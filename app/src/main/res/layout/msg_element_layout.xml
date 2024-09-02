@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginBottom="25dp"
+
+    android:elevation="0dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/menu">
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:background="@color/food"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:gravity="center_vertical"
+            android:paddingStart="13dp"
+            android:text="Title"
+            android:textColor="@color/food"
+            android:textSize="22dp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            app:layout_goneMarginStart="25dp"
+            android:id="@+id/dIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="4dp"
+            android:src="@drawable/coordinator"
+            app:layout_constraintEnd_toStartOf="@id/creater"
+            app:layout_constraintStart_toEndOf="@id/view3"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:layout_marginStart="20dp"
+
+            />
+        <TextView
+
+            android:id="@+id/creater"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:text="Ayush Yadav"
+            app:layout_constraintStart_toEndOf="@+id/dIcon"
+
+            app:layout_constraintTop_toBottomOf="@id/title" />
+        <TextView
+            android:id="@+id/body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:paddingStart="13dp"
+            android:text="body"
+            android:textColor="#201F1F"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toBottomOf="@+id/creater" />
+
+
+        <LinearLayout
+            android:id="@+id/adder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toBottomOf="@id/body">
+        </LinearLayout>
+       <LinearLayout
+           android:id="@+id/comments"
+           app:layout_constraintTop_toBottomOf="@id/adder"
+           app:layout_constraintStart_toEndOf="@id/view3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_marginStart="15dp"
+               android:padding="7dp"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/baseline_comment_24"/>
+
+           <TextView
+
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:gravity="center"
+               android:paddingBottom="5dp"
+               android:text="Comments"
+               android:textSize="18sp"
+               android:textStyle="bold" />
+       </LinearLayout>
+        <ImageView
+            android:id="@+id/delete"
+            android:visibility="invisible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="12:45 Pm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/comments" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="12:45 Pm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view3"
+            app:layout_constraintTop_toBottomOf="@id/comments" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+

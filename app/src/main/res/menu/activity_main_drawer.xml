@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_filled_24"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_messCommitteeActivity"
+            android:icon="@drawable/baseline_people_alt_24"
+            android:title="Mess Committee" />
+        <item
+            android:id="@+id/nav_admin"
+            android:icon="@drawable/baseline_admin_panel_settings_24"
+            android:title="Admin" />
+        <item
+            android:id="@+id/nav_download"
+            android:icon="@drawable/baseline_file_download_24"
+            android:orderInCategory="100"
+            android:title="Download Current Menu" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/team_svgrepo_com"
+            android:title="@string/menu_know_our_team" />
+    </group>
+
+    <!-- This group is for the logout button -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/baseline_logout_24"
+            android:orderInCategory="100"
+            android:title="Logout" />
+    </group>
+
+</menu>

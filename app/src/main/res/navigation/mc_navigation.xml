@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mc_navigation.xml"
+    app:startDestination="@id/mcMainPage">
+
+    <fragment
+        android:id="@+id/mcMainPage"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.McMainPage"
+        android:label="fragment_mc_main_page"
+        tools:layout="@layout/fragment_mc_main_page" >
+
+        <action
+            android:id="@+id/action_mcMainPage_to_createMsgFragment"
+            app:destination="@id/createMsgFragment" />
+        <action
+            android:id="@+id/action_mcMainPage_to_uploadMenuFragment"
+            app:destination="@id/uploadMenuFragment" />
+        <action
+            android:id="@+id/action_mcMainPage_to_createPollFragment"
+            app:destination="@id/createPollFragment" />
+        <action
+            android:id="@+id/action_mcMainPage_to_viewVotesFragment"
+            app:destination="@id/viewVotesFragment" />
+        <action
+            android:id="@+id/action_mcMainPage_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+
+    </fragment>
+     <fragment
+        android:id="@+id/createPollFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.CreatePollFragment"
+        android:label="fragment_create_poll"
+        tools:layout="@layout/fragment_create_poll" />
+    <fragment
+        android:id="@+id/createMsgFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.CreateMsgFragment"
+        android:label="fragment_create_msg"
+        tools:layout="@layout/fragment_create_msg" />
+    <fragment
+        android:id="@+id/uploadMenuFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.UploadMenuFragment"
+        android:label="fragment_upload_menu"
+        tools:layout="@layout/fragment_upload_menu" />
+    <fragment
+        android:id="@+id/viewVotesFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.ViewVotesFragment"
+        android:label="fragment_view_votes"
+        tools:layout="@layout/fragment_view_votes" />
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.ReviewFragment"
+        android:label="fragment_review"
+        tools:layout="@layout/fragment_review" />
+
+
+</navigation>

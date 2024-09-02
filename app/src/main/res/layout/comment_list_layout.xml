@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:strokeWidth="1dp"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/grey"
+    app:cardCornerRadius="7dp"
+    android:layout_height="wrap_content">
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="15dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/profile_circle" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal">
+
+                <ImageView
+
+                    android:id="@+id/dIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:src="@drawable/member" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+
+                    android:text="Ayush Yadav"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toStartOf="@id/time"
+                    app:layout_constraintStart_toEndOf="@+id/dIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="theayushyadav11@gmail.com"
+                android:textColor="@color/food"
+                android:textStyle="italic"
+            />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="25dp"
+
+                android:src="@drawable/baseline_delete_24menu" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingHorizontal="50dp"
+        android:text="Ayush yadav is good"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+
+
+        android:gravity="end"
+        android:text="2 hours ago"
+        android:textSize="12dp" />
+
+
+<!--    <View-->
+<!--        android:id="@+id/v"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:layout_marginHorizontal="15dp"-->
+<!--       android:layout_marginVertical="10dp"-->
+<!--        android:background="@color/grey"-->
+<!--       />-->
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

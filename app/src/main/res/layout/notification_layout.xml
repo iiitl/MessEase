@@ -1,0 +1,33 @@
+<!-- res/layout/custom_notification.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom Title"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/notification_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a custom notification"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/notification_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/profile_circle"
+        android:layout_gravity="center"
+        android:paddingTop="8dp" />
+</LinearLayout>

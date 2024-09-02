@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.more.ReviewActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:background="@color/food"
+        android:paddingBottom="5dp"
+
+        android:titleTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleEnabled="true"
+        app:titleTextColor="@color/white" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:id="@+id/ll"
+               android:layout_marginHorizontal="15dp"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginTop="40dp"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <Spinner
+                   android:id="@+id/day"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+
+                   android:layout_height="wrap_content"
+                   android:hint="Monday"
+                   app:endIconMode="dropdown_menu"/>
+
+
+
+               <Spinner
+                   android:id="@+id/type"
+                   android:layout_width="0dp"
+
+
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:hint="Breakfast"
+                   app:endIconMode="dropdown_menu"/>
+
+
+
+
+
+           </LinearLayout>
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/food"
+                app:layout_constraintTop_toBottomOf="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="25dp"
+                android:textSize="17dp"
+                android:textColor="@color/food"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.5"
+                app:layout_constraintBottom_toTopOf="@id/cc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/food" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                app:cardCornerRadius="7dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                app:strokeColor="@color/grey"
+                app:strokeWidth="2dp">
+
+                <EditText
+                    android:id="@+id/review"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="Write a review"
+                    android:padding="25dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPost"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_margin="25dp"
+                android:text="Post Review"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cc"
+                tools:layout_editor_absoluteX="25dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</LinearLayout>

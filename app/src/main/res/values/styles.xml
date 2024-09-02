@@ -1,0 +1,11 @@
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+
+    <!-- Custom theme for a specific fragment -->
+    <style name="CustomFragmentTheme" parent="Theme.Material3.Light.NoActionBar">
+
+    </style>
+</resources>
