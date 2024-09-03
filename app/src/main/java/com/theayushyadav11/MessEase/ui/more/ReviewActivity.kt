@@ -114,7 +114,7 @@ class ReviewActivity : AppCompatActivity() {
                 day=items[day.value!!],
                 foodtype=if(day.value==7) "" else items2[foodtype.value!!] ,
                 rating = rating.value!!,
-                review = review,
+                review = review.trim(),
                 dateTime = getCurrentTimeAndDate()
             )
             firestoreReference.collection("Reviews").document(key).set(rv).addOnCompleteListener { n->

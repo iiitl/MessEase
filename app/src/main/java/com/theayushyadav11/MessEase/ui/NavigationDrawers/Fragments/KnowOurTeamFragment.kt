@@ -62,14 +62,9 @@ class KnowOurTeamFragment : Fragment() {
                     val v = LayoutInflater.from(requireContext()).inflate(R.layout.person, null)
                     v.findViewById<TextView>(R.id.mname).text = user.name
                     v.findViewById<TextView>(R.id.email).text = user.email
-                    val requestOptions = RequestOptions.circleCropTransform()
-                    Glide.with(this)
-                        .load(user.photoUrl)
-                        .apply(requestOptions)
-                        .error(R.drawable.baseline_person_24)
-                        .into(v.findViewById<ImageView>(R.id.profilePhoto))
+                    mess.loadCircleImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
                     fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = {
-                        if (it.designation == "Coordinator") {
+                        if (it.designation == "Coordinator"||it.designation=="Developer") {
                             v.findViewById<ImageView>(R.id.delete).visibility = View.VISIBLE
                             v.findViewById<ImageView>(R.id.delete).setOnClickListener {
                                 mess.showAlertDialog(

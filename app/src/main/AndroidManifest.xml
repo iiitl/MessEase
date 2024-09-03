@@ -35,7 +35,7 @@
         <activity
             android:name=".ui.splash.fragments.LoginAndSignUpActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".ui.more.ReviewActivity"

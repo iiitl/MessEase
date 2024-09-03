@@ -42,7 +42,6 @@ import com.theayushyadav11.MessEase.ui.MessCommittee.activities.MessCommitteeMai
 import com.theayushyadav11.MessEase.ui.more.PaymentActivity
 import com.theayushyadav11.MessEase.ui.more.ReviewActivity
 import com.theayushyadav11.MessEase.ui.more.SettingsActivity
-import com.theayushyadav11.MessEase.ui.splash.SplashScreen
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
@@ -352,9 +351,6 @@ class MainActivity : AppCompatActivity() {
             REQUEST_CODE_POST_NOTIFICATIONS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     askForExactAlarmPermission()
-                } else {
-                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
         }
@@ -365,8 +361,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(context, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        alarmManager.cancel(pendingIntent)  // Cancel the alarm
-        pendingIntent.cancel()  // Cancel the PendingIntent itself
+        alarmManager.cancel(pendingIntent)
+        pendingIntent.cancel()
     }
 
 
@@ -378,8 +374,6 @@ class MainActivity : AppCompatActivity() {
             if (alarmManager.canScheduleExactAlarms()) {
                 cancelAllAlarms(this@MainActivity)
                 setAlarm()
-            } else {
-                Toast.makeText(this, "Exact alarm permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }

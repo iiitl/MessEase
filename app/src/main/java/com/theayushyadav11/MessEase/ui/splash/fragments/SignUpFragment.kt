@@ -65,6 +65,9 @@ class SignUpFragment : Fragment() {
 
 
         }
+        binding.etPassword.setOnClickListener {
+            binding.etPassword.findFocus()
+        }
         binding.tvSignUp.setOnClickListener {
             findNavController().navigateUp()
         }

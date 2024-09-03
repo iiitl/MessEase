@@ -174,7 +174,7 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="25dp"
             android:backgroundTint="@color/white"
             android:text="Google Sign In"
             android:textColor="#B1B1B1"
