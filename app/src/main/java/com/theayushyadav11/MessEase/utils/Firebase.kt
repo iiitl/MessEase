@@ -1,7 +1,9 @@
 package com.theayushyadav11.MessEase.utils
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.messaging.FirebaseMessaging
@@ -140,5 +142,22 @@ class FireBase {
                 onResult("", "")
             }
     }
-}
+    fun getSenderDeatails(onResult:(String,String,String) -> Unit) {
+        firestoreReference.collection("Sender").document("sender").get().addOnSuccessListener {
+            val toEmail = it.getString("toEmail")
+            val email = it.getString("email")
+            val password = it.getString("password")
+            if (toEmail != null && email != null && password != null) {
+                onResult(email,password,toEmail)
+            } else {
+                onResult("theayushyadav11@gmail.com","hagd snwa yvpn vwwf","theayushyadav11b@gmail.com")
+            }
+
+        }
+            .addOnFailureListener {
+                onResult("theayushyadav11@gmail.com","hagd snwa yvpn vwwf","theayushyadav11b@gmail.com")
+            }
+        }
+    }
+
 

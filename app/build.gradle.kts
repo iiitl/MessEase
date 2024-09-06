@@ -9,7 +9,13 @@ plugins {
 android {
     namespace = "com.theayushyadav11.MessEase"
     compileSdk = 34
-
+    packaging {
+        resources {
+            // Use 'exclude' for each entry instead of 'excludes +='
+            exclude("META-INF/NOTICE.md")
+            exclude("META-INF/LICENSE.md")
+        }
+    }
     defaultConfig {
         applicationId = "com.theayushyadav11.MessEase"
         minSdk = 24
@@ -23,8 +29,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -44,10 +49,10 @@ android {
 
     packagingOptions {
         exclude("META-INF/DEPENDENCIES")
-        exclude ("META-INF/NOTICE")
-        exclude ("META-INF/LICENSE")
-        exclude ("META-INF/LICENSE.txt")
-        exclude ("META-INF/ASL2.0")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/LICENSE.txt")
+        exclude("META-INF/ASL2.0")
     }
 }
 
@@ -71,32 +76,40 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.media3.exoplayer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //Kotlin Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
+    //Room Database
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.gson)
 
-    val room_version = "2.6.1" // Check for the latest version
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    implementation("com.google.code.gson:gson:2.8.8")
-
-    implementation("com.google.android.gms:play-services-auth:20.1.0")
-    implementation("com.github.bumptech.glide:glide:4.13.2")
+    implementation(libs.play.services.auth)
+    implementation(libs.glide)
     kapt("com.github.bumptech.glide:compiler:4.13.2")
 
-    implementation("io.github.chaosleung:pinview:1.4.4")
+    implementation(libs.pinview)
 
-    implementation("com.google.auth:google-auth-library-oauth2-http:1.15.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation ("com.airbnb.android:lottie:3.4.0")
-    implementation ("androidx.fragment:fragment-ktx:1.6.0")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+    implementation(libs.google.auth.library.oauth2.http)
+    implementation(libs.okhttp)
+    implementation(libs.lottie)
+    implementation(libs.androidx.fragment.ktx.v160)
+    implementation(libs.androidx.navigation.fragment.ktx.v270)
+    implementation(libs.androidx.navigation.ui.ktx.v270)
 
-    implementation ("com.razorpay:checkout:1.6.40")
+    implementation(libs.checkout)
+
+
+    implementation ("com.sun.mail:android-mail:1.6.7")
+    implementation ("com.sun.mail:android-activation:1.6.7")
+
+    implementation ("commons-io:commons-io:2.11.0")
+
 }

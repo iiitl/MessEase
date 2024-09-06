@@ -2,7 +2,6 @@ package com.theayushyadav11.MessEase.ui.Adapters
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.OnFailureListener
 import com.theayushyadav11.MessEase.Models.AprMenu
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.R
@@ -19,11 +17,11 @@ import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import com.theayushyadav11.MessEase.utils.MailSender
 import com.theayushyadav11.MessEase.utils.Mess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class UploadMenuAdapter(
     private val aprMenus: List<AprMenu>,
@@ -71,10 +69,17 @@ class UploadMenuAdapter(
         holder.main.setOnClickListener {
             mess.addPb("Loading..,")
             GlobalScope.launch(Dispatchers.IO) {
-                val menu= Menu(id=2,menu=aprMenu.menu.menu,creator=aprMenu.menu.creator)
+                val menu = Menu(id = 2, menu = aprMenu.menu.menu, creator = aprMenu.menu.creator)
                 MenuDatabase.getDatabase(context).menuDao().addMenu(menu)
                 mess.pbDismiss()
-               startActivity(context, Intent(context, com.theayushyadav11.MessEase.ui.more.ShowMenuActivity::class.java), null)
+                startActivity(
+                    context,
+                    Intent(
+                        context,
+                        com.theayushyadav11.MessEase.ui.more.ShowMenuActivity::class.java
+                    ),
+                    null
+                )
             }
         }
     }
@@ -113,15 +118,17 @@ class UploadMenuAdapter(
         firestoreReference.collection("MainMenu").document("menu").set(aprMenu.menu)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                 deleteUrlandUploadNewUrl(aprMenu,onSuccess = {
+                    deleteUrlandUploadNewUrl(aprMenu, onSuccess = {
                         mess.pbDismiss()
                         mess.toast("Menu uploaded successfully")
+                        sendMail(aprMenu.url)
                      val pn= PushNotifications(context, "Batch - 2024Batch - 2025Batch - 2026Batch - 2027Batch - 2028Batch - 2029FemaleMale    Btech    Mtech   MBA     Mtech   ")
                      pn.sendNotificationToAllUsers("New Mess Menu has been updated", "Go and take a look at the new menu.")
+
                     }, onFailure = {
                         mess.pbDismiss()
-                        mess.toast("Failed to upload menu132")
-                 })
+                        mess.toast("Failed to upload menu")
+                    })
                 } else {
                     mess.pbDismiss()
                     mess.toast("Failed to upload menu")
@@ -129,36 +136,60 @@ class UploadMenuAdapter(
             }
 
     }
-    private fun deleteUrlandUploadNewUrl(aprMenu: AprMenu, onSuccess:()->Unit, onFailure:()->Unit)
-    {
-        firestoreReference.collection("MainMenu").document("url").get().addOnSuccessListener { value->
 
-            val url2 = value?.getString("url")
-            if(url2!=null)
-            {
-                fireBase.deletefile(url2,
-                    onSuccess = {
-                        firestoreReference.collection("MainMenu").document("url").set(hashMapOf("url" to aprMenu.url)).addOnCompleteListener{
-                            firestoreReference.collection("MenuForApproval").document(aprMenu.key).delete()
+    fun sendMail(url: String) {
 
+        fireBase.getSenderDeatails { email, password, toEmail ->
+            val mailSender = MailSender(email,password)
 
-                            onSuccess()
-                        }
-                    },
-                    onFailure = {
-                        onFailure()
-                    })
-            }
-        }.addOnFailureListener {error->
-            onFailure()
+            mailSender.sendEmailWithAttachment(
+                toEmail,
+                "Updated Mess Menu",
+                "Greetings everyone,\n" +
+                        "We are introducing the new mess menu of this month and hope y'all will enjoy it\n" +
+                        "For your reference the new menu is attached below.\n" +
+                        "Mess Committee\n" +
+                        "IIIT Lucknow",
+                url
+
+            )
         }
+    }
 
+    private fun deleteUrlandUploadNewUrl(
+        aprMenu: AprMenu,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        firestoreReference.collection("MainMenu").document("url").get()
+            .addOnSuccessListener { value ->
+
+                val url2 = value?.getString("url")
+                if (url2 != null) {
+                    fireBase.deletefile(url2,
+                        onSuccess = {
+                            firestoreReference.collection("MainMenu").document("url")
+                                .set(hashMapOf("url" to aprMenu.url)).addOnCompleteListener {
+                                    firestoreReference.collection("MenuForApproval")
+                                        .document(aprMenu.key).delete()
+
+
+                                    onSuccess()
+                                }
+                        },
+                        onFailure = {
+                            onFailure()
+                        })
+                }
+            }.addOnFailureListener { error ->
+                onFailure()
+            }
 
 
     }
 
     inner class UploadMenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val main:ConstraintLayout=itemView.findViewById(R.id.main)
+        val main: ConstraintLayout = itemView.findViewById(R.id.main)
         val name: TextView = itemView.findViewById(R.id.other)
         val other: TextView = itemView.findViewById(R.id.mname)
         val emal: TextView = itemView.findViewById(R.id.email)
@@ -166,4 +197,5 @@ class UploadMenuAdapter(
         val delete: ImageView = itemView.findViewById(R.id.delete)
         val time: TextView = itemView.findViewById(R.id.time)
     }
+
 }

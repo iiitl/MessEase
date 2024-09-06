@@ -60,7 +60,8 @@ class ViewVotesFragment : Fragment() {
 
             }
         } catch (e: Exception) {
-
+           mess.pbDismiss()
+            mess.toast("Failed to load")
         }
     }
 

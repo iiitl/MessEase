@@ -78,29 +78,16 @@ class KnowOurTeamFragment : Fragment() {
                                     }
                                 }
 
-
                             }
                         }
                     }, onFailure = {})
-
-
-
-
-
-
-
-
-
-
-
-
 
                     when (user.designation) {
                         "Coordinator" -> binding.coordAdder.addView(v)
                         "Developer" -> binding.devAdder.addView(v)
                         "Senior-Member" -> binding.smAdder.addView(v)
                         "Member" -> binding.memAdder.addView(v)
-                        "Vounteer" -> binding.volAdder.addView(v)
+                        "Volunteer" -> binding.volAdder.addView(v)
                     }
 
                 }

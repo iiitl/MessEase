@@ -23,7 +23,6 @@ import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentLoginBinding
 import com.theayushyadav11.MessEase.ui.splash.ViewModels.LoginViewModel
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
-import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
 
 class LoginFragment : Fragment() {
@@ -101,13 +100,16 @@ class LoginFragment : Fragment() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 val email = account.email!!
-                if (email.endsWith("@iiitl.ac.in") || email.contains("ayushyadav")) {
-                    firebaseAuthWithGoogle(account)
-                } else {
-                    mess.pbDismiss()
-                    googleSignInClient.signOut()
-                    mess.toast("Login with college email id only")
+                mess.isValidEmail(email) {
+                    if (it) {
+                        firebaseAuthWithGoogle(account)
+                    } else {
+                        mess.pbDismiss()
+                        googleSignInClient.signOut()
+                        mess.toast("Login with college email id only")
+                    }
                 }
+
             } catch (e: ApiException) {
                 mess.pbDismiss()
                 mess.toast("Google sign in failed: ${e.message}")
@@ -132,22 +134,24 @@ class LoginFragment : Fragment() {
         val email = binding.etEmail.text.toString().trim()
 
         if (email.isNotEmpty()) {
-            if (email.endsWith("@iiitl.ac.in") || email.contains("ayushyadav")) {
-                mess.addPb("Sending Password reset email...")
-                auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener { task ->
-                        mess.pbDismiss()
-                        if (task.isSuccessful) {
-                            mess.toast("Password reset email sent")
+            mess.isValidEmail(email) {
+                if (it) {
+                    mess.addPb("Sending Password reset email...")
+                    auth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            mess.pbDismiss()
+                            if (task.isSuccessful) {
+                                mess.toast("Password reset email sent")
 
-                        } else {
-                            mess.toast(task.exception?.message.toString())
+                            } else {
+                                mess.toast(task.exception?.message.toString())
+                            }
                         }
-                    }
-            } else {
-                mess.toast("Login with college email id only")
-                mess.pbDismiss()
+                } else {
+                    mess.toast("Login with college email id only")
+                    mess.pbDismiss()
 
+                }
             }
         } else {
             Snackbar.make(binding.root, "Email cannot be empty!", Snackbar.LENGTH_LONG).show()
@@ -168,24 +172,26 @@ class LoginFragment : Fragment() {
     private fun loginUser(email: String, password: String) {
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            if (email.endsWith("@iiitl.ac.in") || email.contains("ayushyadav")) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener() { task ->
-                        mess.pbDismiss()
-                        if (task.isSuccessful) {
-                            val user = auth.currentUser
-                            if (user?.isEmailVerified!!) {
-                                navigate()
+            mess.isValidEmail(email) {
+                if (it) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener() { task ->
+                            mess.pbDismiss()
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                if (user?.isEmailVerified!!) {
+                                    navigate()
+                                } else {
+                                    mess.toast("Please verify your email address")
+                                }
                             } else {
-                                mess.toast("Please verify your email address")
+                                mess.toast(task.exception?.message.toString())
                             }
-                        } else {
-                            mess.toast(task.exception?.message.toString())
                         }
-                    }
-            } else {
-                mess.toast("Login with college email id only")
-                mess.pbDismiss()
+                } else {
+                    mess.toast("Login with college email id only")
+                    mess.pbDismiss()
+                }
             }
         } else {
             Snackbar.make(binding.root, "Email or password cannot be empty!", Snackbar.LENGTH_LONG)
@@ -204,6 +210,7 @@ class LoginFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
+
     private fun navigate() {
         viewModel.isPresent { isPresent ->
             if (isPresent) {

@@ -27,6 +27,7 @@ class PushNotifications(private val context: Context, private val target: String
         coroutineScope.launch {
             updateAccessToken()
         }
+        Log.d("FCM", "Sending notification to${target}  users")
     }
 
 

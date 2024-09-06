@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +28,7 @@ class ReviewActivity : AppCompatActivity() {
     val day = MutableLiveData<Int>()
     val rating = MutableLiveData<Float>()
     val foodtype = MutableLiveData<Int>()
+    private val vm:ReviewViewModel by viewModels()
     val items2 = listOf("Breakfast", "Lunch", "Snacks", "Dinner")
     val items =
         listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","AppReview")
@@ -61,10 +63,10 @@ class ReviewActivity : AppCompatActivity() {
             }
             foodtype.observe(this, Observer { type ->
                 if (day != null && foodtype.value != null) {
-                    fireBase.getMainMenu {
-                        val d = if (day == 6) 0 else day + 1
+                   vm.getMainMenu {
+                        val d =day + 1
                         val food = it.menu[d].particulars[type].food
-                        binding.food.setText(food)
+                       binding.food.text = food
                     }
                 }
             })
@@ -153,20 +155,7 @@ class ReviewActivity : AppCompatActivity() {
 
 
         spinner.adapter = adapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                day.value = position
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                day.value = 0
-            }
-        }
 
         val adapter2 = ArrayAdapter(this, R.layout.simple_list_item_1, items2)
 
@@ -177,22 +166,40 @@ class ReviewActivity : AppCompatActivity() {
 
 
         spinner2.adapter = adapter2
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                foodtype.value = position
+                if (view != null) {  // Check for null view
+                    day.value = position
+                }
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                day.value = 0
+            }
+        }
+
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (view != null) {  // Check for null view
+                    foodtype.value = position
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 foodtype.value = 0
             }
         }
+
 
     }
     private fun ratingBar() {

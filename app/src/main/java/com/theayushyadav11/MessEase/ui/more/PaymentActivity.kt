@@ -1,13 +1,11 @@
 package com.theayushyadav11.MessEase.ui.more
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.razorpay.Checkout
@@ -15,7 +13,6 @@ import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.ActivityPaymentBinding
-import org.json.JSONObject
 
 class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private lateinit var binding: ActivityPaymentBinding
@@ -76,7 +73,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         try {
                val intent = Intent(Intent.ACTION_VIEW)
 
-                intent.data = Uri.parse("upi://pay?pa=theayushyadav11@oksbi&pn=Ayush%20Yadav&aid=uGICAgMCCjanOBg")
+                intent.data = Uri.parse("upi://pay?pa=paytmqr1o2ycrqg1f@paytm&pn=Paytm")
                 startActivity(intent)
 
         } catch (e: Exception) {

@@ -21,6 +21,33 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="18dp"
+           >
+
+            <TextView
+                android:id="@+id/nav_footer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Developed by :-"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"/>
+            <TextView
+                android:layout_below="@id/nav_footer_name"
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ayush Yadav I.T. 2027"
+                android:textSize="16sp"
+                android:textColor="@color/food"
+                />
+
+        </RelativeLayout>
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

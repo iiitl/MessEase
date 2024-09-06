@@ -1,10 +1,13 @@
 package com.theayushyadav11.MessEase.utils
 
 import android.app.Dialog
+import android.app.DownloadManager
 import android.app.ProgressDialog
-import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Environment
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,8 +29,8 @@ import com.google.firebase.database.ValueEventListener
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
+import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -61,7 +64,8 @@ class Mess {
     fun get(key: String): String {
         return sharedPreferences.getString(key, "").toString()
     }
-    fun get(key: String,defVal:String): String {
+
+    fun get(key: String, defVal: String): String {
         return sharedPreferences.getString(key, defVal).toString()
     }
 
@@ -247,16 +251,21 @@ class Mess {
     }
 
     fun loadImage(url: String, view: ImageView) {
-        Glide.with(context).
-        load(url).
-        into(view)
+        Glide.with(context).load(url).into(view)
     }
-   fun loadCircleImage(url: String, view: ImageView) {
+
+    fun openLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(intent)
+    }
+
+    fun loadCircleImage(url: String, view: ImageView) {
         Glide.with(context).load(url)
             .circleCrop()
             .error(R.drawable.profile_circle)
             .into(view)
     }
+
     fun showImage(photo: String) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.img2)
@@ -267,6 +276,7 @@ class Mess {
         }
         dialog.show()
     }
+
     fun getmanager(): RecyclerView.LayoutManager {
         val layoutManager = object : LinearLayoutManager(context) {
             override fun onLayoutChildren(
@@ -286,6 +296,44 @@ class Mess {
         }
 
         return layoutManager
+    }
+
+    private fun cont(email: String, onResult: (Boolean) -> Unit) {
+        firestoreReference.collection("Allows").document("allows").get().addOnSuccessListener {
+            val emailList = it.get("list") as? List<String> ?: emptyList()
+            if (emailList.contains(email)) {
+                onResult(true)
+            }
+            onResult(false)
+
+        }
+    }
+
+    fun isValidEmail(email: String, onResult: (Boolean) -> Unit) {
+
+
+        cont(email)
+        {
+            if(it||((email.endsWith("@iiitl.ac.in")&&email.length==22 )|| email.contains("ayushyadav")))
+                onResult(true)
+            else
+                onResult(false)
+        }
+
+
+    }
+    fun downloadFile(url: String) {
+        val title="MessMenu.pdf"
+        val description="Downloading file"
+        val request = DownloadManager.Request(Uri.parse(url))
+        request.setTitle(title)
+        request.setDescription(description)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadId = downloadManager.enqueue(request)
+        Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
     }
 
 }

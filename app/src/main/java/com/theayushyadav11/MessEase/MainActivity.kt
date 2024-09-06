@@ -3,11 +3,14 @@ package com.theayushyadav11.MessEase
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -58,6 +61,9 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE_POST_NOTIFICATIONS = 1
     private val REQUEST_CODE_SCHEDULE_EXACT_ALARM = 2
     private lateinit var analytics: FirebaseAnalytics
+    private lateinit var downloadManager: DownloadManager
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -82,10 +88,23 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initialise() {
         mess = Mess(this)
         mess.setIsLoggedIn(true)
         analytics = FirebaseAnalytics.getInstance(this)
+        registerReceiver(
+            onDownloadComplete,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            RECEIVER_NOT_EXPORTED
+        )
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            Toast.makeText(context, "Download completed!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,10 +118,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, PaymentActivity::class.java))
                 true
             }
+
             R.id.action_review -> {
-                startActivity(Intent(this,ReviewActivity::class.java))
+                startActivity(Intent(this, ReviewActivity::class.java))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -126,7 +147,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_messCommitteeActivity -> {
                     FireBase().getUser(auth.currentUser!!.uid, onSuccess = { user ->
-                        if (user.member&&auth.currentUser!=null) {
+                        if (user.member && auth.currentUser != null) {
                             val intent = Intent(this, MessCommitteeMain::class.java)
                             startActivity(intent)
                         } else {
@@ -134,10 +155,7 @@ class MainActivity : AppCompatActivity() {
 
                             if (!isFinishing && !isDestroyed) {
                                 mess.showAlertDialog(
-                                    "Alert!",
-                                    "You are not a member of Mess Committee!",
-                                    "Ok",
-                                    ""
+                                    "Alert!", "You are not a member of Mess Committee!", "Ok", ""
                                 ) {}
                             }
                         }
@@ -149,13 +167,11 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_download -> {
 
+
                     firestoreReference.collection("MainMenu").document("url").get()
                         .addOnSuccessListener { value ->
                             val url = value?.get("url").toString()
-                            val uri = (Uri.parse(url))
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
+                            mess.downloadFile(url)
 
                         }.addOnFailureListener { error ->
                             mess.toast("Failed to download menu")
@@ -263,6 +279,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
     private fun setAlarm() {
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this@MainActivity, AlarmReceiver::class.java)
@@ -274,8 +291,8 @@ class MainActivity : AppCompatActivity() {
             mess.get("dt", "19:00")
         )
         //val times = listOf("20:14","20:15","20:11","20:12")
-        mess.log("Ayush"+
-            mess.get("bt", "7:30") + mess.get("lt", "12:00") + mess.get(
+        mess.log(
+            "Ayush" + mess.get("bt", "7:30") + mess.get("lt", "12:00") + mess.get(
                 "st", "16:30"
             ) + mess.get("dt", "19:00")
         )
@@ -355,11 +372,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun cancelAllAlarms(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent =
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager.cancel(pendingIntent)
         pendingIntent.cancel()
@@ -378,5 +397,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Unregister the receiver to avoid memory leaks
+        unregisterReceiver(onDownloadComplete)
+    }
 
 }
