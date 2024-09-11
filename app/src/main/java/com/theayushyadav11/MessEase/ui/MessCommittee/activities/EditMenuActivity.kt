@@ -52,9 +52,7 @@ class EditMenuActivity : AppCompatActivity() {
         initialise()
         assign()
         listeners()
-
     }
-
     private fun initialise() {
         mess = Mess(this)
         mess.addPb("Loading menu...")
@@ -121,14 +119,12 @@ class EditMenuActivity : AppCompatActivity() {
             pdfConversion()
             binding.next.isVisible = true
             getEditedMenu { menu ->
+                mess.log("Menu: $menu")
                 viewModel.setEditedMenu(menu)
             }
-
             startActivity(Intent(this@EditMenuActivity, EditCompleteActivity::class.java))
-
         }
     }
-
     private fun pdfConversion() {
         val horizontalScrollView = binding.root
         val displayMetrics = DisplayMetrics()
@@ -148,7 +144,6 @@ class EditMenuActivity : AppCompatActivity() {
             horizontalScrollView.measuredWidth,
             horizontalScrollView.measuredHeight
         )
-
         val document = PdfDocument()
         val viewWidth = horizontalScrollView.measuredWidth
         val viewHeight = horizontalScrollView.measuredHeight
@@ -278,9 +273,7 @@ class EditMenuActivity : AppCompatActivity() {
             }
             dayMenus.add(DayMenu(particulars))
         }
-
         fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
-
             editedMenu = Menu(
                 id = 1,
                 creator = user,
@@ -296,5 +289,16 @@ class EditMenuActivity : AppCompatActivity() {
             })
     }
 
+    override fun onBackPressed() {
 
+        if(isEdited)
+        {
+            mess.showAlertDialog("Alert!","You have unsaved changes,Your data will be gone\nYou want to go back?","Yes","Cancel"){
+
+                finish()
+            }
+        }
+        else
+            super.onBackPressed()
+    }
 }

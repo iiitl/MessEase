@@ -96,7 +96,7 @@ class ViewVotesFragment : Fragment() {
                         val name = usr.findViewById<TextView>(R.id.mname)
                         val time = usr.findViewById<TextView>(R.id.time)
                         val propic = usr.findViewById<ImageView>(R.id.propic)
-                        mess.loadImage(os[i].user.photoUrl, propic)
+                        mess.loadCircleImage(os[i].user.photoUrl, propic)
                         val email = usr.findViewById<TextView>(R.id.email)
                         name.text = os[i].user.name
                         email.text = os[i].user.email

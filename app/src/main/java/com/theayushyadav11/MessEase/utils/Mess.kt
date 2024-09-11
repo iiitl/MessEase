@@ -34,25 +34,19 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class Mess {
+class Mess(context: Context) {
     lateinit var context: Context
-    var progressDialog: ProgressDialog
-    var sharedPreferences: SharedPreferences
-    val disign = MutableLiveData<String>()
+    private var progressDialog: ProgressDialog = ProgressDialog(context)
+    private var sharedPreferences: SharedPreferences
+    val designation = MutableLiveData<String>()
 
-    constructor(context: Context) {
-
-        progressDialog = ProgressDialog(context)
+    init {
         progressDialog.setCancelable(false)
-        init()
+        currentDesignation()
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         if (context != null) {
             this.context = context
         }
-    }
-
-    fun init() {
-        currentDesgin()
     }
 
     fun save(key: String, value: String) {
@@ -96,7 +90,6 @@ class Mess {
         progressDialog.dismiss()
         progressDialog.setMessage(message)
         progressDialog.show()
-
     }
 
     fun pbDismiss() {
@@ -112,27 +105,26 @@ class Mess {
     }
 
     fun log(message: Any) {
-        Log.d("yatinMAdharchod", message.toString())
+        Log.d("yatinMadharchod", message.toString())
     }
 
-    fun currentDesgin() {
+    private fun currentDesignation() {
         val auth = FirebaseAuth.getInstance()
         val database = FirebaseDatabase.getInstance().reference
         database.child("Users").child(auth.currentUser?.uid.toString()).child("designation")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    disign.value = snapshot.value.toString()
+                    designation.value = snapshot.value.toString()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    log("Failed to read value.")
                 }
 
             })
 
 
     }
-
 
     fun getCurrentTimeAndDate(): String {
         val dateFormat = SimpleDateFormat("hh:mm a dd MMM yyyy", Locale.getDefault())
@@ -260,10 +252,7 @@ class Mess {
     }
 
     fun loadCircleImage(url: String, view: ImageView) {
-        Glide.with(context).load(url)
-            .circleCrop()
-            .error(R.drawable.profile_circle)
-            .into(view)
+        Glide.with(context).load(url).circleCrop().error(R.drawable.profile_circle).into(view)
     }
 
     fun showImage(photo: String) {
@@ -280,8 +269,7 @@ class Mess {
     fun getmanager(): RecyclerView.LayoutManager {
         val layoutManager = object : LinearLayoutManager(context) {
             override fun onLayoutChildren(
-                recycler: RecyclerView.Recycler?,
-                state: RecyclerView.State?
+                recycler: RecyclerView.Recycler?, state: RecyclerView.State?
             ) {
                 try {
                     super.onLayoutChildren(recycler, state)
@@ -297,34 +285,58 @@ class Mess {
 
         return layoutManager
     }
-
+    fun getLists(listName: String, onResult: (List<String>) -> Unit) {
+        firestoreReference.collection("Lists").document("lists").get().addOnSuccessListener {
+            val list = it.get(listName) as? List<String> ?: emptyList()
+            onResult(list)
+        }
+    }
     private fun cont(email: String, onResult: (Boolean) -> Unit) {
-        firestoreReference.collection("Allows").document("allows").get().addOnSuccessListener {
-            val emailList = it.get("list") as? List<String> ?: emptyList()
-            if (emailList.contains(email)) {
+        getLists("allows"){
+            if (it.contains(email)) {
                 onResult(true)
             }
             onResult(false)
-
         }
     }
 
     fun isValidEmail(email: String, onResult: (Boolean) -> Unit) {
-
-
-        cont(email)
-        {
-            if(it||((email.endsWith("@iiitl.ac.in")&&email.length==22 )|| email.contains("ayushyadav")))
-                onResult(true)
-            else
-                onResult(false)
+        val emailR = email.substring(0, email.indexOf("@"))
+        var isValid = true
+        if (emailR.contains("+") || emailR.contains(".") || emailR.contains("-") || emailR.contains(
+                "_"
+            ) || emailR.contains(
+                "/"
+            ) || emailR.contains("*") || emailR.contains("#") || emailR.contains("!") || emailR.contains(
+                "$"
+            ) || emailR.contains("%") || emailR.contains("^") || emailR.contains(
+                "&"
+            ) || emailR.contains("(") || emailR.contains(")") || emailR.contains("=") || emailR.contains(
+                "{"
+            ) || emailR.contains("}") || emailR.contains("[") || emailR.contains("]") || emailR.contains(
+                ":"
+            ) || emailR.contains(";") || emailR.contains(",") || emailR.contains("<") || emailR.contains(
+                ">"
+            ) || emailR.contains("?") || emailR.contains("|") || emailR.contains("`") || emailR.contains(
+                "~"
+            )
+        ) {
+            isValid = false
         }
-
-
+        cont(email) {
+            if (it || ((email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
+                    "ayushyadav"
+                ))
+            ) onResult(
+                true
+            )
+            else onResult(false)
+        }
     }
+
     fun downloadFile(url: String) {
-        val title="MessMenu.pdf"
-        val description="Downloading file"
+        val title = "MessMenu.pdf"
+        val description = "Downloading file"
         val request = DownloadManager.Request(Uri.parse(url))
         request.setTitle(title)
         request.setDescription(description)

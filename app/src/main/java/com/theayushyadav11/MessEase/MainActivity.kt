@@ -19,7 +19,6 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE_POST_NOTIFICATIONS = 1
     private val REQUEST_CODE_SCHEDULE_EXACT_ALARM = 2
     private lateinit var analytics: FirebaseAnalytics
-    private lateinit var downloadManager: DownloadManager
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -218,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         val layout: LinearLayout = headerView.findViewById(R.id.navMain)
         FireBase().getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
             if (!isFinishing && !isDestroyed) {
-                mess.loadCircleImage(user.photoUrl, layout.findViewById<ImageView>(R.id.propic))
+                mess.loadCircleImage(user.photoUrl, layout.findViewById(R.id.propic))
                 layout.findViewById<TextView>(R.id.mname).text = user.name
                 layout.findViewById<TextView>(R.id.email).text = user.email
             }
@@ -253,7 +251,6 @@ class MainActivity : AppCompatActivity() {
             val channel = NotificationChannel("DailyNotification", name, importance).apply {
                 description = descriptionText
             }
-
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -286,15 +283,15 @@ class MainActivity : AppCompatActivity() {
 
         val times = listOf(
             mess.get("bt", "7:30"),
-            mess.get("lt", "12:00"),
+            mess.get("lt", "12:0"),
             mess.get("st", "16:30"),
-            mess.get("dt", "19:00")
+            mess.get("dt", "19:0")
         )
         //val times = listOf("20:14","20:15","20:11","20:12")
         mess.log(
-            "Ayush" + mess.get("bt", "7:30") + mess.get("lt", "12:00") + mess.get(
+            "Ayush" + mess.get("bt", "7:30") + mess.get("lt", "12:0") + mess.get(
                 "st", "16:30"
-            ) + mess.get("dt", "19:00")
+            ) + mess.get("dt", "19:0")
         )
         for (i in times.indices) {
 
@@ -313,15 +310,11 @@ class MainActivity : AppCompatActivity() {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
-
-
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent
             )
         }
-
     }
-
     private fun askForNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -340,7 +333,6 @@ class MainActivity : AppCompatActivity() {
             askForExactAlarmPermission()
         }
     }
-
     private fun askForExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -399,7 +391,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Unregister the receiver to avoid memory leaks
         unregisterReceiver(onDownloadComplete)
     }
 

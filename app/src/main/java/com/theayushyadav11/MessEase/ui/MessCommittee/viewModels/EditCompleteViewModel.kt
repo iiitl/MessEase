@@ -94,6 +94,7 @@ class EditCompleteViewModel(private val dao: MenuDao) : ViewModel() {
                 c+=j.food
             }
         }
+     Log.d("getComp ",c)
         return c
     }
     private fun getCurrentTimeAndDate(): String {

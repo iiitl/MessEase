@@ -25,7 +25,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initialise() {
-        val times = listOf(mess.get("bt","7:30"),mess.get("lt","12:00"),mess.get("st","16:30"),mess.get("dt","19:00"))
+        val times = listOf(mess.get("bt","7:30"),mess.get("lt","12:0"),mess.get("st","16:30"),mess.get("dt","19:0"))
         binding.timeb.text=getFormattedTime(times[0])
         binding.timel.text=getFormattedTime(times[1])
         binding.times.text=getFormattedTime(times[2])
@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun listeners()
     {
-        val b= mutableListOf<String>("07:30","12:00","15:30","19:00")
+        val b= mutableListOf("07:30","12:0","15:30","19:0")
         binding.pickb.setOnClickListener{
             showTimePicker(0, 0, 10, 0) {it,p->
                 binding.timeb.text = it
@@ -42,20 +42,20 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
         binding.pickl.setOnClickListener{
-            showTimePicker(10, 0, 12, 30) {it,p->
+            showTimePicker(10, 0, 14, 30) {it,p->
                 binding.timel.text = it
                 b[1]=(p)
             }
         }
         binding.picks.setOnClickListener{
-            showTimePicker(14, 30, 17, 0) {it,p->
+            showTimePicker(14, 30, 18, 0) {it,p->
 
                 binding.times.text = it
                 b[2]=(p)
             }
         }
         binding.pickd.setOnClickListener{
-            showTimePicker(18, 0, 22, 0) {it,p->
+            showTimePicker(18, 0, 21, 30) {it,p->
                 binding.timed.text = it
                 b[3]=(p)
             }
@@ -67,15 +67,14 @@ class SettingsActivity : AppCompatActivity() {
             mess.save("st",b[2])
             mess.save("dt",b[3])
             mess.log(b)
+            mess.toast("Timings Updated")
             finish()
         }
 
     }
-    fun setUpToolBar() {
+    private fun setUpToolBar() {
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-
-        // Ensure that the support action bar is not null before setting the title
         supportActionBar?.apply {
             title = "Settings"
             setDisplayHomeAsUpEnabled(true)
@@ -87,7 +86,7 @@ class SettingsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
     }
-    fun showTimePicker(minHour: Int, minMinute: Int, maxHour: Int, maxMinute: Int, onResult: (String,String) -> Unit) {
+    private fun showTimePicker(minHour: Int, minMinute: Int, maxHour: Int, maxMinute: Int, onResult: (String, String) -> Unit) {
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute = calendar.get(Calendar.MINUTE)
@@ -112,13 +111,13 @@ class SettingsActivity : AppCompatActivity() {
     }
 
 
-    fun isTimeInRange(hour: Int, minute: Int, minHour: Int, minMinute: Int, maxHour: Int, maxMinute: Int): Boolean {
+    private fun isTimeInRange(hour: Int, minute: Int, minHour: Int, minMinute: Int, maxHour: Int, maxMinute: Int): Boolean {
         val selectedTime = hour * 60 + minute
         val minTime = minHour * 60 + minMinute
         val maxTime = maxHour * 60 + maxMinute
         return selectedTime in minTime..maxTime
     }
-    fun getFormattedTime(time:String): String {
+    private fun getFormattedTime(time:String): String {
         val hour = time.substringBefore(":").toInt()
         val minute = time.substringAfter(":").toInt()
 

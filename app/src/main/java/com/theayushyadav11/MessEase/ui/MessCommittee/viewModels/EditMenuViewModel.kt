@@ -26,7 +26,7 @@ class EditMenuViewModel(private val menuDao: MenuDao) : ViewModel() {
 
 
             viewModelScope.launch(Dispatchers.IO) {
-                val menu = menuDao.getMenu()
+                val menu = menuDao.getMenuFromId(3)
                 _currentMenu = menu
                 onResult(menu)
             }

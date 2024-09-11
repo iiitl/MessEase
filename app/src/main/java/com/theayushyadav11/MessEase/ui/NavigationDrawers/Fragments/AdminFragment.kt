@@ -63,7 +63,7 @@ class AdminFragment : Fragment() {
     }
 
     fun setAdapter() {
-        viewModel.getDesList {
+        mess.getLists("designations") {
             val spinner: Spinner = binding.spinner
             val spinnerItems = it
             val adapter =

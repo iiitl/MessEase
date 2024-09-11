@@ -12,8 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayoutMediator
 import com.theayushyadav11.MessEase.MainActivity
+import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.R.id.action_mcMainPage_to_createMsgFragment
+import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.FragmentMcMainPageBinding
 import com.theayushyadav11.MessEase.ui.Adapters.ViewPagerAdapter
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
@@ -21,6 +23,8 @@ import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.McMainPageViewMo
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class McMainPage : Fragment() {
     private lateinit var binding: FragmentMcMainPageBinding
@@ -56,6 +60,13 @@ class McMainPage : Fragment() {
             navigateSafely(action_mcMainPage_to_createMsgFragment)
         }
         binding.editMenu.setOnClickListener {
+            val db=MenuDatabase.getDatabase(requireContext()).menuDao()
+            GlobalScope.launch {
+                val currentMenu=db.getMenu()
+                val menuTo= Menu(id=3, menu = currentMenu.menu, creator = currentMenu.creator)
+                db.addMenu(menuTo)
+            }
+
             startActivity(Intent(requireActivity(), EditMenuActivity::class.java))
         }
         binding.uploadMenu.setOnClickListener {

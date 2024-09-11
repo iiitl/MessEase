@@ -54,6 +54,7 @@ android {
         exclude("META-INF/LICENSE.txt")
         exclude("META-INF/ASL2.0")
     }
+
 }
 
 dependencies {
@@ -107,9 +108,10 @@ dependencies {
     implementation(libs.checkout)
 
 
-    implementation ("com.sun.mail:android-mail:1.6.7")
-    implementation ("com.sun.mail:android-activation:1.6.7")
+    implementation (libs.android.mail)
+    implementation (libs.android.activation)
+    implementation (libs.commons.io)
 
-    implementation ("commons-io:commons-io:2.11.0")
+    implementation (libs.anychart.android)
 
 }

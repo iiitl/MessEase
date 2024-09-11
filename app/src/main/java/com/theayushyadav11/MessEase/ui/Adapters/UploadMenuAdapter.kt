@@ -15,6 +15,7 @@ import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.notifications.PushNotifications
+import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.MailSender
@@ -81,6 +82,26 @@ class UploadMenuAdapter(
                     null
                 )
             }
+        }
+        holder.edit.setOnClickListener {
+          edit(aprMenu)
+        }
+    }
+
+    private fun edit(aprMenu: AprMenu) {
+        mess.addPb("Loading..,")
+        GlobalScope.launch(Dispatchers.IO) {
+            val menu = Menu(id = 3, menu = aprMenu.menu.menu, creator = aprMenu.menu.creator)
+            MenuDatabase.getDatabase(context).menuDao().addMenu(menu)
+            mess.pbDismiss()
+            startActivity(
+                context,
+                Intent(
+                    context,
+                    EditMenuActivity::class.java
+                ),
+                null
+            )
         }
     }
 
@@ -196,6 +217,7 @@ class UploadMenuAdapter(
         val upload: ImageView = itemView.findViewById(R.id.upload)
         val delete: ImageView = itemView.findViewById(R.id.delete)
         val time: TextView = itemView.findViewById(R.id.time)
+        val edit:ImageView = itemView.findViewById(R.id.edit)
     }
 
 }
