@@ -6,14 +6,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.firestore
 import com.theayushyadav11.MessEase.Models.User
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
+import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
+import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 
 class DetailsViewModel : ViewModel() {
-
-    private val auth = FirebaseAuth.getInstance()
-    private val databaeReference = FirebaseDatabase.getInstance().reference
-    private val firestoreReference = Firebase.firestore
-
-
     fun addDetails(name: String, batch: String,passingyear:String,gender: String,
                    onSuccess: () -> Unit,
                    onFailure: (Exception) -> Unit){
@@ -28,7 +25,7 @@ class DetailsViewModel : ViewModel() {
             passingYear = passingyear,
             photoUrl = auth.currentUser?.photoUrl.toString(),
         )
-        firestoreReference.collection("Users").document(auth.currentUser?.uid.toString()).set(user).addOnCompleteListener{
+        firestoreReference.collection(USERS).document(auth.currentUser?.uid.toString()).set(user).addOnCompleteListener{
             if(it.isSuccessful){
                onSuccess()
             }

@@ -5,31 +5,48 @@ import com.theayushyadav11.MessEase.Models.Msg
 import com.theayushyadav11.MessEase.utils.Constants.Companion.DESCENDING_ORDER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import com.google.firebase.firestore.ListenerRegistration
+import com.theayushyadav11.MessEase.Models.User
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COMPARER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MESSAGES
 
 class MsgViewModel : ViewModel() {
-    fun getMyMsgs(uid: String, onResult: (List<Msg>) -> Unit) {
-        firestoreReference.collection("Msgs").orderBy("comp", DESCENDING_ORDER)
+    private var listenerRegistration: ListenerRegistration? = null
+
+    fun getMyMsgs(uid: String,user: User, onResult: (List<Msg>) -> Unit) {
+        removeSnapshotListener()
+
+        listenerRegistration = firestoreReference.collection(MESSAGES)
+            .orderBy(COMPARER, DESCENDING_ORDER)
             .addSnapshotListener { value, error ->
-                fireBase.getUser(uid, onSuccess = {user->
+
                     if (error != null) {
                         onResult(listOf())
-                        return@getUser
+                        return@addSnapshotListener
                     }
                     val msgs = mutableListOf<Msg>()
                     value?.documents?.forEach {
                         val msg = it.toObject(Msg::class.java)
                         if (msg != null) {
-                            if (msg.creater.uid == uid||user.designation=="Coordinator"||user.designation=="Developer")
-
+                            if (msg.creater.uid == uid || user.designation == COORDINATOR || user.designation == DEVELOPER) {
                                 msgs.add(msg)
+                            }
                         }
                     }
                     onResult(msgs)
-                }, onFailure = {
-                    onResult(listOf())
-                })
-
 
             }
+    }
+
+    private fun removeSnapshotListener() {
+        listenerRegistration?.remove()
+        listenerRegistration = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        removeSnapshotListener()
     }
 }

@@ -24,8 +24,7 @@ class ViewVotesFragment : Fragment() {
     private lateinit var mess: Mess
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentViewVotesBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,10 +56,9 @@ class ViewVotesFragment : Fragment() {
                 }
 
 
-
             }
         } catch (e: Exception) {
-           mess.pbDismiss()
+            mess.pbDismiss()
             mess.toast("Failed to load")
         }
     }

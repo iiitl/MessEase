@@ -77,12 +77,16 @@ class CreatePollFragment : Fragment() {
             binding.tvQuestion.text.toString(),
             target,
             options,
+            mess.getUser(),
             onSuccess = {
                 mess.pbDismiss()
                 mess.toast("Poll Added Successfully")
                 if (isAdded) {
-                    val pn= PushNotifications(requireContext(), target)
-                    pn.sendNotificationToAllUsers("New Poll Added\n Vote now!", binding.tvQuestion.text.toString())
+                    val pn = PushNotifications(requireContext(), target)
+                    pn.sendNotificationToAllUsers(
+                        "New Poll Added\n Vote now!",
+                        binding.tvQuestion.text.toString()
+                    )
                 }
                 findNavController().navigateUp()
             },
@@ -139,8 +143,13 @@ class CreatePollFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (binding.tvQuestion.text.isNotEmpty() || binding.opt0.text.isNotEmpty() || binding.opt1.text.isNotEmpty()) {
-                        mess.showAlertDialog("Alert!", "Do you want to discard the Poll?", "Yes", "No") {
-                          findNavController().navigateUp()
+                        mess.showAlertDialog(
+                            "Alert!",
+                            "Do you want to discard the Poll?",
+                            "Yes",
+                            "No"
+                        ) {
+                            findNavController().navigateUp()
                         }
                     } else
                         findNavController().navigateUp()

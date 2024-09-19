@@ -19,10 +19,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.GoogleAuthProvider
 import com.theayushyadav11.MessEase.MainActivity
+import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentLoginBinding
 import com.theayushyadav11.MessEase.ui.splash.ViewModels.LoginViewModel
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
+import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
 
 class LoginFragment : Fragment() {
@@ -214,10 +216,24 @@ class LoginFragment : Fragment() {
     private fun navigate() {
         viewModel.isPresent { isPresent ->
             if (isPresent) {
-                mess.pbDismiss()
-                mess.toast("Authentication Successful.")
-                startActivity(Intent(requireContext(), MainActivity::class.java))
-                requireActivity().finish()
+                mess.log("User is present")
+                fireBase.getUser(auth.currentUser?.uid.toString(),
+                    onSuccess = {user ->
+                        mess.log("User from database =$user")
+                        mess.setUser(user)
+                        mess.log("User set in mess = ${mess.getUser()}")
+                        mess.pbDismiss()
+                        if (isAdded) {
+                            mess.toast("Authentication Successful.")
+                            startActivity(Intent(requireContext(), MainActivity::class.java))
+                            requireActivity().finish()
+                        }
+
+                    },
+                    onFailure = {
+                        mess.toast(it.message.toString())
+                        mess.setUser(User())
+                    })
             } else {
                 mess.pbDismiss()
                 mess.toast("Please complete your profile")

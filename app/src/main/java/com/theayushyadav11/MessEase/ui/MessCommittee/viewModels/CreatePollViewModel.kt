@@ -2,6 +2,8 @@ package com.theayushyadav11.MessEase.ui.MessCommittee.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.theayushyadav11.MessEase.Models.Poll
+import com.theayushyadav11.MessEase.Models.User
+import com.theayushyadav11.MessEase.utils.Constants.Companion.POLLS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.databaseReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
@@ -16,12 +18,12 @@ class CreatePollViewModel : ViewModel() {
         question: String,
         target: String,
         options: MutableList<String>,
+        user:User,
         onSuccess: () -> Unit,
+
         onFailure: (Exception) -> Unit
     ) {
         val id = databaseReference.push().key.toString()
-        fireBase.getUser(auth.currentUser?.uid.toString(),
-            onSuccess = { user ->
                 val poll = Poll(
                     id = id,
                     creater = user,
@@ -31,16 +33,11 @@ class CreatePollViewModel : ViewModel() {
                     options = options,
                     target = target
                 )
-                firestoreReference.collection("Polls").document(id).set(poll).addOnSuccessListener {
+                firestoreReference.collection(POLLS).document(id).set(poll).addOnSuccessListener {
                     onSuccess()
                 }.addOnFailureListener {
                     onFailure(it)
                 }
-
-            }, onFailure = {
-                onFailure(it)
-
-            })
 
     }
 

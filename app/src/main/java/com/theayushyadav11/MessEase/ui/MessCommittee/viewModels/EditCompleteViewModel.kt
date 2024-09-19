@@ -5,11 +5,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.theayushyadav11.MessEase.Models.AprMenu
-import com.theayushyadav11.MessEase.Models.DayMenu
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDao
-import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditCompleteActivity
-import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COMPARER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MENU_FOR_APPROVAL
 import com.theayushyadav11.MessEase.utils.Constants.Companion.databaseReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
@@ -30,7 +29,7 @@ class EditCompleteViewModel(private val dao: MenuDao) : ViewModel() {
         }
     }
     fun sendToApprove(uri: Uri,note:String,menu:Menu,onSuccess:(String)->Unit,onFailure:(Exception)->Unit){
-       fireBase.uploadfile(uri,"ApprovePdf/$menuFileName${databaseReference.push().key}",
+       fireBase.uploadFile(uri,"ApprovePdf/$menuFileName${databaseReference.push().key}",
            onSuccess={ url->
               val key=  databaseReference.push().key.toString()
                val aprmenu= AprMenu(
@@ -43,7 +42,7 @@ class EditCompleteViewModel(private val dao: MenuDao) : ViewModel() {
                    getComp(menu)
 
                )
-               firestoreReference.collection("MenuForApproval").document(key).set(aprmenu).addOnCompleteListener{
+               firestoreReference.collection(MENU_FOR_APPROVAL).document(key).set(aprmenu).addOnCompleteListener{
                    if(it.isSuccessful)
                    {
                           onSuccess(url)
@@ -61,7 +60,7 @@ class EditCompleteViewModel(private val dao: MenuDao) : ViewModel() {
     }
     fun ifSameExists(comp:String,onResult: (Boolean) -> Unit,onError: (String) -> Unit)
     {
-        firestoreReference.collection("MenuForApproval").whereEqualTo("comp",comp).get().addOnCompleteListener {
+        firestoreReference.collection(MENU_FOR_APPROVAL).whereEqualTo(COMPARER,comp).get().addOnCompleteListener {
 
           if(it.isSuccessful)
           {

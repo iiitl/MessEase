@@ -273,7 +273,7 @@ class EditMenuActivity : AppCompatActivity() {
             }
             dayMenus.add(DayMenu(particulars))
         }
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
+        val  user=mess.getUser()
             editedMenu = Menu(
                 id = 1,
                 creator = user,
@@ -283,10 +283,7 @@ class EditMenuActivity : AppCompatActivity() {
                 )
             onResult(editedMenu)
 
-        },
-            onFailure = {
 
-            })
     }
 
     override fun onBackPressed() {

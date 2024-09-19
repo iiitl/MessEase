@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.firestore
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 
 class LoginViewModel : ViewModel() {
 
@@ -18,7 +19,7 @@ class LoginViewModel : ViewModel() {
 
 
     fun isPresent(onSuccess:(Boolean)->Unit){
-        firestoreReference.collection("Users").document(auth.currentUser?.uid.toString()).get()
+        firestoreReference.collection(USERS).document(auth.currentUser?.uid.toString()).get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     if (it.result?.exists() == true) {

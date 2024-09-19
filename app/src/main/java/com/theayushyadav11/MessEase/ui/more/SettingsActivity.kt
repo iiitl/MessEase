@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun listeners()
     {
-        val b= mutableListOf("07:30","12:0","15:30","19:0")
+        val b= mutableListOf("07:30","12:0","16:30","19:0")
         binding.pickb.setOnClickListener{
             showTimePicker(0, 0, 10, 0) {it,p->
                 binding.timeb.text = it

@@ -20,6 +20,8 @@ import com.theayushyadav11.MessEase.databinding.FragmentMcMainPageBinding
 import com.theayushyadav11.MessEase.ui.Adapters.ViewPagerAdapter
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.McMainPageViewModel
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
@@ -70,9 +72,8 @@ class McMainPage : Fragment() {
             startActivity(Intent(requireActivity(), EditMenuActivity::class.java))
         }
         binding.uploadMenu.setOnClickListener {
-            fireBase.getUser(auth.currentUser?.uid.toString(),
-                onSuccess = { user ->
-                    if (isAdded && (user.designation == "Developer" || user.designation == "Coordinator")) {
+           val user=mess.getUser()
+                    if (isAdded && (user.designation ==DEVELOPER || user.designation == COORDINATOR)) {
                         navigateSafely(R.id.action_mcMainPage_to_uploadMenuFragment)
                     } else {
                         mess.showAlertDialog(
@@ -82,11 +83,7 @@ class McMainPage : Fragment() {
                             ""
                         ) {}
                     }
-                },
-                onFailure = {
-                    // Handle failure
-                }
-            )
+
         }
         binding.ivBack.setOnClickListener {
             val intent = Intent(requireActivity(), MainActivity::class.java)
@@ -107,8 +104,7 @@ class McMainPage : Fragment() {
     }
 
     private fun setValues() {
-        fireBase.getUser(auth.currentUser?.uid.toString(),
-            onSuccess = { user ->
+        val user=mess.getUser()
                 binding.tvname.text = user.name
                 binding.tvDesignation.text = user.designation
                 binding.tvYear.text = "Batch-${user.passingYear}"
@@ -116,11 +112,8 @@ class McMainPage : Fragment() {
                 if (isAdded) {
                     mess.loadImage(user.photoUrl, binding.ivUser)
                 }
-            },
-            onFailure = {
-                // Handle failure
-            }
-        )
+
+
     }
 
     private fun showPopupMenu(view: View) {

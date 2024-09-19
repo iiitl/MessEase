@@ -63,8 +63,8 @@ class KnowOurTeamFragment : Fragment() {
                     v.findViewById<TextView>(R.id.mname).text = user.name
                     v.findViewById<TextView>(R.id.email).text = user.email
                     mess.loadCircleImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
-                    fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = {
-                        if (it.designation == "Coordinator"||it.designation=="Developer") {
+                    val user=mess.getUser()
+                        if (user.designation == "Coordinator"||user.designation=="Developer") {
                             v.findViewById<ImageView>(R.id.delete).visibility = View.VISIBLE
                             v.findViewById<ImageView>(R.id.delete).setOnClickListener {
                                 mess.showAlertDialog(
@@ -80,7 +80,7 @@ class KnowOurTeamFragment : Fragment() {
 
                             }
                         }
-                    }, onFailure = {})
+
 
                     when (user.designation) {
                         "Coordinator" -> binding.coordAdder.addView(v)

@@ -14,27 +14,21 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.storageReference
 
 class FireBase {
-
-
     fun getUser(uid: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
-        firestoreReference.collection("Users").whereEqualTo("uid", uid).get()
-            .addOnCompleteListener() {
-                if (it.isSuccessful) {
-
-                    val doc = it.result.documents[0]
-                    if (doc != null) {
-                        onSuccess(doc.toObject(User::class.java)!!)
-                    }
+        firestoreReference.collection("Users").whereEqualTo("uid", uid)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    onFailure(error)
+                    return@addSnapshotListener
                 }
-                else
-                {
-                    onFailure(Exception("User not found"))
+                val doc = value?.documents?.get(0)
+                if (doc != null) {
+                    onSuccess(doc.toObject(User::class.java)!!)
                 }
-
             }
     }
 
-    fun uploadfile(
+    fun uploadFile(
         uri: Uri,
         path: String,
         onSuccess: (String) -> Unit,
@@ -135,6 +129,7 @@ class FireBase {
             if (version != null && url != null) {
                 onResult(version, url)
             } else {
+
                 onResult("", "")
             }
 

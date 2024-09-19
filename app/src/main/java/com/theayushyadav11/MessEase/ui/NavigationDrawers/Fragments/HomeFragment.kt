@@ -1,5 +1,6 @@
 package com.theayushyadav11.MessEase.ui.NavigationDrawers.Fragments
 
+
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -75,6 +76,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         addToDatabase()
         updateUI()
     }
+
     //Initialising all the variables etc...
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initialise() {
@@ -166,16 +168,16 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun addToDatabase() {
-        firestoreReference.collection("MainMenu").document("menu")
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    mess.toast(error.message.toString())
-                    return@addSnapshotListener
-                }
+        if (isAdded) {
+            firestoreReference.collection("MainMenu").document("menu")
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        mess.toast(error.message.toString())
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null && snapshot.exists()) {
+                        val menu = snapshot.toObject(Menu::class.java)
 
-                if (snapshot != null && snapshot.exists()) {
-                    val menu = snapshot.toObject(Menu::class.java)
-                    if (isAdded) {
                         GlobalScope.launch(Dispatchers.IO) {
                             val menuDatabase = MenuDatabase.getDatabase(requireActivity()).menuDao()
                             if (menu != null) {
@@ -185,12 +187,11 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                                 menuDatabase.addMenu(newMenu)
                             }
                         }
+                    } else {
+                        mess.toast("Menu document does not exist.")
                     }
-
-                } else {
-                    mess.toast("Menu document does not exist.")
                 }
-            }
+        }
 
     }
 
@@ -208,15 +209,17 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     }
 
     fun setAdapters() {
-        homeViewModel.day.observe(requireActivity(), Observer {
-            fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
-                homeViewModel.getDayMsgs(user, getDate(it)) { msgs ->
-                    setMsgAdapter(msgs)
+        if (isAdded) {
+            homeViewModel.day.observe(requireActivity(), Observer {
+                val user = mess.getUser()
+                if (isAdded) {
+                    homeViewModel.getDayMsgs(user, getDate(it)) { msgs ->
+                        setMsgAdapter(msgs)
+                    }
                 }
-            }, onFailure = {
 
             })
-        })
+        }
     }
 
     private fun setMsgAdapter(msgs: List<Msg>) {
@@ -230,7 +233,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
 
     private fun addMsgs(day: Int) {
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
+           val user = mess.getUser()
             homeViewModel.getDayMsgs(user, getDate(day)) { msgs ->
                 binding.msgAdder.removeAllViews()
                 if (msgs.isNotEmpty()) {
@@ -241,7 +244,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
             }
 
 
-        }, onFailure = {})
+
     }
 
     private fun addMsg(msg: Msg) {
@@ -298,7 +301,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     }
 
     private fun addPolls(day: Int) {
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
+        val user = mess.getUser()
             homeViewModel.getDayPolls(user, getDate(day)) { polls ->
                 binding.pollAdder.removeAllViews()
                 if (polls.isNotEmpty()) {
@@ -308,9 +311,6 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                     }
                 }
             }
-
-
-        }, onFailure = {})
     }
 
     private fun addPoll(poll: Poll) {
@@ -393,22 +393,21 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
     private fun optionSelect(pid: String, option: String) {
 
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = {
+     val user=mess.getUser()
             val optionSelected = OptionSelected(
-                user = it, selected = option, time = getCurrentTimeInAmPm(), date = getCurrentDate()
+                user = user, selected = option, time = getCurrentTimeInAmPm(), date = getCurrentDate()
             )
             homeViewModel.selectOption(pid, optionSelected)
 
 
-        }, onFailure = {
 
-        })
     }
+
     fun updateDetails() {
-        val name:String = auth.currentUser?.displayName.toString()
+        val name: String = auth.currentUser?.displayName.toString()
         val photoUrl = auth.currentUser?.photoUrl
         val detailMap = mutableMapOf<String, Any>()
-        if (name != ""&&name!="null") detailMap["name"] = name
+        if (name != "" && name != "null") detailMap["name"] = name
         if (photoUrl != null) detailMap["photoUrl"] = photoUrl.toString()
         firestoreReference.collection("Users").document(auth.currentUser?.uid.toString())
             .set(detailMap, SetOptions.merge())
@@ -430,12 +429,12 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         dismiss?.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
-            if(isAdded)
-            mess.loadCircleImage(
-                user.photoUrl, bottomSheetDialog.findViewById<ImageView>(R.id.profileIcon)!!
-            )
-        }, onFailure = {})
+        val user=mess.getUser()
+            if (isAdded)
+                mess.loadCircleImage(
+                    user.photoUrl, bottomSheetDialog.findViewById<ImageView>(R.id.profileIcon)!!
+                )
+
         val rv = bottomSheetDialog.findViewById<RecyclerView>(R.id.rv)
         val message = bottomSheetDialog.findViewById<TextView>(R.id.message)!!
         if (rv != null) {
@@ -459,7 +458,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         if (commentText.isNotEmpty()) {
             val key = databaseReference.push().key.toString()
 
-            fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
+            val user=mess.getUser()
 
                 val comment = Comment(
                     id = key,
@@ -481,9 +480,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                         }
                     }
 
-            }, onFailure = {
 
-            })
         }
 
     }

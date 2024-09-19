@@ -101,8 +101,8 @@
 
         <ImageView
             android:id="@+id/upload"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:background="@drawable/ripple"
             android:padding="10dp"
             android:src="@drawable/baseline_file_open_24"
@@ -111,16 +111,17 @@
 
         <ImageView
             android:id="@+id/edit"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
             android:src="@drawable/baseline_edit_food"
             app:layout_constraintTop_toBottomOf="@id/upload"
             app:layout_constraintBottom_toTopOf="@+id/delete"
             app:layout_constraintEnd_toEndOf="parent" />
         <ImageView
             android:id="@+id/delete"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:contentDescription="TODO"
             android:padding="7dp"
             android:src="@drawable/baseline_delete_24menu"

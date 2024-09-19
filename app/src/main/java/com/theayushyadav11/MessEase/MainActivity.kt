@@ -38,6 +38,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.databinding.ActivityMainBinding
 import com.theayushyadav11.MessEase.notifications.AlarmReceiver
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.MessCommitteeMain
@@ -45,6 +46,8 @@ import com.theayushyadav11.MessEase.ui.more.PaymentActivity
 import com.theayushyadav11.MessEase.ui.more.ReviewActivity
 import com.theayushyadav11.MessEase.ui.more.SettingsActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
@@ -137,14 +140,14 @@ class MainActivity : AppCompatActivity() {
                     signOut()
                     val intent = Intent(this@MainActivity, LoginAndSignUpActivity::class.java)
                     mess.setIsLoggedIn(false)
+                    mess.setUser(User())
                     startActivity(intent)
                     finish()
-
                     true
                 }
 
                 R.id.nav_messCommitteeActivity -> {
-                    FireBase().getUser(auth.currentUser!!.uid, onSuccess = { user ->
+                     val user=mess.getUser()
                         if (user.member && auth.currentUser != null) {
                             val intent = Intent(this, MessCommitteeMain::class.java)
                             startActivity(intent)
@@ -157,9 +160,7 @@ class MainActivity : AppCompatActivity() {
                                 ) {}
                             }
                         }
-                    }, onFailure = {
-                        Mess(this).toast(it)
-                    })
+
                     true
                 }
 
@@ -202,32 +203,23 @@ class MainActivity : AppCompatActivity() {
 
         val menu: Menu = navView.menu
         val admin = menu.findItem(R.id.nav_admin)
-        fireBase.getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
-            if (!(user.designation == "Coordinator" || user.designation == "Developer")) {
+        val user=mess.getUser()
+            if (!(user.designation == COORDINATOR || user.designation == DEVELOPER)) {
                 admin.isVisible = false
             }
-        }, onFailure = {
-
-        })
     }
 
     private fun setUpHeader() {
         val headerView: View = binding.navView.getHeaderView(0)
         val layout: LinearLayout = headerView.findViewById(R.id.navMain)
-        FireBase().getUser(auth.currentUser?.uid.toString(), onSuccess = { user ->
+
             if (!isFinishing && !isDestroyed) {
+                val user=mess.getUser()
                 mess.loadCircleImage(user.photoUrl, layout.findViewById(R.id.propic))
                 layout.findViewById<TextView>(R.id.mname).text = user.name
                 layout.findViewById<TextView>(R.id.email).text = user.email
             }
-
-
-        }, onFailure = {
-            Mess(this).toast(it)
-        })
-
-
-    }
+         }
 
     private fun signOut() {
         var mAuth = FirebaseAuth.getInstance()

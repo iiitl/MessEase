@@ -93,7 +93,12 @@ class CreateMsgFragment : Fragment() {
                     listOfImages.add(imageUri)
                 }
                 view.setOnLongClickListener {
-                    mess.showAlertDialog("Alert!", "Do you want to remove this image?", "Yes", "No") {
+                    mess.showAlertDialog(
+                        "Alert!",
+                        "Do you want to remove this image?",
+                        "Yes",
+                        "No"
+                    ) {
                         binding.adder.removeView(view)
                         listOfImages.remove(imageUri)
                         binding.addImage.visibility = View.VISIBLE
@@ -130,20 +135,24 @@ class CreateMsgFragment : Fragment() {
                 title = binding.tvQuestion.text.toString(),
                 body = binding.tvBody.text.toString(),
                 photos = listOfImg,
+                user = mess.getUser(),
                 target = target,
                 onSuccess = {
-                    if(isAdded)
-                    findNavController().navigateUp()
+                    if (isAdded)
+                        findNavController().navigateUp()
                     mess.pbDismiss()
                     mess.toast("Msg Added Successfully")
                     if (isAdded) {
-                        val pn=PushNotifications(requireContext(), target)
-                        pn.sendNotificationToAllUsers("New Message Added", binding.tvQuestion.text.toString())
+                        val pn = PushNotifications(requireContext(), target)
+                        pn.sendNotificationToAllUsers(
+                            "New Message Added",
+                            binding.tvQuestion.text.toString()
+                        )
                     }
                 },
                 onFailure = {
                     mess.pbDismiss()
-                    mess.toast("Failed to post")
+                    mess.toast("Failed to add Msg")
                 }
             )
         }
@@ -165,7 +174,7 @@ class CreateMsgFragment : Fragment() {
             } else
                 findNavController().navigateUp()
         }
-        }
+    }
 
     private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -173,7 +182,12 @@ class CreateMsgFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (binding.tvQuestion.text.isNotEmpty() || binding.tvBody.text.isNotEmpty() || listOfImages.isNotEmpty()) {
-                        mess.showAlertDialog("Alert!", "Do you want to discard the Message?", "Yes", "No") {
+                        mess.showAlertDialog(
+                            "Alert!",
+                            "Do you want to discard the Message?",
+                            "Yes",
+                            "No"
+                        ) {
                             findNavController().navigateUp()
                         }
                     } else

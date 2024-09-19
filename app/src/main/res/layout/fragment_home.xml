@@ -10,20 +10,23 @@
 
     <TextView
         android:id="@+id/month"
-
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="JULY 2024"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:paddingStart="13sp"
         android:text="Mess Menu"
@@ -71,14 +74,6 @@
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -93,39 +88,40 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical">
+
             <androidx.recyclerview.widget.RecyclerView
-                android:padding="15dp"
+                android:id="@+id/rvMsg"
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:nestedScrollingEnabled="false"
-                android:id="@+id/rvMsg"
-                />
+                android:paddingHorizontal="15dp" />
+
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/pollAdder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:paddingHorizontal="12dp"
-                >
+                android:paddingHorizontal="12dp">
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/msgAdder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="12dp"
-                >
+                android:paddingHorizontal="12dp">
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/menuAdder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="12dp"
-                >
+                android:paddingHorizontal="12dp">
 
             </LinearLayout>
 

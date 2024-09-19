@@ -11,6 +11,9 @@
     android:paddingTop="25dp">
 
 
+
+
+
     <ScrollView
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -620,13 +623,21 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_margin="5dp"
+                    android:gravity="center_vertical"
                     android:text="\@MessEase"
                     android:textColor="@color/food"
+                    app:layout_constraintEnd_toStartOf="@id/logo"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
+                    />
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"   />/
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

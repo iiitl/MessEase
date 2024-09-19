@@ -2,13 +2,16 @@ package com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels
 
 import androidx.lifecycle.ViewModel
 import com.theayushyadav11.MessEase.Models.User
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DESIGNATION
+import com.theayushyadav11.MessEase.utils.Constants.Companion.IS_MEMBER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 
 
 class SlideshowViewModel : ViewModel() {
 
     fun getCoord(onResult: (List<User>) -> Unit) {
-        firestoreReference.collection("Users")
+        firestoreReference.collection(USERS)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     onResult(emptyList())
@@ -26,10 +29,10 @@ class SlideshowViewModel : ViewModel() {
     }
     fun delete(uid:String,onResult: (String) -> Unit) {
         val updates= hashMapOf<String,Any>(
-            "designation" to "",
-            "member" to false
+            DESIGNATION to "",
+            IS_MEMBER to false
         )
-        firestoreReference.collection("Users").document(uid).update(updates).addOnSuccessListener {
+        firestoreReference.collection(USERS).document(uid).update(updates).addOnSuccessListener {
             onResult("Removed from Mess Committee")
         }.addOnFailureListener {
             onResult("Failed to remove")

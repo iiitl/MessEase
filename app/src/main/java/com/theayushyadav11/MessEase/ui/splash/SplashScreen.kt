@@ -9,10 +9,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.ui.more.ErrorActivity
 import com.theayushyadav11.MessEase.ui.more.UpdateActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
-import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
 
 class SplashScreen : AppCompatActivity() {
@@ -27,7 +27,7 @@ class SplashScreen : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
-
+        mess.log(mess.getUser())
         Handler().postDelayed({
             navigate()
 
@@ -39,11 +39,17 @@ class SplashScreen : AppCompatActivity() {
         mess = Mess(this)
     }
 
-    fun navigate() {
+    private fun navigate() {
         val versionName = packageManager.getPackageInfo(packageName, 0).versionName
         fireBase.getUpdates { version, url ->
-            if (version != versionName) {
-
+//             if(version=="")
+//             {
+//                 startActivity(Intent(this, ErrorActivity::class.java))
+//                 finish()
+//             }
+          if (version != versionName&&false) {
+                mess.log(version)
+                mess.log(versionName)
                 startActivity(Intent(this, UpdateActivity::class.java))
                 finish()
 

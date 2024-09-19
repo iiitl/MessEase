@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentAdminBinding
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels.AdminViewModel
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DESIGNATION
 import com.theayushyadav11.MessEase.utils.Mess
 
 class AdminFragment : Fragment() {
@@ -62,8 +63,8 @@ class AdminFragment : Fragment() {
         }
     }
 
-    fun setAdapter() {
-        mess.getLists("designations") {
+    private fun setAdapter() {
+        mess.getLists("${DESIGNATION}s") {
             val spinner: Spinner = binding.spinner
             val spinnerItems = it
             val adapter =

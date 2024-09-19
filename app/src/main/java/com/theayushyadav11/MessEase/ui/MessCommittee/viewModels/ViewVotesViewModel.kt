@@ -4,19 +4,24 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.theayushyadav11.MessEase.Models.OptionSelected
 import com.theayushyadav11.MessEase.Models.Poll
+import com.theayushyadav11.MessEase.utils.Constants.Companion.POLLS
+import com.theayushyadav11.MessEase.utils.Constants.Companion.POLL_RESULT
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SELECTED_OPTION
 import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 
 class ViewVotesViewModel : ViewModel() {
     fun getPoll(id:String,onResult:(Poll)->Unit)
     {
-        firestoreReference.collection("Polls").whereEqualTo("id",id).get().addOnSuccessListener {
+        firestoreReference.collection(POLLS).whereEqualTo("id",id).get().addOnSuccessListener {
             onResult(it.documents[0].toObject(Poll::class.java)!!)
         }
     }
     fun getoptionDetails(pollId:String, option: String, onSuccess:(Int,List<OptionSelected>)->Unit, onFailure:(String)->Unit)
     {
-       firestoreReference.collection("PollResult").document(pollId).collection("Users").whereEqualTo("selected",option).addSnapshotListener{
+       firestoreReference.collection(POLL_RESULT).document(pollId).collection(USERS).whereEqualTo(
+           SELECTED_OPTION,option).addSnapshotListener{
            value,error->
               if(error!=null)
               {

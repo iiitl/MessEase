@@ -26,27 +26,26 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
+import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class Mess(context: Context) {
-    lateinit var context: Context
+    var context: Context
     private var progressDialog: ProgressDialog = ProgressDialog(context)
     private var sharedPreferences: SharedPreferences
     val designation = MutableLiveData<String>()
 
     init {
         progressDialog.setCancelable(false)
-        currentDesignation()
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        if (context != null) {
-            this.context = context
-        }
+        this.context = context
     }
 
     fun save(key: String, value: String) {
@@ -107,31 +106,6 @@ class Mess(context: Context) {
     fun log(message: Any) {
         Log.d("yatinMadharchod", message.toString())
     }
-
-    private fun currentDesignation() {
-        val auth = FirebaseAuth.getInstance()
-        val database = FirebaseDatabase.getInstance().reference
-        database.child("Users").child(auth.currentUser?.uid.toString()).child("designation")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    designation.value = snapshot.value.toString()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    log("Failed to read value.")
-                }
-
-            })
-
-
-    }
-
-    fun getCurrentTimeAndDate(): String {
-        val dateFormat = SimpleDateFormat("hh:mm a dd MMM yyyy", Locale.getDefault())
-        val currentDate = Date()
-        return dateFormat.format(currentDate)
-    }
-
     fun showInputDialog(
         hint: String, onOkClicked: (String) -> Unit, oncancelClicked: (String) -> Unit
     ) {
@@ -140,7 +114,7 @@ class Mess(context: Context) {
         dialog.setContentView(bind.root)
         dialog.setCancelable(false)
         dialog.show()
-        bind.textInputLayout3.hint = "Add Note"
+        bind.textInputLayout3.hint = hint
         bind.cancel.setOnClickListener {
             oncancelClicked("")
             dialog.dismiss()
@@ -301,36 +275,40 @@ class Mess(context: Context) {
     }
 
     fun isValidEmail(email: String, onResult: (Boolean) -> Unit) {
-        val emailR = email.substring(0, email.indexOf("@"))
-        var isValid = true
-        if (emailR.contains("+") || emailR.contains(".") || emailR.contains("-") || emailR.contains(
-                "_"
-            ) || emailR.contains(
-                "/"
-            ) || emailR.contains("*") || emailR.contains("#") || emailR.contains("!") || emailR.contains(
-                "$"
-            ) || emailR.contains("%") || emailR.contains("^") || emailR.contains(
-                "&"
-            ) || emailR.contains("(") || emailR.contains(")") || emailR.contains("=") || emailR.contains(
-                "{"
-            ) || emailR.contains("}") || emailR.contains("[") || emailR.contains("]") || emailR.contains(
-                ":"
-            ) || emailR.contains(";") || emailR.contains(",") || emailR.contains("<") || emailR.contains(
-                ">"
-            ) || emailR.contains("?") || emailR.contains("|") || emailR.contains("`") || emailR.contains(
-                "~"
-            )
-        ) {
-            isValid = false
-        }
-        cont(email) {
-            if (it || ((email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
-                    "ayushyadav"
-                ))
-            ) onResult(
-                true
-            )
-            else onResult(false)
+        try {
+            val emailR = email.substring(0, email.indexOf("@"))
+            var isValid = true
+            if (emailR.contains("+") || emailR.contains(".") || emailR.contains("-") || emailR.contains(
+                    "_"
+                ) || emailR.contains(
+                    "/"
+                ) || emailR.contains("*") || emailR.contains("#") || emailR.contains("!") || emailR.contains(
+                    "$"
+                ) || emailR.contains("%") || emailR.contains("^") || emailR.contains(
+                    "&"
+                ) || emailR.contains("(") || emailR.contains(")") || emailR.contains("=") || emailR.contains(
+                    "{"
+                ) || emailR.contains("}") || emailR.contains("[") || emailR.contains("]") || emailR.contains(
+                    ":"
+                ) || emailR.contains(";") || emailR.contains(",") || emailR.contains("<") || emailR.contains(
+                    ">"
+                ) || emailR.contains("?") || emailR.contains("|") || emailR.contains("`") || emailR.contains(
+                    "~"
+                )
+            ) {
+                isValid = false
+            }
+            cont(email) {
+                if (it || ((email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
+                        "ayushyadav"
+                    ))
+                ) onResult(
+                    true
+                )
+                else onResult(false)
+            }
+        } catch (e: Exception) {
+
         }
     }
 
@@ -347,5 +325,23 @@ class Mess(context: Context) {
         val downloadId = downloadManager.enqueue(request)
         Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
     }
+
+    fun setUser(user: User) {
+        val s =
+            user.uid + "#" + user.name + "#" + user.token + "#" + user.member + "#" + user.photoUrl + "#" + user.email + "#" + user.designation + "#" + user.batch + "#" + user.passingYear + "#" + user.gender + "#"
+        save("user", s)
+    }
+    fun getUser(): User {
+        try {
+            val s = get("user")
+            val a = s.split("#")
+            Log.d(TAG, a.toString())
+            return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
+        } catch (e: Exception) {
+            Log.e("yatin", e.toString())
+           return User()
+        }
+    }
+
 
 }

@@ -18,11 +18,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.firestore
 import com.theayushyadav11.MessEase.MainActivity
+import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentDetailsBinding
 import com.theayushyadav11.MessEase.databinding.FragmentHomeBinding
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels.HomeViewModel
 import com.theayushyadav11.MessEase.ui.splash.ViewModels.DetailsViewModel
+import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
+import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
 import java.util.Date
 
@@ -89,6 +92,14 @@ class DetailsFragment : Fragment() {
                     onSuccess = {
                         mess.toast("Details Added Successfully")
                         mess.pbDismiss()
+                        fireBase.getUser(
+                            auth.currentUser?.uid.toString(),
+                            onSuccess = {user ->
+                                mess.setUser(user)
+                            },
+                            onFailure = {
+                                mess.setUser(User())
+                            })
                         startActivity(Intent(requireContext(), MainActivity::class.java))
                         requireActivity().finish()
                     },
@@ -107,9 +118,6 @@ class DetailsFragment : Fragment() {
         val toolbar: Toolbar = binding.toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = "Enter Your Details"
-
-
-
     }
 
 }

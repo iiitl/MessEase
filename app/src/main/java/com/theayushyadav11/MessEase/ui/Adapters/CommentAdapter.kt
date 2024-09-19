@@ -44,12 +44,11 @@ class CommentAdapter(private val comments: List<Comment>, context: Context, val 
         if (comment.creator.member) {
             holder.dIcon.setImageResource(fireBase.getIcon(comment.creator.designation))
         } else holder.dIcon.visibility = View.GONE
-        fireBase.getUser(auth.currentUser?.uid!!, onSuccess = {
-
+             val it=mess.getUser()
             if (!ifdelete(comment, it.member)) {
                 holder.delete.visibility = View.INVISIBLE
             }
-        }, onFailure = {})
+
         holder.delete.setOnClickListener {
             mess.showAlertDialog("Alert!", "Do you want to delete this comment?", "Yes", "No") {
                 deleteComment(position)

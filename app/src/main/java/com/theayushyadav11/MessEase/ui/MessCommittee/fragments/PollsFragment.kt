@@ -46,8 +46,9 @@ class PollsFragment : Fragment() {
     }
     private fun setAdapter() {
         if (isAdded) {
-            val uid = auth.currentUser?.uid.toString()
-            viewModel.getMyPolls(uid) { polls ->
+            val user=mess.getUser()
+
+            viewModel.getMyPolls(user) { polls ->
                 if (isAdded) {
                     if (polls.isEmpty()) {
                         binding.recyclerView.isVisible = false

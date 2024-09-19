@@ -107,11 +107,11 @@ class ReviewActivity : AppCompatActivity() {
 
     private fun addReview(food: String, review: String) {
         mess.addPb("Adding Review...")
-        fireBase.getUser(auth.currentUser!!.uid, onSuccess = { it ->
+        val user=mess.getUser()
             val key = databaseReference.push().key.toString()
             val rv = Review(
                 id = key,
-                creater = it,
+                creater = user,
                 food = food,
                 day=items[day.value!!],
                 foodtype=if(day.value==7) "" else items2[foodtype.value!!] ,
@@ -131,10 +131,6 @@ class ReviewActivity : AppCompatActivity() {
                 }
             }
 
-        },
-            onFailure = {
-                mess.pbDismiss()
-            })
 
     }
 

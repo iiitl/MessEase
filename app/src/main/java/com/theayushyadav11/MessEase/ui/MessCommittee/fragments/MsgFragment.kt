@@ -13,6 +13,7 @@ import com.theayushyadav11.MessEase.databinding.FragmentMsgBinding
 import com.theayushyadav11.MessEase.ui.Adapters.MsgAdapter
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.MsgViewModel
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
+import com.theayushyadav11.MessEase.utils.Mess
 
 class MsgFragment : Fragment() {
 
@@ -45,7 +46,7 @@ class MsgFragment : Fragment() {
     fun setAdapter() {
         if (isAdded) {
             val uid = auth.currentUser?.uid.toString()
-            viewModel.getMyMsgs(uid) { msgs ->
+            viewModel.getMyMsgs(uid, Mess(requireContext()).getUser()) { msgs ->
                 if (isAdded) {
                     if (msgs.isEmpty()) {
                         binding.recyclerView.isVisible = false

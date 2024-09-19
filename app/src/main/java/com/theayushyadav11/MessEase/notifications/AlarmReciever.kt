@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -35,7 +36,7 @@ class AlarmReceiver : BroadcastReceiver() {
             }
             val mess= Mess(context)
             val times = listOf(mess.get("bt","7:30"),mess.get("lt","12:0"),mess.get("st","16:30"),mess.get("dt","19:0"))
-            val currentTime = getCurrentTime(context)
+            val currentTime = ""+Date().hours +":"+ Date().minutes                     // getCurrentTime(context)
             mess.log(times)
             mess.log(currentTime)
             if(times.contains(currentTime)) {
