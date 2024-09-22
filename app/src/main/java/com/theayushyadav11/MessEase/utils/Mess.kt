@@ -26,12 +26,19 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
 import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -106,6 +113,7 @@ class Mess(context: Context) {
     fun log(message: Any) {
         Log.d("yatinMadharchod", message.toString())
     }
+
     fun showInputDialog(
         hint: String, onOkClicked: (String) -> Unit, oncancelClicked: (String) -> Unit
     ) {
@@ -259,14 +267,16 @@ class Mess(context: Context) {
 
         return layoutManager
     }
+
     fun getLists(listName: String, onResult: (List<String>) -> Unit) {
         firestoreReference.collection("Lists").document("lists").get().addOnSuccessListener {
             val list = it.get(listName) as? List<String> ?: emptyList()
             onResult(list)
         }
     }
+
     private fun cont(email: String, onResult: (Boolean) -> Unit) {
-        getLists("allows"){
+        getLists("allows") {
             if (it.contains(email)) {
                 onResult(true)
             }
@@ -331,6 +341,7 @@ class Mess(context: Context) {
             user.uid + "#" + user.name + "#" + user.token + "#" + user.member + "#" + user.photoUrl + "#" + user.email + "#" + user.designation + "#" + user.batch + "#" + user.passingYear + "#" + user.gender + "#"
         save("user", s)
     }
+
     fun getUser(): User {
         try {
             val s = get("user")
@@ -339,9 +350,33 @@ class Mess(context: Context) {
             return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
         } catch (e: Exception) {
             Log.e("yatin", e.toString())
-           return User()
+            return User()
         }
     }
 
+    fun getUpdates(onResult: (String, String) -> Unit) {
+        val s = get("update")
+        val a = s.split("#")
+        onResult(a[0], a[1])
+
+    }
+
+    fun setUpdate(version: String, url: String) {
+        val s = "$version#$url"
+        save("update", s)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun getMainMenu(onResult: (Menu) -> Unit) {
+       GlobalScope.launch (Dispatchers.IO)
+       {
+           val menu=MenuDatabase.getDatabase(context).menuDao().getMenu()
+           withContext(Dispatchers.Main)
+           {
+               onResult(menu)
+           }
+
+       }
+    }
 
 }

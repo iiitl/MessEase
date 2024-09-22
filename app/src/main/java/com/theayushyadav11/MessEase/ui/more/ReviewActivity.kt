@@ -63,7 +63,7 @@ class ReviewActivity : AppCompatActivity() {
             }
             foodtype.observe(this, Observer { type ->
                 if (day != null && foodtype.value != null) {
-                   vm.getMainMenu {
+                   vm.getMainMenu(this) {
                         val d =day + 1
                         val food = it.menu[d].particulars[type].food
                        binding.food.text = food

@@ -127,6 +127,7 @@ class LoginFragment : Fragment() {
                     navigate()
                 } else {
                     mess.toast("Authentication Failed.")
+                    mess.pbDismiss()
                 }
             }
     }

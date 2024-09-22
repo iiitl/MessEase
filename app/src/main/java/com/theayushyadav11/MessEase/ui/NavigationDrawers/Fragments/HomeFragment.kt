@@ -178,15 +178,15 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                     if (snapshot != null && snapshot.exists()) {
                         val menu = snapshot.toObject(Menu::class.java)
 
-                        GlobalScope.launch(Dispatchers.IO) {
-                            val menuDatabase = MenuDatabase.getDatabase(requireActivity()).menuDao()
-                            if (menu != null) {
-                                val newMenu = Menu(
-                                    id = 0, creator = menu.creator, menu = menu.menu
-                                )
-                                menuDatabase.addMenu(newMenu)
+                            GlobalScope.launch(Dispatchers.IO) {
+                                val menuDatabase = MenuDatabase.getDatabase(requireActivity()).menuDao()
+                                if (menu != null) {
+                                    val newMenu = Menu(
+                                        id = 0, creator = menu.creator, menu = menu.menu
+                                    )
+                                    menuDatabase.addMenu(newMenu)
+                                }
                             }
-                        }
                     } else {
                         mess.toast("Menu document does not exist.")
                     }
@@ -280,7 +280,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     private fun addFood() {
         homeViewModel.dayOfWeek.observe(requireActivity(), Observer { day ->
 
-            homeViewModel.getDayParticulars(day) { particulars ->
+            homeViewModel.getDayParticulars(requireContext(),day) { particulars ->
                 if (isAdded) {
                     binding.menuAdder.removeAllViews()
                     if (particulars.isNotEmpty()) {

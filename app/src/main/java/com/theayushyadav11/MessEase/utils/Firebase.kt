@@ -114,12 +114,16 @@ class FireBase {
     }
 
     fun getMainMenu(onResult: (Menu) -> Unit) {
-        firestoreReference.collection("MainMenu").document("menu").get().addOnSuccessListener {
-            onResult(it.toObject(Menu::class.java)!!)
-        }
-            .addOnFailureListener {
+
+
+        firestoreReference.collection("MainMenu").document("menu").addSnapshotListener { value, error ->
+            if(error!=null)
+            {
                 onResult(Menu())
+                return@addSnapshotListener
             }
+            onResult(value?.toObject(Menu::class.java)!!)
+        }
     }
 
     fun getUpdates(onResult: (String, String) -> Unit) {

@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -48,14 +49,23 @@ import com.theayushyadav11.MessEase.ui.more.SettingsActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
 import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.FireBase
 import com.theayushyadav11.MessEase.utils.Mess
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.realtime.Realtime
+import io.ktor.client.plugins.HttpTimeout
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var supabase: SupabaseClient
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var mess: Mess
@@ -75,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         createNotificationChannel()
         askForNotificationPermission()
         fireBase.getToken()
+        //setSupaBase()
 
 
     }
@@ -100,6 +111,40 @@ class MainActivity : AppCompatActivity() {
             RECEIVER_NOT_EXPORTED
         )
     }
+    private fun setSupaBase() {
+        supabase = createSupabaseClient(
+            supabaseUrl = "https://yrkrbtqdyknfawyjnuhs.supabase.co/",
+            supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlya3JidHFkeWtuZmF3eWpudWhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYzMzM2MDIsImV4cCI6MjA0MTkwOTYwMn0.psr8wK4USbjkdoW0uyNoK0RY0tN3fEHQ7JYjMfIpggI"
+        ) {
+            install(Postgrest)
+            install(Realtime)
+
+        }
+        addusers()
+    }
+    fun addusers()
+    {
+        firestoreReference.collection(USERS).get().addOnSuccessListener {
+            for(document in it.documents)
+            {
+                val user = document.toObject(User::class.java)
+                lifecycleScope.launch {
+                    if (user != null) {
+                        try {
+                            supabase.postgrest["User"].insert(
+                                user
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

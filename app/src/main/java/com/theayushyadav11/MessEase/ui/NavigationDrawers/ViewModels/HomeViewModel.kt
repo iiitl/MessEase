@@ -1,5 +1,6 @@
 package com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels
 
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -26,6 +27,7 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import com.theayushyadav11.MessEase.utils.Mess
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -72,9 +74,9 @@ class HomeViewModel(val menuDao: MenuDao) : ViewModel() {
             }
     }
 
-    fun getDayParticulars(day: Int, onSuccess: (List<Particulars>) -> Unit) {
+    fun getDayParticulars(context: Context, day: Int, onSuccess: (List<Particulars>) -> Unit) {
 
-        fireBase.getMainMenu {
+        Mess(context).getMainMenu {
             val list = it.menu[day].particulars
             onSuccess(list)
         }
