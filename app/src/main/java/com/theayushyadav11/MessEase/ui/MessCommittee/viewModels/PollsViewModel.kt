@@ -1,8 +1,7 @@
 package com.theayushyadav11.MessEase.ui.MessCommittee.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.theayushyadav11.MessEase.Models.Msg
-import com.theayushyadav11.MessEase.Models.OptionSelected
 import com.theayushyadav11.MessEase.Models.Poll
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COMPARER
@@ -13,8 +12,6 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.POLLS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.POLL_RESULT
 import com.theayushyadav11.MessEase.utils.Constants.Companion.SELECTED_OPTION
 import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
-import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
-import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 
 class PollsViewModel : ViewModel() {
@@ -34,8 +31,10 @@ class PollsViewModel : ViewModel() {
                     if (poll != null) {
                         if (poll.creater.uid == user.uid||user.designation== COORDINATOR||user.designation== DEVELOPER)
                             polls.add(poll)
+                        Log.d("TAG", "getMyPolls:"+polls.size)
                     }
                 }
+            Log.d("TAG", polls.toString())
                 onResult(polls)
         }
     }

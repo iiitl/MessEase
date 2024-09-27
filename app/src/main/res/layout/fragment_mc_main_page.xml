@@ -4,8 +4,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu"
-   >
+    android:background="@color/menu">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,6 +33,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:paddingBottom="5dp"
                     android:layout_height="match_parent">
 
                     <ImageView
@@ -58,9 +59,9 @@
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         android:layout_marginTop="25dp"
-                      app:cardElevation="15dp"
                         android:outlineSpotShadowColor="@color/black"
                         app:cardCornerRadius="200dp"
+                        app:cardElevation="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -104,7 +105,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="102dp"
-                        android:layout_marginVertical="20dp"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal"
 
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,16 +115,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/editMenu"
-                            android:layout_marginVertical="6dp"
-                            app:cardElevation="5dp"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="5dp"
+                            android:layout_marginVertical="6dp"
                             android:layout_marginStart="2dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_weight="1"
-                           
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
                             app:strokeColor="@color/grey"
                             app:strokeWidth="2dp">
 
@@ -156,13 +157,14 @@
                             android:id="@+id/btnPoll"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_weight="1"
                             android:layout_marginVertical="6dp"
-                            app:cardElevation="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
                             app:strokeColor="@color/grey"
                             app:strokeWidth="2dp">
 
@@ -193,13 +195,14 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/createMsg"
                             android:layout_width="0dp"
-                            android:layout_marginVertical="6dp"
-                            app:cardElevation="5dp"
                             android:layout_height="match_parent"
+                            android:layout_marginVertical="6dp"
                             android:layout_marginRight="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
                             app:strokeColor="@color/grey"
                             app:strokeWidth="2dp">
 
@@ -230,13 +233,14 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/uploadMenu"
                             android:layout_width="0dp"
-                            android:layout_marginVertical="6dp"
-                            app:cardElevation="5dp"
                             android:layout_height="match_parent"
+                            android:layout_marginVertical="6dp"
                             android:layout_marginRight="2dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
                             app:strokeColor="@color/grey"
                             app:strokeWidth="2dp">
 

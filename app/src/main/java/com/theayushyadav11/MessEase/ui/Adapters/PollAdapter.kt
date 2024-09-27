@@ -28,7 +28,7 @@ class PollAdapter(
         return PollViewHolder(view)
     }
 
-    override fun getItemCount() = polls.size
+    override fun getItemCount() = polls.size+1
 
     override fun onBindViewHolder(holder: PollViewHolder, position: Int) {
         val poll = polls[position]

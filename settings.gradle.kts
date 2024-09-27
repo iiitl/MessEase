@@ -17,6 +17,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven ("https://jitpack.io")
+        maven("https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android")
+
     }
 }
 

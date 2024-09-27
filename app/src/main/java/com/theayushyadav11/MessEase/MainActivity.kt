@@ -24,6 +24,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -49,18 +50,19 @@ import com.theayushyadav11.MessEase.ui.more.SettingsActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
 import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_KEY
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_URL
 import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
-import com.theayushyadav11.MessEase.utils.FireBase
 import com.theayushyadav11.MessEase.utils.Mess
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.realtime.Realtime
-import io.ktor.client.plugins.HttpTimeout
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -85,9 +87,7 @@ class MainActivity : AppCompatActivity() {
         createNotificationChannel()
         askForNotificationPermission()
         fireBase.getToken()
-        //setSupaBase()
-
-
+        setSupaBase()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -111,22 +111,27 @@ class MainActivity : AppCompatActivity() {
             RECEIVER_NOT_EXPORTED
         )
     }
+
     private fun setSupaBase() {
         supabase = createSupabaseClient(
-            supabaseUrl = "https://yrkrbtqdyknfawyjnuhs.supabase.co/",
-            supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlya3JidHFkeWtuZmF3eWpudWhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYzMzM2MDIsImV4cCI6MjA0MTkwOTYwMn0.psr8wK4USbjkdoW0uyNoK0RY0tN3fEHQ7JYjMfIpggI"
+            supabaseUrl = SUPABASE_URL,
+            supabaseKey = SUPABASE_KEY
         ) {
             install(Postgrest)
             install(Realtime)
 
         }
+        lifecycleScope.launch(Dispatchers.IO) {
+            supabase.postgrest["User"].upsert(
+                mess.getUser()
+            )
+        }
         addusers()
     }
-    fun addusers()
-    {
+
+    fun addusers() {
         firestoreReference.collection(USERS).get().addOnSuccessListener {
-            for(document in it.documents)
-            {
+            for (document in it.documents) {
                 val user = document.toObject(User::class.java)
                 lifecycleScope.launch {
                     if (user != null) {
@@ -135,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                                 user
                             )
                         } catch (e: Exception) {
-                            e.printStackTrace()
+                           // e.printStackTrace()
                         }
                     }
                 }
@@ -192,19 +197,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_messCommitteeActivity -> {
-                     val user=mess.getUser()
-                        if (user.member && auth.currentUser != null) {
-                            val intent = Intent(this, MessCommitteeMain::class.java)
-                            startActivity(intent)
-                        } else {
+                    val user = mess.getUser()
+                    if (user.member && auth.currentUser != null) {
+                        val intent = Intent(this, MessCommitteeMain::class.java)
+                        startActivity(intent)
+                    } else {
 
 
-                            if (!isFinishing && !isDestroyed) {
-                                mess.showAlertDialog(
-                                    "Alert!", "You are not a member of Mess Committee!", "Ok", ""
-                                ) {}
-                            }
+                        if (!isFinishing && !isDestroyed) {
+                            mess.showAlertDialog(
+                                "Alert!", "You are not a member of Mess Committee!", "Ok", ""
+                            ) {}
                         }
+                    }
 
                     true
                 }
@@ -248,23 +253,23 @@ class MainActivity : AppCompatActivity() {
 
         val menu: Menu = navView.menu
         val admin = menu.findItem(R.id.nav_admin)
-        val user=mess.getUser()
-            if (!(user.designation == COORDINATOR || user.designation == DEVELOPER)) {
-                admin.isVisible = false
-            }
+        val user = mess.getUser()
+        if (!(user.designation == COORDINATOR || user.designation == DEVELOPER)) {
+            admin.isVisible = false
+        }
     }
 
     private fun setUpHeader() {
         val headerView: View = binding.navView.getHeaderView(0)
         val layout: LinearLayout = headerView.findViewById(R.id.navMain)
 
-            if (!isFinishing && !isDestroyed) {
-                val user=mess.getUser()
-                mess.loadCircleImage(user.photoUrl, layout.findViewById(R.id.propic))
-                layout.findViewById<TextView>(R.id.mname).text = user.name
-                layout.findViewById<TextView>(R.id.email).text = user.email
-            }
-         }
+        if (!isFinishing && !isDestroyed) {
+            val user = mess.getUser()
+            mess.loadCircleImage(user.photoUrl, layout.findViewById(R.id.propic))
+            layout.findViewById<TextView>(R.id.mname).text = user.name
+            layout.findViewById<TextView>(R.id.email).text = user.email
+        }
+    }
 
     private fun signOut() {
         var mAuth = FirebaseAuth.getInstance()
@@ -352,6 +357,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
     private fun askForNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -370,6 +376,7 @@ class MainActivity : AppCompatActivity() {
             askForExactAlarmPermission()
         }
     }
+
     private fun askForExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager

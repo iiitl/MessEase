@@ -13,12 +13,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.theayushyadav11.MessEase.Models.supabase.Poll
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentCreatePollBinding
 import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.CreatePollViewModel
+import com.theayushyadav11.MessEase.utils.Constants
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_KEY
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_URL
+import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentDate
+import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentTimeInAmPm
+import com.theayushyadav11.MessEase.utils.Constants.Companion.getKey
 import com.theayushyadav11.MessEase.utils.Mess
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.realtime.Realtime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CreatePollFragment : Fragment() {
     var optionList: MutableList<EditText> = mutableListOf()
@@ -82,11 +97,37 @@ class CreatePollFragment : Fragment() {
                 mess.pbDismiss()
                 mess.toast("Poll Added Successfully")
                 if (isAdded) {
-                    val pn = PushNotifications(requireContext(), target)
-                    pn.sendNotificationToAllUsers(
-                        "New Poll Added\n Vote now!",
-                        binding.tvQuestion.text.toString()
-                    )
+//                    val pn = PushNotifications(requireContext(), target)
+//                    pn.sendNotificationToAllUsers(
+//                        "New Poll Added\n Vote now!",
+//                        binding.tvQuestion.text.toString()
+//                    )
+
+//   val  supabase = createSupabaseClient(
+//        supabaseUrl = SUPABASE_URL,
+//        supabaseKey = SUPABASE_KEY
+//    ) {
+//        install(Postgrest)
+//        install(Realtime)
+//
+//    }
+
+
+                    GlobalScope.launch(Dispatchers.IO) {
+                        Constants().supabase.postgrest["Poll"].insert(
+                            Poll(
+                                id= getKey(),
+                                question = binding.tvQuestion.text.toString(),
+                                creater = mess.getUser().uid,
+                                isMultiple = true,
+                                target = target,
+                                date = getCurrentDate(),
+                                time = getCurrentTimeInAmPm(),
+                            )
+                        )
+                    }
+
+
                 }
                 findNavController().navigateUp()
             },

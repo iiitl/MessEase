@@ -91,15 +91,14 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(Intent(this, UpdateActivity::class.java))
                 finish()
 
-            } else {
-                if (mess.isLoggedIn()) {
+            } else if (mess.isLoggedIn()) {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
                     startActivity(Intent(this, LoginAndSignUpActivity::class.java))
                     finish()
                 }
-            }
+
 
 
         }
