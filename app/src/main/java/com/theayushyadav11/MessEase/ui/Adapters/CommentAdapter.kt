@@ -36,7 +36,7 @@ class CommentAdapter(private val comments: List<Comment>, context: Context, val 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val comment = comments[position]
-        mess.loadCircleImage(comment.creator.photoUrl, holder.photo)
+        mess.loadCircularImage(comment.creator.photoUrl, holder.photo)
         holder.time.text = comment.time
         holder.tvcomment.text = comment.comment
         holder.name.text = comment.creator.name

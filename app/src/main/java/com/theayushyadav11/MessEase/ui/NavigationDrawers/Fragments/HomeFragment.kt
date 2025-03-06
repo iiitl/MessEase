@@ -431,7 +431,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         }
         val user=mess.getUser()
             if (isAdded)
-                mess.loadCircleImage(
+                mess.loadCircularImage(
                     user.photoUrl, bottomSheetDialog.findViewById<ImageView>(R.id.profileIcon)!!
                 )
 

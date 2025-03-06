@@ -21,8 +21,6 @@ import com.theayushyadav11.MessEase.databinding.FragmentCreatePollBinding
 import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.CreatePollViewModel
 import com.theayushyadav11.MessEase.utils.Constants
-import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_KEY
-import com.theayushyadav11.MessEase.utils.Constants.Companion.SUPABASE_URL
 import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentDate
 import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentTimeInAmPm
 import com.theayushyadav11.MessEase.utils.Constants.Companion.getKey
@@ -102,31 +100,6 @@ class CreatePollFragment : Fragment() {
 //                        "New Poll Added\n Vote now!",
 //                        binding.tvQuestion.text.toString()
 //                    )
-
-//   val  supabase = createSupabaseClient(
-//        supabaseUrl = SUPABASE_URL,
-//        supabaseKey = SUPABASE_KEY
-//    ) {
-//        install(Postgrest)
-//        install(Realtime)
-//
-//    }
-
-
-                    GlobalScope.launch(Dispatchers.IO) {
-                        Constants().supabase.postgrest["Poll"].insert(
-                            Poll(
-                                id= getKey(),
-                                question = binding.tvQuestion.text.toString(),
-                                creater = mess.getUser().uid,
-                                isMultiple = true,
-                                target = target,
-                                date = getCurrentDate(),
-                                time = getCurrentTimeInAmPm(),
-                            )
-                        )
-                    }
-
 
                 }
                 findNavController().navigateUp()

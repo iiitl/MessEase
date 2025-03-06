@@ -113,7 +113,7 @@ class EditCompleteActivity : AppCompatActivity() {
                                 }
                             )
                         },
-                        oncancelClicked = {
+                        onCancelClicked = {
                             mess.pbDismiss()
                         }
                     )

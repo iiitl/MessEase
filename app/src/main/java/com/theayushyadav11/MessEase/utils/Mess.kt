@@ -21,11 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
@@ -39,9 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class Mess(context: Context) {
     var context: Context
@@ -111,11 +104,11 @@ class Mess(context: Context) {
     }
 
     fun log(message: Any) {
-        Log.d("yatinMadharchod", message.toString())
+        Log.d(TAG, message.toString())
     }
 
     fun showInputDialog(
-        hint: String, onOkClicked: (String) -> Unit, oncancelClicked: (String) -> Unit
+        hint: String, onOkClicked: (String) -> Unit, onCancelClicked: (String) -> Unit
     ) {
         val dialog = Dialog(context)
         val bind = EditDialogBinding.inflate(LayoutInflater.from(context))
@@ -124,7 +117,7 @@ class Mess(context: Context) {
         dialog.show()
         bind.textInputLayout3.hint = hint
         bind.cancel.setOnClickListener {
-            oncancelClicked("")
+            onCancelClicked("")
             dialog.dismiss()
         }
         bind.done.setOnClickListener {
@@ -233,7 +226,7 @@ class Mess(context: Context) {
         context.startActivity(intent)
     }
 
-    fun loadCircleImage(url: String, view: ImageView) {
+    fun loadCircularImage(url: String, view: ImageView) {
         Glide.with(context).load(url).circleCrop().error(R.drawable.profile_circle).into(view)
     }
 

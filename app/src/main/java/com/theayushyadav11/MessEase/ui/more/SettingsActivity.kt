@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.theayushyadav11.MessEase.MainActivity
+import com.theayushyadav11.MessEase.MainActivity.Companion.cancelAllAlarms
 import com.theayushyadav11.MessEase.databinding.ActivitySettingsBinding
 import com.theayushyadav11.MessEase.utils.Mess
 import java.util.Calendar
@@ -68,6 +70,7 @@ class SettingsActivity : AppCompatActivity() {
             mess.save("dt",b[3])
             mess.log(b)
             mess.toast("Timings Updated")
+            //cancelAllAlarms(this@SettingsActivity)
             finish()
         }
 
