@@ -1,8 +1,6 @@
 package com.theayushyadav11.MessEase.Models.supabase
 
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Votes(
     val id: String="",
     val poll_id: String="",

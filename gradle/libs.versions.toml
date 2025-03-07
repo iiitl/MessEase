@@ -2,6 +2,7 @@
 agp = "8.6.1"
 androidMail = "1.6.7"
 anychartAndroid = "1.1.5"
+bom = "2.0.0-rc-1"
 checkout = "1.6.40"
 commonsIo = "2.13.0"
 fragmentKtxVersion = "1.6.0"
@@ -55,6 +56,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 anychart-android = { module = "com.github.AnyChart:AnyChart-Android", version.ref = "anychartAndroid" }
+bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "bom" }
 checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }

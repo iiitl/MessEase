@@ -13,7 +13,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.theayushyadav11.MessEase.Models.Poll
 import com.theayushyadav11.MessEase.R
-import com.theayushyadav11.MessEase.ui.MessCommittee.fragments.PollsFragment
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
@@ -28,7 +27,9 @@ class PollAdapter(
         return PollViewHolder(view)
     }
 
-    override fun getItemCount() = polls.size+1
+    // FIX 1: The getItemCount() was returning polls.size+1 which caused index out of bounds
+    // This would make the adapter try to show one more item than available in the list
+    override fun getItemCount() = polls.size
 
     override fun onBindViewHolder(holder: PollViewHolder, position: Int) {
         val poll = polls[position]
@@ -40,8 +41,6 @@ class PollAdapter(
                 deletePoll(poll)
             }
         }
-
-
     }
 
     fun getVotesOnOption(pid: String, option: String, onResult: (Int) -> Unit) {
@@ -52,7 +51,7 @@ class PollAdapter(
                     return@addSnapshotListener
                 }
                 val votes = value?.size()
-                onResult(votes!!)
+                onResult(votes ?: 0) // FIX 2: Handle null case properly
             }
     }
 
@@ -64,15 +63,13 @@ class PollAdapter(
                     return@addSnapshotListener
                 }
                 val votes = value?.size()
-                onResult(votes!!)
+                onResult(votes ?: 0) // FIX 3: Handle null case properly
             }
     }
 
     private fun deletePoll(poll: Poll) {
         mess.addPb("Deleting poll...")
         firestoreReference.collection("Polls").document(poll.id).delete().addOnSuccessListener {
-
-
             firestoreReference.collection("PollResult").document(poll.id).delete()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -87,13 +84,10 @@ class PollAdapter(
             mess.pbDismiss()
             mess.toast("Failed to delete poll")
         }
-
-
     }
 
     inner class PollViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val delete = itemView.findViewById<ImageView>(R.id.delete)
-
 
         fun bind(poll: Poll) {
             itemView.findViewById<TextView>(R.id.tvQuestion).text = poll.question
@@ -107,12 +101,13 @@ class PollAdapter(
 
             itemView.findViewById<ImageView>(R.id.dIcon)
                 .setImageResource(fireBase.getIcon(poll.creater.designation))
+
+            // FIX 4: Clear previous options before adding new ones
             val adder = itemView.findViewById<LinearLayout>(R.id.radioGroup)
+            adder.removeAllViews()
+
             addOptions(poll.id, adder, poll.options)
-
-
         }
-
 
         private fun addOptions(id: String, adder: LinearLayout, options: MutableList<String>) {
             options.forEach {
@@ -120,8 +115,6 @@ class PollAdapter(
                     LayoutInflater.from(context).inflate(R.layout.option_layout, adder, false)
                 view.findViewById<TextView>(R.id.title).text = it
                 view.findViewById<RadioButton>(R.id.rb).visibility = View.INVISIBLE
-
-
 
                 getTotalVotes(id) { votes ->
                     getVotesOnOption(id, it) { vote ->
@@ -131,7 +124,8 @@ class PollAdapter(
                     }
                 }
 
-                itemView.findViewById<ViewGroup>(R.id.radioGroup).addView(view)
+                // FIX 5: Use the proper adder container instead of finding radioGroup again
+                adder.addView(view)
             }
         }
     }

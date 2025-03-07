@@ -99,14 +99,11 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="IHhEavcmQQdYClbIvaXgvdEt" />
+            android:value="rzp_live_pEv2OERPEj1yaT" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data android:name="com.phonepe.android.sdk.isUAT" android:value="true"/>
-        <meta-data android:name="com.phonepe.android.sdk.isSimulator" android:value="true"/>
-        <meta-data android:name="com.phonepe.android.sdk.MerchantId" android:value="MERCHANTUAT"/>
-<!--        <meta-data android:name="com.phonepe.android.sdk.AppId" android:value="appId"/>-->
+
     </application>
 
 </manifest>

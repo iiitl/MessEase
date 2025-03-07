@@ -13,25 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.theayushyadav11.MessEase.Models.supabase.Poll
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentCreatePollBinding
-import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.CreatePollViewModel
-import com.theayushyadav11.MessEase.utils.Constants
-import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentDate
-import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentTimeInAmPm
-import com.theayushyadav11.MessEase.utils.Constants.Companion.getKey
 import com.theayushyadav11.MessEase.utils.Mess
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.postgrest.Postgrest
-import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.realtime.Realtime
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CreatePollFragment : Fragment() {
     var optionList: MutableList<EditText> = mutableListOf()

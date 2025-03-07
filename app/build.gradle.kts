@@ -105,23 +105,14 @@ dependencies {
     implementation(libs.androidx.fragment.ktx.v160)
     implementation(libs.androidx.navigation.fragment.ktx.v270)
     implementation(libs.androidx.navigation.ui.ktx.v270)
-
-    implementation(libs.checkout)
-
-
     implementation (libs.android.mail)
     implementation (libs.android.activation)
     implementation (libs.commons.io)
-
     implementation (libs.anychart.android)
+    implementation (libs.checkout)
 
 
 
-    implementation(platform("io.github.jan-tennert.supabase:bom:2.0.0-rc-1"))
-    implementation("io.github.jan-tennert.supabase:postgrest-kt")
-    implementation("io.github.jan-tennert.supabase:realtime-kt")
-    implementation("io.ktor:ktor-client-android:2.3.12")
-    implementation("phonepe.intentsdk.android.release:IntentSDK:2.4.3")
 
 
 
