@@ -2,7 +2,6 @@ package com.theayushyadav11.MessEase.utils
 
 import android.app.Dialog
 import android.app.DownloadManager
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,8 +11,11 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
@@ -29,21 +31,21 @@ import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
 import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import java.util.Date
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
 
 class Mess(context: Context) {
     var context: Context
-    private var progressDialog: ProgressDialog = ProgressDialog(context)
+    private var loadingDialog: Dialog? = null
     private var sharedPreferences: SharedPreferences
     val designation = MutableLiveData<String>()
 
     init {
-        progressDialog.setCancelable(false)
+        loadingDialog?.setCancelable(false)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         this.context = context
     }
@@ -75,24 +77,34 @@ class Mess(context: Context) {
     }
 
     fun isLoggedIn(): Boolean {
-
         if (get("isLoggedIn") == "true") {
             return true
         } else {
             return false
         }
-
-
     }
 
     fun addPb(message: String) {
-        progressDialog.dismiss()
-        progressDialog.setMessage(message)
-        progressDialog.show()
+        loadingDialog = Dialog(context).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val layout = LayoutInflater.from(context).inflate(R.layout.loading, null)
+            val tvMsg = layout.findViewById<TextView>(R.id.msg)
+            tvMsg.text = message
+            setContentView(layout)
+            setCancelable(false)
+
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
+            window?.setLayout(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+            show()
+        }
     }
 
     fun pbDismiss() {
-        progressDialog.dismiss()
+        loadingDialog?.setCancelable(true)
+        loadingDialog?.dismiss()
     }
 
     fun toast(message: Any) {
@@ -108,7 +120,9 @@ class Mess(context: Context) {
     }
 
     fun showInputDialog(
-        hint: String, onOkClicked: (String) -> Unit, onCancelClicked: (String) -> Unit
+        hint: String,
+        onOkClicked: (String) -> Unit,
+        onCancelClicked: (String) -> Unit
     ) {
         val dialog = Dialog(context)
         val bind = EditDialogBinding.inflate(LayoutInflater.from(context))
@@ -128,14 +142,16 @@ class Mess(context: Context) {
                 onOkClicked(d)
                 dialog.dismiss()
             }
-
         }
     }
 
     fun showAlertDialog(
-        title: String, message: String, okText: String, cancelText: String, onResult: () -> Unit
+        title: String,
+        message: String,
+        okText: String,
+        cancelText: String,
+        onResult: () -> Unit
     ) {
-
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
         builder.setCancelable(false)
@@ -209,12 +225,9 @@ class Mess(context: Context) {
             } else {
                 onResult(target)
                 dialog.dismiss()
-
             }
         }
         dialog.show()
-
-
     }
 
     fun loadImage(url: String, view: ImageView) {
@@ -244,12 +257,12 @@ class Mess(context: Context) {
     fun getmanager(): RecyclerView.LayoutManager {
         val layoutManager = object : LinearLayoutManager(context) {
             override fun onLayoutChildren(
-                recycler: RecyclerView.Recycler?, state: RecyclerView.State?
+                recycler: RecyclerView.Recycler?,
+                state: RecyclerView.State?
             ) {
                 try {
                     super.onLayoutChildren(recycler, state)
                 } catch (e: IndexOutOfBoundsException) {
-
                 }
             }
 
@@ -281,37 +294,47 @@ class Mess(context: Context) {
         try {
             val emailR = email.substring(0, email.indexOf("@"))
             var isValid = true
-            if (emailR.contains("+") || emailR.contains(".") || emailR.contains("-") || emailR.contains(
+            if (emailR.contains("+") || emailR.contains(".") || emailR.contains("-") ||
+                emailR.contains(
                     "_"
                 ) || emailR.contains(
                     "/"
-                ) || emailR.contains("*") || emailR.contains("#") || emailR.contains("!") || emailR.contains(
+                ) || emailR.contains("*") || emailR.contains("#") || emailR.contains("!") ||
+                emailR.contains(
                     "$"
                 ) || emailR.contains("%") || emailR.contains("^") || emailR.contains(
                     "&"
-                ) || emailR.contains("(") || emailR.contains(")") || emailR.contains("=") || emailR.contains(
+                ) || emailR.contains("(") || emailR.contains(")") || emailR.contains("=") ||
+                emailR.contains(
                     "{"
-                ) || emailR.contains("}") || emailR.contains("[") || emailR.contains("]") || emailR.contains(
+                ) || emailR.contains("}") || emailR.contains("[") || emailR.contains("]") ||
+                emailR.contains(
                     ":"
-                ) || emailR.contains(";") || emailR.contains(",") || emailR.contains("<") || emailR.contains(
+                ) || emailR.contains(";") || emailR.contains(",") || emailR.contains("<") ||
+                emailR.contains(
                     ">"
-                ) || emailR.contains("?") || emailR.contains("|") || emailR.contains("`") || emailR.contains(
+                ) || emailR.contains("?") || emailR.contains("|") || emailR.contains("`") ||
+                emailR.contains(
                     "~"
                 )
             ) {
                 isValid = false
             }
             cont(email) {
-                if (it || ((email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
-                        "ayushyadav"
-                    ))
-                ) onResult(
-                    true
-                )
-                else onResult(false)
+                if (it || (
+                            (email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
+                                "ayushyadav"
+                            )
+                            )
+                ) {
+                    onResult(
+                        true
+                    )
+                } else {
+                    onResult(false)
+                }
             }
         } catch (e: Exception) {
-
         }
     }
 
@@ -321,9 +344,13 @@ class Mess(context: Context) {
         val request = DownloadManager.Request(Uri.parse(url))
         request.setTitle(title)
         request.setDescription(description)
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setNotificationVisibility(
+            DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+        )
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+        request.setAllowedNetworkTypes(
+            DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE
+        )
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadId = downloadManager.enqueue(request)
         Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
@@ -331,7 +358,10 @@ class Mess(context: Context) {
 
     fun setUser(user: User) {
         val s =
-            user.uid + "#" + user.name + "#" + user.token + "#" + user.member + "#" + user.photoUrl + "#" + user.email + "#" + user.designation + "#" + user.batch + "#" + user.passingYear + "#" + user.gender + "#"
+            user.uid + "#" + user.name + "#" + user.token + "#" + user.member + "#" +
+                    user.photoUrl +
+                    "#" + user.email + "#" + user.designation + "#" + user.batch + "#" +
+                    user.passingYear + "#" + user.gender + "#"
         save("user", s)
     }
 
@@ -351,7 +381,6 @@ class Mess(context: Context) {
         val s = get("update")
         val a = s.split("#")
         onResult(a[0], a[1])
-
     }
 
     fun setUpdate(version: String, url: String) {
@@ -361,15 +390,11 @@ class Mess(context: Context) {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun getMainMenu(onResult: (Menu) -> Unit) {
-       GlobalScope.launch (Dispatchers.IO)
-       {
-           val menu=MenuDatabase.getDatabase(context).menuDao().getMenu()
-           withContext(Dispatchers.Main)
-           {
-               onResult(menu)
-           }
-
-       }
+        GlobalScope.launch(Dispatchers.IO) {
+            val menu = MenuDatabase.getDatabase(context).menuDao().getMenu()
+            withContext(Dispatchers.Main) {
+                onResult(menu)
+            }
+        }
     }
-
 }
