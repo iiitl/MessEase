@@ -81,7 +81,7 @@ class KnowOurTeamFragment : Fragment() {
                             }
                         }
 
-
+                  mess.log("User: ${user.name} - ${user.designation}")
                     when (user.designation) {
                         "Coordinator" -> binding.coordAdder.addView(v)
                         "Developer" -> binding.devAdder.addView(v)
