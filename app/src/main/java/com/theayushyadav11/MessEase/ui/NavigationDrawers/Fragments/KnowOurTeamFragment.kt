@@ -38,17 +38,11 @@ class KnowOurTeamFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initialise()
-        listeners()
-
     }
 
     private fun initialise() {
         mess = Mess(requireContext())
         addCoord()
-    }
-
-    private fun listeners() {
-
     }
 
     fun addCoord() {
@@ -63,8 +57,10 @@ class KnowOurTeamFragment : Fragment() {
                     val v = LayoutInflater.from(requireContext()).inflate(R.layout.person, null)
                     v.findViewById<TextView>(R.id.mname).text = user.name
                     v.findViewById<TextView>(R.id.email).text = user.email
-                    mess.loadCircularImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
-                    if (   mess.getUser().designation == COORDINATOR ||mess.getUser().designation == DEVELOPER) {
+
+                    mess.loadCircleImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
+                    val user = mess.getUser()
+                    if (user.designation == COORDINATOR || user.designation == DEVELOPER) {
                         v.findViewById<ImageView>(R.id.delete).visibility = View.VISIBLE
                         v.findViewById<ImageView>(R.id.delete).setOnClickListener {
                             mess.showAlertDialog(
@@ -80,8 +76,6 @@ class KnowOurTeamFragment : Fragment() {
 
                         }
                     }
-
-
                     when (user.designation) {
                         COORDINATOR -> binding.coordAdder.addView(v)
                         DEVELOPER -> binding.devAdder.addView(v)
