@@ -69,11 +69,9 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setDateAdapter()
-        addToDatabase()
         initialise()
         updateDetails()
         listeners()
-        addToDatabase()
         updateUI()
     }
 
@@ -86,6 +84,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         homeViewModel.monthYear.observe(viewLifecycleOwner) {
             binding.month.text = it
         }
+        mess.addPb("Loading")
     }
 
     //Listeners for the onClicks
@@ -164,35 +163,6 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                 binding.imageView2.visibility = View.INVISIBLE
             }
         }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    fun addToDatabase() {
-        if (isAdded) {
-            firestoreReference.collection("MainMenu").document("menu")
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        mess.toast(error.message.toString())
-                        return@addSnapshotListener
-                    }
-                    if (snapshot != null && snapshot.exists()) {
-                        val menu = snapshot.toObject(Menu::class.java)
-
-                            GlobalScope.launch(Dispatchers.IO) {
-                                val menuDatabase = MenuDatabase.getDatabase(requireActivity()).menuDao()
-                                if (menu != null) {
-                                    val newMenu = Menu(
-                                        id = 0, creator = menu.creator, menu = menu.menu
-                                    )
-                                    menuDatabase.addMenu(newMenu)
-                                }
-                            }
-                    } else {
-                        mess.toast("Menu document does not exist.")
-                    }
-                }
-        }
-
     }
 
     fun updateUI() {
@@ -294,6 +264,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                             binding.menuAdder.addView(menuLayout)
                         }
                     }
+                    mess.pbDismiss()
                 }
             }
 

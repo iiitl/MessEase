@@ -372,7 +372,6 @@ class Mess(context: Context) {
             Log.d(TAG, a.toString())
             return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
         } catch (e: Exception) {
-            Log.e("yatin", e.toString())
             return User()
         }
     }
