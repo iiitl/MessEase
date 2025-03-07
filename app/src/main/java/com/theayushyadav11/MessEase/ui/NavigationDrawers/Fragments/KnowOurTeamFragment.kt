@@ -58,7 +58,7 @@ class KnowOurTeamFragment : Fragment() {
                     v.findViewById<TextView>(R.id.mname).text = user.name
                     v.findViewById<TextView>(R.id.email).text = user.email
 
-                    mess.loadCircleImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
+                    mess.loadCircularImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
                     val user = mess.getUser()
                     if (user.designation == COORDINATOR || user.designation == DEVELOPER) {
                         v.findViewById<ImageView>(R.id.delete).visibility = View.VISIBLE
