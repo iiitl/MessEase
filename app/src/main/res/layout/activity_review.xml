@@ -41,27 +41,17 @@
                    android:id="@+id/day"
                    android:layout_width="0dp"
                    android:layout_weight="1"
-
                    android:layout_height="wrap_content"
                    android:hint="Monday"
                    app:endIconMode="dropdown_menu"/>
 
-
-
                <Spinner
                    android:id="@+id/type"
                    android:layout_width="0dp"
-
-
                    android:layout_weight="1"
                    android:layout_height="wrap_content"
                    android:hint="Breakfast"
                    app:endIconMode="dropdown_menu"/>
-
-
-
-
-
            </LinearLayout>
 
             <TextView

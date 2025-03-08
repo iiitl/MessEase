@@ -59,8 +59,8 @@ class KnowOurTeamFragment : Fragment() {
                     v.findViewById<TextView>(R.id.email).text = user.email
 
                     mess.loadCircularImage(user.photoUrl, v.findViewById(R.id.profilePhoto))
-                    val user = mess.getUser()
-                    if (user.designation == COORDINATOR || user.designation == DEVELOPER) {
+                    val currentUser = mess.getUser()
+                    if (currentUser.designation == COORDINATOR ||currentUser.designation == DEVELOPER) {
                         v.findViewById<ImageView>(R.id.delete).visibility = View.VISIBLE
                         v.findViewById<ImageView>(R.id.delete).setOnClickListener {
                             mess.showAlertDialog(
@@ -76,6 +76,7 @@ class KnowOurTeamFragment : Fragment() {
 
                         }
                     }
+                    mess.log("User: ${user.name}-${user.designation}")
                     when (user.designation) {
                         COORDINATOR -> binding.coordAdder.addView(v)
                         DEVELOPER -> binding.devAdder.addView(v)
