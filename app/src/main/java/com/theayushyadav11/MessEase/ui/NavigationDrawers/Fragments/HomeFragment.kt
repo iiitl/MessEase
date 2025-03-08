@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,6 +36,7 @@ import com.theayushyadav11.MessEase.ui.Adapters.DateItem
 import com.theayushyadav11.MessEase.ui.Adapters.MsgAdapter
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels.HomeViewModel
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.viewModelFactories.HomeViewModelFactory
+import com.theayushyadav11.MessEase.ui.splash.SplashScreen
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.databaseReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
@@ -46,6 +48,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -70,9 +73,12 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         super.onViewCreated(view, savedInstanceState)
         setDateAdapter()
         initialise()
-        updateDetails()
-        listeners()
-        updateUI()
+        setMainMenu {
+            updateDetails()
+            listeners()
+            updateUI()
+        }
+
     }
 
     //Initialising all the variables etc...
@@ -473,6 +479,28 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
             }
         }
+    }
+    private fun setMainMenu(onResult: () -> Unit) {
+        firestoreReference.collection("MainMenu").document("menu")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    onResult()
+                    return@addSnapshotListener
+                }
+                val menu = (value?.toObject(Menu::class.java)!!)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val menuDatabase = MenuDatabase.getDatabase(requireContext()).menuDao()
+                    val newMenu = Menu(
+                        id = 0, creator = menu.creator, menu = menu.menu
+                    )
+                    menuDatabase.addMenu(newMenu)
+                    withContext(Dispatchers.Main) {
+                        onResult()
+                    }
+
+                }
+            }
+
     }
 }
 
