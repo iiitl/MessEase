@@ -185,29 +185,32 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Spicy Matar Chhole,\n" +
+                                    " Kulcha, Milk, Tea,\n" +
+                                    " Banana/egg,Bread,\n" +
+                                    " butter/jam ",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "  Vegetable Biryani ,Dal\n" +
+                                    " Makhni, Tawa Paratha,\n" +
+                                    " Raita",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
-                        ),
-                        Particulars(
-                            type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Bhel, tea",
+                            time = "5:00 PM to 6:00 PM"
                         ),
 
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = "Sewai ,Jeera\n" +
+                                    " Rice, Roti,Malai\n" +
+                                    " Kofta ,Punjabi\n" +
+                                    " Dal Tadka ",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -216,23 +219,31 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Pav Bhaji ,Daliya,Milk,\n" +
+                                    " Tea ,Banana /Egg -1pc,\n" +
+                                    " Bread Butter/jam ",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "  Spicy Chhola,\n" +
+                                    " Poori,\n" +
+                                    " Curd,\n" +
+                                    " Jeera Rice",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "  Maggi, Tea",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = "Arahar Dal Fry,\n" +
+                                    " Baigan Bharta,\n" +
+                                    " Roti,\n" +
+                                    " Rice ",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -241,23 +252,36 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Medu vada,\n" +
+                                    " Coconut chutney,\n" +
+                                    " sambhar,\n" +
+                                    " milk,\n" +
+                                    " tea,\n" +
+                                    " Banana/egg,\n" +
+                                    " Bread, butter/jam",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Rajma Masala,\n" +
+                                    " Boondi Raita,\n" +
+                                    " Roti,\n" +
+                                    " Jeera Rice ",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "Bread Pakoda,\n" +
+                                    " Sauce,Chutney ,\n" +
+                                    " Tea ",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = " Lauki Kofta,\n" +
+                                    " vegetable tahri roti raita\n" +
+                                    " thick ",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -266,23 +290,31 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = "Aloo paratha,\n" +
+                                    " curd, milk, tea,\n" +
+                                    " Banana/egg,\n" +
+                                    " Bread, Butter/jam",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "Sambhar,\n" +
+                                    " Roti,\n" +
+                                    " Rice ,\n" +
+                                    " Aaloo Gobi",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "Pyaz Bhajiya, chutney,Tea",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = " Shahi Paneer, Zeera rice,\n" +
+                                    " Mix Dal fry, Jalebi/\n" +
+                                    " Moong daal halwa ",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -291,23 +323,31 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Aloo Puri, Banana/\n" +
+                                    " egg,\n" +
+                                    " Milk,Tea,\n" +
+                                    " Bread,Butter/Jam",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "  Aaloo Pyaz Bhujia,Kadhi\n" +
+                                    " pyaaz\n" +
+                                    " pakoda,\n" +
+                                    " rice ,roti",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Chola Samosa,Tea",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = " Aloo matar gajar,\n" +
+                                    " Rice,Roti,\n" +
+                                    " Dal palak",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -316,23 +356,32 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Gobi Paratha,\n" +
+                                    " Banana/egg 1 pc\n" +
+                                    " bread\n" +
+                                    " Butter jam\n" +
+                                    " Milk,Tea, ",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = "  Aloo Palak,\n" +
+                                    " Arahar dal Fry,\n" +
+                                    " Roti,Rice",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Aloo tikki matar chaat\n" +
+                                    " with dahi and chutney",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = " Bhandara style sabji,\n" +
+                                    " Poori , Black Masoor Dal,\n" +
+                                    " Rice",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 
@@ -341,23 +390,33 @@ class FireBase {
                     listOf(
                         Particulars(
                             type = "Breakfast",
-                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            food = " Utappam, sambhar,\n" +
+                                    " coconut chutney,\n" +
+                                    " Milk, tea,\n" +
+                                    " banana/egg, Bread,\n" +
+                                    " butter/jam",
                             time = "8:30 AM to 10:00 AM"
                         ),
                         Particulars(
                             type = "Lunch",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Pindi Choley\n" +
+                                    " Bathure\n" +
+                                    " Rice\n" +
+                                    " Boondi Raita",
+                            time = "12:30 PM to 2:30 PM"
                         ),
                         Particulars(
                             type = "Snacks",
-                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
-                            time = "1:00 PM to 2:30 PM"
+                            food = " Rusk(5 pcs) ,Tea",
+                            time = "5:00 PM to 6:00 PM"
                         ),
                         Particulars(
                             type = "Dinner",
-                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
-                            time = "8:00 PM to 9:30 PM"
+                            food = "Veg\n" +
+                                    " Jalfrezi,Arhar\n" +
+                                    " Dal Fry\n" +
+                                    " Roti, JeeraRice",
+                            time = "7:30 PM to 9:30 PM"
                         )
                     )
 

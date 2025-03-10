@@ -2,7 +2,6 @@ package com.theayushyadav11.MessEase.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -34,18 +33,19 @@ class SplashScreen : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
         initialise()
-        runScripts()
+        //runScripts()
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
 
 
 
-      lifecycleScope.launch {
-          checkIfPresent {
-              runScripts()
-          }
-          delay(1500)
+        lifecycleScope.launch {
+            checkIfPresent {
+                if (it)
+                    runScripts()
+            }
+            delay(1500)
             if (isFirstTime()) {
                 getUpdate {
                     setMainMenu {
@@ -101,13 +101,12 @@ class SplashScreen : AppCompatActivity() {
                 finish()
 
             } else if (mess.isLoggedIn()) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                } else {
-                    startActivity(Intent(this, LoginAndSignUpActivity::class.java))
-                    finish()
-                }
-
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this, LoginAndSignUpActivity::class.java))
+                finish()
+            }
 
 
         }
@@ -144,13 +143,22 @@ class SplashScreen : AppCompatActivity() {
             }
 
     }
+
     fun runScripts() {
         fireBase.runScripts(mess.getUser())
     }
-   fun checkIfPresent(isPresent:(Boolean)->Unit)
-   {
-       firestoreReference.collection(MAIN_MENU).document(MENU).addSnapshotListener() { value, error ->
-           isPresent(value?.exists()!!)
-       }
-   }
+
+    fun checkIfPresent(isPresent: (Boolean) -> Unit) {
+        firestoreReference.collection(MAIN_MENU).document(MENU)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists())
+                    isPresent(false)
+                else isPresent(true)
+            }
+            .addOnFailureListener {
+                isPresent(false)
+            }
+    }
+
 }
