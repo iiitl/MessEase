@@ -40,13 +40,11 @@ import kotlinx.coroutines.withContext
 
 class Mess(context: Context) {
     var context: Context
-    private var loadingDialog: Dialog? = null
-    private var sharedPreferences: SharedPreferences
+    private var loadingDialog: Dialog? = Dialog(context)
+    private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     val designation = MutableLiveData<String>()
 
     init {
-        loadingDialog?.setCancelable(false)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         this.context = context
     }
 
@@ -93,11 +91,11 @@ class Mess(context: Context) {
             setContentView(layout)
             setCancelable(false)
 
-            window?.setBackgroundDrawableResource(android.R.color.transparent)
-            window?.setLayout(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
+//            window?.setBackgroundDrawableResource(android.R.color.transparent)
+//            window?.setLayout(
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT
+//            )
             show()
         }
     }

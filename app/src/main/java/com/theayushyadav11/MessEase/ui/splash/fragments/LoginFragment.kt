@@ -123,11 +123,12 @@ class LoginFragment : Fragment() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
+                mess.pbDismiss()
                 if (task.isSuccessful) {
                     navigate()
                 } else {
                     mess.toast("Authentication Failed.")
-                    mess.pbDismiss()
+
                 }
             }
     }

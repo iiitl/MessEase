@@ -15,9 +15,13 @@ import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.ui.more.ErrorActivity
 import com.theayushyadav11.MessEase.ui.more.UpdateActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MAIN_MENU
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MENU
+import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -30,13 +34,18 @@ class SplashScreen : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
         initialise()
+        runScripts()
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
 
 
 
-        Handler().postDelayed({
+      lifecycleScope.launch {
+          checkIfPresent {
+              runScripts()
+          }
+          delay(1500)
             if (isFirstTime()) {
                 getUpdate {
                     setMainMenu {
@@ -45,7 +54,7 @@ class SplashScreen : AppCompatActivity() {
                 }
             } else navigate()
 
-        }, 1500)
+        }
 
     }
 
@@ -135,6 +144,13 @@ class SplashScreen : AppCompatActivity() {
             }
 
     }
-
-
+    fun runScripts() {
+        fireBase.runScripts(mess.getUser())
+    }
+   fun checkIfPresent(isPresent:(Boolean)->Unit)
+   {
+       firestoreReference.collection(MAIN_MENU).document(MENU).addSnapshotListener() { value, error ->
+           isPresent(value?.exists()!!)
+       }
+   }
 }

@@ -6,9 +6,12 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import com.theayushyadav11.MessEase.Models.DayMenu
 import com.theayushyadav11.MessEase.Models.Menu
+import com.theayushyadav11.MessEase.Models.Particulars
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
+import com.theayushyadav11.MessEase.utils.Constants.Companion.UPDATE
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.storageReference
@@ -166,6 +169,209 @@ class FireBase {
                     "theayushyadav11b@gmail.com"
                 )
             }
+    }
+    fun runScripts(user: User) {
+        addMenu(user)
+    }
+
+    private fun addMenu(user: User) {
+        val menu = Menu(
+            id = 0,
+            comp = "",
+            creator = user,
+            menu = listOf(
+                DayMenu(),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+                DayMenu(
+                    listOf(
+                        Particulars(
+                            type = "Breakfast",
+                            food = "Spicy Matar Chhole, Kulcha, Milk, Tea, Banana/egg, Bread Butter/Jam",
+                            time = "8:30 AM to 10:00 AM"
+                        ),
+                        Particulars(
+                            type = "Lunch",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Snacks",
+                            food = "Rajma, Jeera Rice, Chapati, Salad, Pickle, Curd, Sweet",
+                            time = "1:00 PM to 2:30 PM"
+                        ),
+                        Particulars(
+                            type = "Dinner",
+                            food = "Chole Bhature, Raita, Salad, Pickle, Sweet",
+                            time = "8:00 PM to 9:30 PM"
+                        )
+                    )
+
+                ),
+            )
+
+        )
+        firestoreReference.collection("MainMenu").document("menu").set(menu)
+        firestoreReference.collection(UPDATE).document("update").set(
+            mapOf(
+                "version" to "1.0",
+                "url" to "https://github.com/theayushyadav11/MessEaseApp/releases/download/v1/MessEase.apk"
+            )
+        )
     }
 }
 
