@@ -76,6 +76,7 @@
             </intent-filter>
         </activity>
 
+
         <service
             android:name=".notifications.MyFirebaseMessagingService"
             android:exported="false">
