@@ -8,8 +8,9 @@ MessEase is an Android application designed to streamline and simplify the mess-
 
 ### **Features**
 1. **Daily Menu Display:** View the menu for each day, ensuring all users stay informed about meal options.
-   
-   ![Menu Screenshot](https://github.com/user-attachments/assets/0e54b882-d913-4494-a8b7-69b17f19d455)
+   <img src="https://github.com/user-attachments/assets/0e54b882-d913-4494-a8b7-69b17f19d455" alt="Description" width="300">
+
+  
 
 2. **Automated Push Notifications:** Receive notifications for each meal 30 minutes in advance.
 
