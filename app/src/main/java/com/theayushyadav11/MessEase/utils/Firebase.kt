@@ -10,15 +10,24 @@ import com.theayushyadav11.MessEase.Models.DayMenu
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.Particulars
 import com.theayushyadav11.MessEase.Models.User
+import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
+import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MAIN_MENU
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MEMBER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MENU
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SENIOR_MEMBER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
 import com.theayushyadav11.MessEase.utils.Constants.Companion.UPDATE
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
+import com.theayushyadav11.MessEase.utils.Constants.Companion.UID
+import com.theayushyadav11.MessEase.utils.Constants.Companion.VOLUNTEER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.storageReference
 
 class FireBase {
     fun getUser(uid: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
-        firestoreReference.collection("Users").whereEqualTo("uid", uid)
+        firestoreReference.collection(USERS).whereEqualTo(UID, uid)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     onFailure(error)
@@ -78,11 +87,11 @@ class FireBase {
 
     fun getIcon(designation: String): Int {
         when (designation) {
-            "Coordinator" -> return com.theayushyadav11.MessEase.R.drawable.coordinator
-            "Member" -> return com.theayushyadav11.MessEase.R.drawable.member
-            "Volunteer" -> return com.theayushyadav11.MessEase.R.drawable.volunteer
-            "Senior-Member" -> return com.theayushyadav11.MessEase.R.drawable.seniormember
-            "Developer" -> return com.theayushyadav11.MessEase.R.drawable.developer
+            COORDINATOR -> return com.theayushyadav11.MessEase.R.drawable.coordinator
+            MEMBER -> return com.theayushyadav11.MessEase.R.drawable.member
+            VOLUNTEER -> return com.theayushyadav11.MessEase.R.drawable.volunteer
+            SENIOR_MEMBER -> return com.theayushyadav11.MessEase.R.drawable.seniormember
+            DEVELOPER -> return com.theayushyadav11.MessEase.R.drawable.developer
             else ->
                 return com.theayushyadav11.MessEase.R.drawable.logo
         }
@@ -424,7 +433,7 @@ class FireBase {
             )
 
         )
-        firestoreReference.collection("MainMenu").document("menu").set(menu)
+        firestoreReference.collection(MAIN_MENU).document(MENU).set(menu)
         firestoreReference.collection(UPDATE).document("update").set(
             mapOf(
                 "version" to "1.0",
@@ -433,5 +442,3 @@ class FireBase {
         )
     }
 }
-
-
