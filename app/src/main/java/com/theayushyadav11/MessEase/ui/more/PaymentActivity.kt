@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doOnTextChanged
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
@@ -54,7 +55,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
             )
             options.put("theme.color", "#1972f0");
             options.put("currency", "INR");
-            options.put("amount", "500")
+            options.put("amount", binding.etAmount.text.toString().toDouble() * 100)
 
             val retryObj = JSONObject();
             retryObj.put("enabled", true);
@@ -62,7 +63,6 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
             options.put("retry", retryObj);
 
             val prefill = JSONObject()
-            prefill.put("email", "theayushyadav11@gmail.com")
             prefill.put("contact", "9696620395")
 
             options.put("prefill", prefill)
@@ -76,6 +76,19 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
 
     private fun initialise() {
         setUpToolBar()
+        amountWatcher()
+        binding.btnPay.isFocusable = true
+    }
+
+    private fun amountWatcher() {
+       binding.etAmount.doOnTextChanged {
+              text, start, before, count ->
+              if (text.toString().isNotEmpty()) {
+                binding.btnPay.isEnabled = true
+              } else {
+                binding.btnPay.isEnabled = false
+              }
+       }
     }
 
     fun setUpToolBar() {
@@ -93,11 +106,13 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentSuccess(p0: String?, p1: PaymentData?) {
-        Toast.makeText(this@PaymentActivity, "payment success", Toast.LENGTH_SHORT).show()
+        binding.etAmount.text?.clear()
+        Toast.makeText(this@PaymentActivity, "Payment Success!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
-        Toast.makeText(this@PaymentActivity, p2.toString(), Toast.LENGTH_SHORT).show()
+        binding.etAmount.text?.clear()
+        Toast.makeText(this@PaymentActivity,"Payment Failed!", Toast.LENGTH_SHORT).show()
         Mess(this@PaymentActivity).log(p2.toString())
     }
 

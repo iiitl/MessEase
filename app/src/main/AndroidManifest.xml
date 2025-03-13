@@ -44,13 +44,15 @@
         <activity
             android:name=".ui.splash.fragments.LoginAndSignUpActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            />
         <activity
             android:name=".ui.more.ReviewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.more.PaymentActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".ui.more.SettingsActivity"
