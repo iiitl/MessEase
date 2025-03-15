@@ -162,7 +162,7 @@ class CreateMsgFragment : Fragment() {
         val toolbar: Toolbar = binding.toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = "Create Message"
-
+        toolbar.setTitleTextColor(Color.WHITE)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar.navigationIcon?.setTint(Color.WHITE)

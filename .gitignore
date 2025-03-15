@@ -1,7 +1,7 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches
+/.idea/
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
@@ -15,3 +15,6 @@
 local.properties
 /app/src/main/res/raw/messease.json
 /app/src/google-services.json
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml

@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:background="@color/white"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/baseline_home_filled_24"
-            android:title="Home" />
+            android:title="Home"
+
+            />
         <item
             android:id="@+id/nav_messCommitteeActivity"
             android:icon="@drawable/baseline_people_alt_24"
@@ -16,24 +20,40 @@
             android:id="@+id/nav_admin"
             android:icon="@drawable/baseline_admin_panel_settings_24"
             android:title="Admin" />
-        <item
-            android:id="@+id/nav_download"
-            android:icon="@drawable/baseline_file_download_24"
-            android:orderInCategory="100"
-            android:title="Download Current Menu" />
+
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/team_svgrepo_com"
             android:title="@string/menu_know_our_team" />
+        <item
+            android:id="@+id/nav_download"
+            android:icon="@drawable/baseline_file_download_24"
+            android:title="Download Current Menu" />
     </group>
 
-    <!-- This group is for the logout button -->
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/baseline_logout_24"
-            android:orderInCategory="100"
-            android:title="Logout" />
-    </group>
+    <item android:title="Preferences">
+        <menu>
+            <item
+                android:id="@+id/nav_darkmode"
+                android:checkable="true"
+                android:icon="@drawable/baseline_toggle_off_24"
+                android:actionLayout="@layout/switch_item"
+                android:title="Dark Mode" />
+
+        </menu>
+    </item>
+
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/baseline_logout_24"
+                android:title="Logout" />
+
+        </menu>
+
+    </item>
+
 
 </menu>

@@ -19,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.ui.splash.SplashScreen
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.databaseReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
@@ -47,7 +48,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val title = SpannableString(t)
         title.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, SplashScreen::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(
