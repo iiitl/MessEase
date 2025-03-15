@@ -6,6 +6,7 @@ import com.google.auth.oauth2.GoogleCredentials
 
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import kotlinx.coroutines.CoroutineScope
@@ -49,26 +50,26 @@ class PushNotifications(private val context: Context, private val target: String
     }
 
     private fun getTokens(onResult: (List<String>,List<String>) -> Unit) {
-        firestoreReference.collection("Users").addSnapshotListener { value, error ->
-            if (error != null) {
-                onResult(emptyList(), emptyList())
-                return@addSnapshotListener
-            }
-            val tokens = mutableListOf<String>()
-            val names = mutableListOf<String>()
-            for (document in value?.documents!!) {
-                val user = document.toObject(User::class.java)!!
-                if (target.contains(user.batch) && target.contains(user.passingYear) && target.contains(user.gender)) {
-                    if (user.token.length>1)
-                    {
-                        user.token.let { tokens.add(it) }
-                        names.add(user.email)
-                    }
+        firestoreReference.collection(USERS).get()
+            .addOnSuccessListener { value ->
+                val tokens = mutableListOf<String>()
+                val names = mutableListOf<String>()
 
+                for (document in value.documents) {
+                    val user = document.toObject(User::class.java)
+                    if (user != null && target.contains(user.batch) && target.contains(user.passingYear) && target.contains(user.gender)) {
+                        if (user.token.length > 1) {
+                            tokens.add(user.token)
+                            names.add(user.email)
+                        }
+                    }
                 }
+                onResult(tokens, names)
             }
-            onResult(tokens,names)
-        }
+            .addOnFailureListener {
+                onResult(emptyList(), emptyList())
+            }
+
     }
 
     private suspend fun updateAccessToken() {

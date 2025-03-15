@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentCreatePollBinding
+import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.CreatePollViewModel
 import com.theayushyadav11.MessEase.utils.Mess
 
@@ -81,11 +82,11 @@ class CreatePollFragment : Fragment() {
                 mess.pbDismiss()
                 mess.toast("Poll Added Successfully")
                 if (isAdded) {
-//                    val pn = PushNotifications(requireContext(), target)
-//                    pn.sendNotificationToAllUsers(
-//                        "New Poll Added\n Vote now!",
-//                        binding.tvQuestion.text.toString()
-//                    )
+                    val pn = PushNotifications(requireContext(), target)
+                    pn.sendNotificationToAllUsers(
+                        "New Poll Added\n Vote now!",
+                        binding.tvQuestion.text.toString()
+                    )
 
                 }
                 findNavController().navigateUp()
@@ -123,7 +124,7 @@ class CreatePollFragment : Fragment() {
         val toolbar: Toolbar = binding.toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = "Create Poll"
-
+        toolbar.setTitleTextColor(Color.WHITE)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar.navigationIcon?.setTint(Color.WHITE)
