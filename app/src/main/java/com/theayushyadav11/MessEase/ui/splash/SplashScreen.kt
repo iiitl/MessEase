@@ -51,7 +51,9 @@ class SplashScreen : AppCompatActivity() {
                         navigate()
                     }
                 }
-            } else navigate()
+            } else {
+                getUpdate { navigate() }
+            }
 
         }
 
