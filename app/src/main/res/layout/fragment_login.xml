@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:fillViewport="true"
+  >
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -17,7 +18,6 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-
             android:layout_height="500dp"
             android:scaleType="fitXY"
             android:src="@drawable/loginbg"
@@ -60,12 +60,12 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="180dp"
             android:hint="Email"
+            android:textColorHint="@color/black"
             app:boxStrokeColor="@color/food"
             app:boxStrokeWidth="2dp"
             app:endIconMode="clear_text"
-            app:helperTextTextColor="#FF0015"
+            app:hintTextColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:startIconDrawable="@drawable/baseline_attach_email_24">
@@ -74,6 +74,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,10 +84,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:hint="Password"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
             app:boxStrokeColor="@color/food"
             app:boxStrokeWidth="2dp"
-
-            app:helperTextTextColor="#FF0015"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilEmail"
@@ -95,8 +96,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
-
                 android:layout_width="match_parent"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -129,9 +130,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="55dp"
-            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@id/btngsi"
             android:gravity="center"
             android:orientation="horizontal"
+
             app:layout_constraintTop_toBottomOf="@id/btnLogin">
 
             <View

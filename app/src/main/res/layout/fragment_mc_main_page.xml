@@ -4,7 +4,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu">
+    android:background="@color/white"
+  >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
+                app:cardBackgroundColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="12dp"
@@ -122,6 +124,7 @@
                             android:layout_marginRight="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="1"
+                            app:cardBackgroundColor="@color/menu"
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
@@ -146,6 +149,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
+                                    android:textColor="@color/black"
                                     android:gravity="center"
                                     android:text="Edit Menu" />
                             </LinearLayout>
@@ -160,6 +164,7 @@
                             android:layout_marginVertical="6dp"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
+                            app:cardBackgroundColor="@color/menu"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/ripple"
@@ -185,6 +190,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
+                                    android:textColor="@color/black"
                                     android:gravity="center"
                                     android:text="Create Poll" />
                             </LinearLayout>
@@ -203,6 +209,7 @@
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
+                            app:cardBackgroundColor="@color/menu"
                             app:strokeColor="@color/grey"
                             app:strokeWidth="2dp">
 
@@ -224,6 +231,7 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
                                     android:gravity="center"
+                                    android:textColor="@color/black"
                                     android:text="Create Msg" />
                             </LinearLayout>
 
@@ -238,6 +246,7 @@
                             android:layout_marginRight="2dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="1"
+                            app:cardBackgroundColor="@color/menu"
                             android:background="@drawable/ripple"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
@@ -263,6 +272,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
+                                    android:textColor="@color/black"
                                     android:gravity="center"
                                     android:text="Upload Menu" />
                             </LinearLayout>
@@ -292,6 +302,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
+                    android:background="@color/white"
                     android:paddingStart="10dp">
 
                     <TextView
@@ -299,6 +310,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email"
+                        android:textColor="@color/black"
                         android:textSize="15sp" />
 
                     <TextView
@@ -306,6 +318,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ist year"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>

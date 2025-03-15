@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
+import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.ActivityPaymentBinding
 import com.theayushyadav11.MessEase.utils.Constants.Companion.RAZORPAY_API_KEY
 import com.theayushyadav11.MessEase.utils.Mess
@@ -53,7 +55,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
                 "image",
                 "https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
             )
-            options.put("theme.color", "#1972f0");
+            options.put("theme.color", ContextCompat.getColor(this, R.color.food));
             options.put("currency", "INR");
             options.put("amount", binding.etAmount.text.toString().toDouble() * 100)
 

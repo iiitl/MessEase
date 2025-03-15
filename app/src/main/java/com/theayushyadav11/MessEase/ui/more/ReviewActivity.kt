@@ -1,6 +1,5 @@
 package com.theayushyadav11.MessEase.ui.more
 
-import android.R
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.theayushyadav11.MessEase.Models.Review
 import com.theayushyadav11.MessEase.databinding.ActivityReviewBinding
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
@@ -28,10 +28,10 @@ class ReviewActivity : AppCompatActivity() {
     val day = MutableLiveData<Int>()
     val rating = MutableLiveData<Float>()
     val foodtype = MutableLiveData<Int>()
-    private val vm:ReviewViewModel by viewModels()
+    private val vm: ReviewViewModel by viewModels()
     val items2 = listOf("Breakfast", "Lunch", "Snacks", "Dinner")
-    val items =
-        listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","AppReview")
+    val items = listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "AppReview")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReviewBinding.inflate(layoutInflater)
@@ -42,31 +42,30 @@ class ReviewActivity : AppCompatActivity() {
 
     private fun initialise() {
         mess = Mess(this)
-        setUpAdapter()
         setUpToolBar()
-        setUpfood()
-        ratingBar()
-        rating.value=0.0f
+        setUpAdapters()
+        setUpFoodDisplay()
+        setUpRatingBar()
+        rating.value = 0.0f
     }
 
-    private fun setUpfood() {
-        day.observe(this, Observer { day ->
-            if(day==7)
-            {
-                binding.type.visibility=View.GONE
-                binding.food.setText("App Review")
+    private fun setUpFoodDisplay() {
+        day.observe(this, Observer { selectedDay ->
+            if (selectedDay == 7) {
+                // App Review selected
+                binding.typeContainer.visibility = View.GONE
+                binding.food.text = "App Review"
                 return@Observer
+            } else {
+                binding.typeContainer.visibility = View.VISIBLE
             }
-            else
-            {
-                binding.type.visibility=View.VISIBLE
-            }
-            foodtype.observe(this, Observer { type ->
-                if (day != null && foodtype.value != null) {
-                   vm.getMainMenu(this) {
-                        val d =day + 1
-                        val food = it.menu[d].particulars[type].food
-                       binding.food.text = food
+
+            foodtype.observe(this, Observer { selectedType ->
+                if (selectedDay != null && foodtype.value != null) {
+                    vm.getMainMenu(this) { menuData ->
+                        val dayIndex = selectedDay + 1
+                        val food = menuData.menu[dayIndex].particulars[selectedType].food
+                        binding.food.text = food
                     }
                 }
             })
@@ -75,23 +74,22 @@ class ReviewActivity : AppCompatActivity() {
 
     private fun listeners() {
         binding.btnPost.setOnClickListener {
-            if (binding.food.text.isNotEmpty())
-            {
-                    if (rating.value!! > 0.0f) {
-                        addReview(binding.food.text.toString(), binding.review.text.toString())
-                    }
-                    else
-                    {
-                        mess.toast("Please select rating")
-                    }
+            val foodText = binding.food.text.toString()
+            val reviewText = binding.review.text.toString()
 
+            if (foodText.isNotEmpty()) {
+                if (rating.value!! > 0.0f) {
+                    addReview(foodText, reviewText)
+                } else {
+                    mess.toast("Please select a rating")
+                }
             } else {
-                mess.toast("Please select food ")
+                mess.toast("Please select a food item")
             }
         }
     }
 
-    fun setUpToolBar() {
+    private fun setUpToolBar() {
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -99,6 +97,7 @@ class ReviewActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+        toolbar.setTitleTextColor(Color.WHITE)
         toolbar.navigationIcon?.setTint(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -107,31 +106,39 @@ class ReviewActivity : AppCompatActivity() {
 
     private fun addReview(food: String, review: String) {
         mess.addPb("Adding Review...")
-        val user=mess.getUser()
-            val key = databaseReference.push().key.toString()
-            val rv = Review(
-                id = key,
-                creater = user,
-                food = food,
-                day=items[day.value!!],
-                foodtype=if(day.value==7) "" else items2[foodtype.value!!] ,
-                rating = rating.value!!,
-                review = review.trim(),
-                dateTime = getCurrentTimeAndDate()
-            )
-            firestoreReference.collection("Reviews").document(key).set(rv).addOnCompleteListener { n->
-                if (n.isSuccessful) {
+        val user = mess.getUser()
+        val key = databaseReference.push().key.toString()
+
+        val rv = Review(
+            id = key,
+            creater = user,
+            food = food,
+            day = items[day.value!!],
+            foodtype = if (day.value == 7) "" else items2[foodtype.value!!],
+            rating = rating.value!!,
+            review = review.trim(),
+            dateTime = getCurrentTimeAndDate()
+        )
+
+        firestoreReference.collection("Reviews").document(key).set(rv)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     mess.toast("Review Added")
                     mess.pbDismiss()
-                    binding.review.text=null
-                    binding.ratingBar.rating=0.0f
+                    resetForm()
                 } else {
                     mess.toast("Failed to add review")
                     mess.pbDismiss()
                 }
             }
+    }
 
-
+    private fun resetForm() {
+        binding.review.text = null
+        binding.ratingBar.rating = 0.0f
+        // Optionally reset dropdowns to default values
+        (binding.day as? MaterialAutoCompleteTextView)?.setText(items[0], false)
+        (binding.type as? MaterialAutoCompleteTextView)?.setText(items2[0], false)
     }
 
     private fun getCurrentTimeAndDate(): String {
@@ -140,70 +147,37 @@ class ReviewActivity : AppCompatActivity() {
         return dateFormat.format(currentDate)
     }
 
-    fun setUpAdapter() {
+    private fun setUpAdapters() {
+        // Day adapter
+        val dayAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        (binding.day as? MaterialAutoCompleteTextView)?.setAdapter(dayAdapter)
 
-        val adapter = ArrayAdapter(this, R.layout.simple_list_item_1, items)
+        // Meal type adapter
+        val typeAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items2)
+        (binding.type as? MaterialAutoCompleteTextView)?.setAdapter(typeAdapter)
 
-        val spinner = binding.day
-        spinner.setAdapter(adapter)
+        // Set initial values
+        (binding.day as? MaterialAutoCompleteTextView)?.setText(items[0], false)
+        (binding.type as? MaterialAutoCompleteTextView)?.setText(items2[0], false)
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-
-        spinner.adapter = adapter
-
-
-        val adapter2 = ArrayAdapter(this, R.layout.simple_list_item_1, items2)
-
-        val spinner2 = binding.type
-        spinner2.setAdapter(adapter2)
-
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-
-        spinner2.adapter = adapter2
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (view != null) {  // Check for null view
-                    day.value = position
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                day.value = 0
-            }
+        // Set item click listeners
+        (binding.day as? MaterialAutoCompleteTextView)?.setOnItemClickListener { _, _, position, _ ->
+            day.value = position
         }
 
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (view != null) {  // Check for null view
-                    foodtype.value = position
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                foodtype.value = 0
-            }
+        (binding.type as? MaterialAutoCompleteTextView)?.setOnItemClickListener { _, _, position, _ ->
+            foodtype.value = position
         }
 
-
+        // Initialize default values
+        day.value = 0
+        foodtype.value = 0
     }
-    private fun ratingBar() {
-        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            if(fromUser)
-            {
 
-                this.rating.value=rating
+    private fun setUpRatingBar() {
+        binding.ratingBar.setOnRatingBarChangeListener { _, newRating, fromUser ->
+            if (fromUser) {
+                this.rating.value = newRating
             }
         }
     }

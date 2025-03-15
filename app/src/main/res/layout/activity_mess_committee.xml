@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="40dp"
+    android:background="@color/bg"
     tools:context=".ui.splash.SplashScreen">
     <fragment
         android:id="@+id/mc_host"

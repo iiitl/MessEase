@@ -57,6 +57,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:focusable="true"
                 android:id="@+id/etEmail"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -70,7 +71,6 @@
             android:hint="Password"
             app:boxStrokeColor="@color/food"
             app:boxStrokeWidth="2dp"
-
             app:helperTextTextColor="#FF0015"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
-
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

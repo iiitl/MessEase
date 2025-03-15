@@ -75,7 +75,7 @@ class DateAdapter(
                     R.color.menu
                 )
             )
-            holder.dates.setTextColor(Color.parseColor("#1972f0"))
+            holder.dates.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.food))
         } else {
             holder.main.setBackgroundColor(
                 ContextCompat.getColor(

@@ -46,7 +46,7 @@
         android:fillColor="#e4e4e4"
         android:pathData="M284.26,336.75a3.41,3.41 0,0 0,0 6.82L543.55,343.57a3.41,3.41 0,0 0,0 -6.82Z" />
     <path
-        android:fillColor="#1972f0"
+        android:fillColor="@color/food"
         android:pathData="M339.84,166.94a49,49 0,1 1,49 -49A49.06,49.06 0,0 1,339.84 166.94Z" />
     <path
         android:fillColor="#a0616a"

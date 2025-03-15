@@ -1,4 +1,6 @@
 /build
 ./src/main/raw/messease.json
 google-services.json
-.idea
+.idea/
+*.iml
+

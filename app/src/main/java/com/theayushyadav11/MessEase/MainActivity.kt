@@ -20,10 +20,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -35,6 +37,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -115,6 +118,15 @@ class MainActivity : AppCompatActivity() {
         askForNotificationPermission()
         fireBase.getToken()
         setAlarm()
+        listeners()
+    }
+
+    private fun listeners() {
+//        darkModeSwitch.setOnCheckedChangeListener{
+//           _, isChecked->
+//            toggleTheme()
+//        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -177,6 +189,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_download -> {
                     downloadMenu()
                     true
+                }
+                R.id.nav_darkmode -> {
+                    toggleTheme()
+                    return@setNavigationItemSelectedListener true
                 }
                 else -> {
                     navController.navigate(menuItem.itemId)
@@ -259,12 +275,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         setDrawerClickListener(navView, drawerLayout, navController)
-
         val menu: Menu = navView.menu
         val admin = menu.findItem(R.id.nav_admin)
         val user = mess.getUser()
-
         admin.isVisible = (user.designation == COORDINATOR || user.designation == DEVELOPER)
+
     }
 
     private fun setUpHeader() {
@@ -496,5 +511,13 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
         }
         super.onDestroy()
+    }
+    private fun toggleTheme() {
+        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 }

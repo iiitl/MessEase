@@ -61,6 +61,7 @@
             android:layout_height="25dp"
             android:gravity="center_vertical"
             android:text="Ayush Yadav"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/dIcon"
 
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -71,7 +72,7 @@
             android:layout_marginVertical="10dp"
             android:paddingStart="13dp"
             android:text="body"
-            android:textColor="#201F1F"
+            android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -129,6 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="12:45 Pm"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/comments" />
@@ -138,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="12:45 Pm"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/view3"
             app:layout_constraintTop_toBottomOf="@id/comments" />
