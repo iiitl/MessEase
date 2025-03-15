@@ -36,9 +36,6 @@ class SplashScreen : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
-
-
-
         lifecycleScope.launch {
             checkIfPresent {
                 if (it)
@@ -51,9 +48,8 @@ class SplashScreen : AppCompatActivity() {
                         navigate()
                     }
                 }
-            } else {
-                getUpdate { navigate() }
-            }
+
+            } else getUpdate {navigate()}
 
         }
 
