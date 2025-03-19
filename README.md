@@ -1,6 +1,6 @@
-
-
 ## **MessEase** 
+
+##### For contributing to this repo see [Contributers.md](https://github.com/iiitl/MessEase/blob/master/Contributors.md)
 
 ![logo](https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df)
 
