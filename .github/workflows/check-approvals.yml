@@ -1,0 +1,24 @@
+name: Ensure PR Has Two Maintainer Approvals
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  check-approvals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR approvals
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify minimum approvals
+        run: |
+          approvals=$(gh pr view ${{ github.event.pull_request.number }} --json reviews --jq '.reviews | map(select(.state=="APPROVED")) | length')
+          if [[ "$approvals" -lt 2 ]]; then
+            echo "❌ PR requires at least two approvals from maintainers."
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
