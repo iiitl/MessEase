@@ -436,7 +436,7 @@ class FireBase {
         firestoreReference.collection(MAIN_MENU).document(MENU).set(menu)
         firestoreReference.collection(UPDATE).document("update").set(
             mapOf(
-                "version" to "1.0",
+                "version" to "1.1",
                 "url" to "https://github.com/theayushyadav11/MessEaseApp/releases/download/v1/MessEase.apk"
             )
         )
