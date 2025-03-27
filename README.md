@@ -1,5 +1,6 @@
-
 ## **MessEase** 
+
+##### For contributing to this repo see [Contributers.md](https://github.com/iiitl/MessEase/blob/master/Contributors.md)
 
 ![logo](https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df)
 
@@ -15,8 +16,6 @@ MessEase is an Android application designed to streamline and simplify the mess-
 2. **Automated Push Notifications:** Receive notifications for each meal 30 minutes in advance.
 
 3. **Mess Committee Section:** A secure section exclusively accessible to mess committee members for managing mess operations.
-   
-   ![Committee Section Screenshot](https://github.com/user-attachments/assets/66470546-67cb-4005-a25b-b508b2d438de)
 
 4. **Admin Panel:** An admin-only section to manage users, menus, and other administrative tasks.
 

@@ -88,7 +88,7 @@ class Mess(context: Context) {
             val tvMsg = layout.findViewById<TextView>(R.id.msg)
             tvMsg.text = message
             setContentView(layout)
-            setCancelable(false)
+            setCancelable(true)
 
 //            window?.setBackgroundDrawableResource(android.R.color.transparent)
 //            window?.setLayout(
