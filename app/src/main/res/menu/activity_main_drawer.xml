@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
     <group
-        android:background="@color/white"
+        android:background="@color/bg"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"

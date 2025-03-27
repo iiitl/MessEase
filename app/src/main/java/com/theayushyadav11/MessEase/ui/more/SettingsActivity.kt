@@ -85,6 +85,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         toolbar.navigationIcon?.setTint(Color.WHITE)
+        toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

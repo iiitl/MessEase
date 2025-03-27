@@ -102,6 +102,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
             setDisplayShowHomeEnabled(true)
         }
         toolbar.navigationIcon?.setTint(Color.WHITE)
+        toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

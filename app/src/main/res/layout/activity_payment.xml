@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/bg"
     android:layout_height="match_parent"
     tools:context=".ui.more.PaymentActivity">
 
@@ -13,13 +14,10 @@
         android:layout_height="59dp"
         android:background="@color/food"
         android:paddingBottom="5dp"
-
-        android:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleEnabled="true"
-        app:titleTextColor="@color/white" />
+        app:titleEnabled="true" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -28,11 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:hint="Enter Amount in Rupees"
+        app:startIconDrawable="@drawable/baseline_currency_rupee_24"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:layout_editor_absoluteX="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAmount"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />

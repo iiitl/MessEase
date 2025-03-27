@@ -80,7 +80,7 @@ class DateAdapter(
             holder.main.setBackgroundColor(
                 ContextCompat.getColor(
                     holder.itemView.context,
-                    R.color.white
+                    R.color.bg
                 )
             )
             holder.dates.setTextColor(
