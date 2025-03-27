@@ -23,7 +23,6 @@ Thank you for your interest in contributing to the MessEaseApp! Please follow th
 2. **Add an Android App to Your Firebase Project:**
    - In the Firebase Console, click on `Add app` and select the Android icon.
    - Register your app with the package name (`com.theayushyadav11.MessEase`).
-   - Download the `google-services.json` file provided and place it in the `app` directory of your project, select `Project` to view a proper file structure.
 
 3. **Enable Firebase Services:**
    - **Authentication:**
@@ -44,6 +43,7 @@ Thank you for your interest in contributing to the MessEaseApp! Please follow th
        ```
        ./gradlew signingreport
       - Copy the SHA-1 and SHA-256 keys from the report and add them to Firebase.
+      - After adding SHA-1 and SHA-256 keys and then download the `google-services.json` file provided and place it in the `app` directory of your project, select `Project` to view a proper file structure.
 
 5. **Set Up Google Cloud Console:**
    - Go to the [Google Cloud Console](https://console.cloud.google.com/).
