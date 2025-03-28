@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -20,7 +21,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
-
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -37,7 +37,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -70,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mess: Mess
     private lateinit var alarmManager: AlarmManager
     private lateinit var analytics: FirebaseAnalytics
+    private lateinit var sharedPreferences: SharedPreferences
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 if (pendingIntent != null) {
                     alarmManager.cancel(pendingIntent)
                     pendingIntent.cancel()
-                Log.d(TAG, "All alarms cancelled")
+                    Log.d(TAG, "All alarms cancelled")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -110,7 +110,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        applySavedTheme()
         initialise()
         setUpNav()
         setUpHeader()
@@ -120,7 +121,32 @@ class MainActivity : AppCompatActivity() {
         setAlarm()
         listeners()
     }
+    private fun applySavedTheme() {
+        val isNightMode = sharedPreferences.getBoolean("isNightMode", false)
+        if (isNightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
 
+    private fun toggleTheme() {
+        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        val isNightMode = currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES
+
+        val newMode = if (isNightMode) {
+            AppCompatDelegate.MODE_NIGHT_NO
+        } else {
+            AppCompatDelegate.MODE_NIGHT_YES
+        }
+
+        AppCompatDelegate.setDefaultNightMode(newMode)
+
+        with(sharedPreferences.edit()) {
+            putBoolean("isNightMode", !isNightMode)
+            apply()
+        }
+    }
     private fun listeners() {
 //        darkModeSwitch.setOnCheckedChangeListener{
 //           _, isChecked->
@@ -512,12 +538,5 @@ class MainActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
-    private fun toggleTheme() {
-        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-    }
+
 }
