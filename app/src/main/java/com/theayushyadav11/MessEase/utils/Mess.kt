@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.R.string.empty_field
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
@@ -202,7 +204,7 @@ class Mess(context: Context) {
         bind.done.setOnClickListener {
             val d = bind.etUpdate.text.toString()
             if (d.isEmpty()) {
-                toast("This feild cannot be empty!")
+                toast(context.getString(R.string.empty_field))
             } else {
                 onOkClicked(d)
                 dialog.dismiss()
@@ -297,11 +299,11 @@ class Mess(context: Context) {
                 if (i > 7 && rbList[i].isChecked) batchSelected = true
             }
             if (!yearSelected) {
-                toast("Please Select a year")
+                toast(context.getString(R.string.select_year))
             } else if (!genderSelected) {
-                toast("Please Select gender")
+                toast(context.getString(R.string.select_gender))
             } else if (!batchSelected) {
-                toast("Please Select a batch")
+                toast(context.getString(R.string.select_batch))
             } else {
                 onResult(target)
                 dialog.dismiss()
@@ -470,8 +472,8 @@ class Mess(context: Context) {
      * @param url-> The direct URL to the file.
      */
     fun downloadFile(url: String) {
-        val title = "MessMenu.pdf"
-        val description = "Downloading file"
+        val title = context.getString(R.string.title_mess_menu)
+        val description = context.getString(R.string.description_downloading_file)
         val request = DownloadManager.Request(Uri.parse(url))
         request.setTitle(title)
         request.setDescription(description)
@@ -484,7 +486,7 @@ class Mess(context: Context) {
         )
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadId = downloadManager.enqueue(request)
-        Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.download_started), Toast.LENGTH_SHORT).show()
     }
 
     /**
