@@ -562,14 +562,13 @@ class Mess(context: Context) {
     fun getIsDarkMode(): Boolean {
         return sharedPreferences.getBoolean("isDarkMode", false)
     }
-
-    fun changeTheme() {
+    fun changeTheme()
+    {
         val editor = sharedPreferences.edit()
         editor.putBoolean("isDarkMode", !getIsDarkMode())
         editor.apply()
         setTheme()
     }
-
     fun setTheme() {
         if (getIsDarkMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -577,6 +576,7 @@ class Mess(context: Context) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+
 }
 
 

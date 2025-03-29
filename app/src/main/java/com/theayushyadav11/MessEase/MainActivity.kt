@@ -108,11 +108,8 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mess = Mess(this)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        applySavedTheme()
         initialise()
         setUpNav()
         setUpHeader()
@@ -122,27 +119,8 @@ class MainActivity : AppCompatActivity() {
         setAlarm()
         listeners()
     }
-    private fun applySavedTheme() {
-        val isNightMode = mess.get("isNightMode","false").toBoolean()
-        val newMode = if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES
-        else AppCompatDelegate.MODE_NIGHT_NO
-        AppCompatDelegate.setDefaultNightMode(newMode)
-    }
 
-    private fun toggleTheme() {
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        val isNightMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES
 
-        val newMode = if (isNightMode) {
-            AppCompatDelegate.MODE_NIGHT_NO
-        } else {
-            AppCompatDelegate.MODE_NIGHT_YES
-        }
-
-        AppCompatDelegate.setDefaultNightMode(newMode)
-
-        mess.save("isNightMode", (!isNightMode).toString())
-    }
     private fun listeners() {
 //        darkModeSwitch.setOnCheckedChangeListener{
 //           _, isChecked->
@@ -193,6 +171,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+
     private fun setDrawerClickListener(
         navView: NavigationView,
         drawerLayout: DrawerLayout,
@@ -213,9 +192,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_darkmode -> {
-                    toggleTheme()
+                    mess.changeTheme()
                     return@setNavigationItemSelectedListener true
                 }
+
                 else -> {
                     navController.navigate(menuItem.itemId)
                     drawerLayout.closeDrawers()

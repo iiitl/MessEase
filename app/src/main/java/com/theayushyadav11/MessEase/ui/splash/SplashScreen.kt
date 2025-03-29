@@ -31,7 +31,6 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initialise()
-        applySavedTheme()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
@@ -58,15 +57,7 @@ class SplashScreen : AppCompatActivity() {
         }
 
     }
-    private fun applySavedTheme() {
-        val savedTheme = mess.get("isNightMode").toBoolean()
-        val newMode = if (savedTheme) {
-            AppCompatDelegate.MODE_NIGHT_YES
-        } else {
-            AppCompatDelegate.MODE_NIGHT_NO
-        }
-        AppCompatDelegate.setDefaultNightMode(newMode)
-    }
+
 
 
     fun initialise() {
