@@ -98,7 +98,7 @@ class Mess(context: Context) {
      * @return The stored poll ID, or an empty string if none is stored.
      */
     fun getPollId(): String {
-        return get("pollId", "7:30")
+        return get("pollId")
     }
 
     /**
@@ -116,7 +116,7 @@ class Mess(context: Context) {
      * @return `true` if the user is logged in, otherwise `false`.
      */
     fun isLoggedIn(): Boolean {
-        if (get("isLoggedIn", "7:30") == "true") {
+        if (get("isLoggedIn") == "true") {
             return true
         } else {
             return false

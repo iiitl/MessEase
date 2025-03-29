@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mess: Mess
     private lateinit var alarmManager: AlarmManager
     private lateinit var analytics: FirebaseAnalytics
-    private lateinit var sharedPreferences: SharedPreferences
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
