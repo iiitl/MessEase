@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.Models.Menu
@@ -29,10 +30,12 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mess: Mess
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initialise()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
-        initialise()
+
+
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
@@ -55,8 +58,11 @@ class SplashScreen : AppCompatActivity() {
 
     }
 
+
+
     fun initialise() {
         mess = Mess(this)
+        mess.setTheme()
     }
 
     private fun getUpdate(onResult: () -> Unit) {
