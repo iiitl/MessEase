@@ -47,28 +47,72 @@ class Mess(context: Context) {
         this.context = context
     }
 
+    /**
+     * Saves a string value in SharedPreferences with a key pair
+     * @param key-> the key used to store the value
+     * @param value-> The string value to be stored
+     */
     fun save(key: String, value: String) {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
-    fun get(key: String, s: String): String {
+
+    /**
+     * Retrieves a string value from SharedPreferences for the specified key.
+     * Getter func for the above func
+     * @param key-> The key whose associated value is to be returned.
+     * @return The string value if it exists, otherwise an empty string.
+     */
+    fun get(key: String): String {
         return sharedPreferences.getString(key, "").toString()
     }
 
+    /**
+     * Retrieves a string value from SharedPreferences for the specified key, or
+     * gives a default value if the key does not exist
+     *
+     * @param key-> The key whose associated value is to be returned.
+     * @param defVal-> The default value to return if no value is found.
+     * @return The string value if it exists, otherwise `defVal`.
+     */
+    fun get(key: String, defVal: String): String {
+        return sharedPreferences.getString(key, defVal).toString()
+    }
+
+    /**
+     * Saves the poll ID to SharedPreferences.
+     *
+     * @param id-> The poll ID to store.
+     */
     fun sendPollId(id: String) {
         save("pollId", id)
     }
 
+    /**
+     * Retrieves the poll ID from SharedPreferences.
+     *
+     * @return The stored poll ID, or an empty string if none is stored.
+     */
     fun getPollId(): String {
         return get("pollId", "7:30")
     }
 
+    /**
+     * Sets a bool value indicating whether the user is logged in.
+     *
+     * @param isMember-> A boolean that is converted to a string and stored.
+     */
     fun setIsLoggedIn(isMember: Boolean) {
         save("isLoggedIn", isMember.toString())
     }
 
+    /**
+     * Checks if the user is logged in based on stored SharedPreferences value.
+     *
+     * @return `true` if the user is logged in, otherwise `false`.
+     */
     fun isLoggedIn(): Boolean {
         if (get("isLoggedIn", "7:30") == "true") {
             return true
@@ -77,6 +121,11 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Displays a progress dialog with the specified message.
+     *
+     * @param message-> The message to display in the loading dialog.
+     */
     fun addPb(message: String) {
         loadingDialog = Dialog(context).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -95,23 +144,47 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Dismisses the progress dialog if it is showing.
+     */
     fun pbDismiss() {
         loadingDialog?.setCancelable(true)
         loadingDialog?.dismiss()
     }
 
+    /**
+     * Shows a short Toast message.
+     *
+     * @param message-> The message or object to display as a Toast.
+     */
     fun toast(message: Any) {
         Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Displays a Snackbar with a specified message in the provided view.
+     *
+     * @param view-> The view to find a parent from.
+     * @param message-> The message to show in the Snackbar.
+     */
     fun snack(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
-
+    /**
+     * Logs a message to the console with a predefined tag.
+     *
+     * @param message-> The message or object to log.
+     */
     fun log(message: Any) {
         Log.d(TAG, message.toString())
     }
-
+    /**
+     * Shows a custom input dialog with a text field. The user can press "OK" or "Cancel".
+     *
+     * @param hint-> The hint text to show in the input field.
+     * @param onOkClicked-> A callback that receives the input when the user presses OK.
+     * @param onCancelClicked-> A callback that is invoked when the user presses Cancel.
+     */
     fun showInputDialog(
         hint: String,
         onOkClicked: (String) -> Unit,
@@ -138,6 +211,15 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Shows an alert dialog with a title, message, and OK/Cancel buttons.
+     *
+     * @param title-> The title of the dialog.
+     * @param message-> The message displayed in the dialog.
+     * @param okText-> The text for the OK button.
+     * @param cancelText-> The text for the Cancel button.
+     * @param onResult-> A callback invoked when the user clicks OK.
+     */
     fun showAlertDialog(
         title: String,
         message: String,
@@ -159,6 +241,12 @@ class Mess(context: Context) {
         builder.show()
     }
 
+    /**
+     * Displays a dialog for selecting recipients (year, gender, batch) for the specified type.
+     *
+     * @param type-> A string describing the type of content or operation (e.g., "poll", "notification").
+     * @param onResult-> A callback that returns the concatenated selection string.
+     */
     fun openDialog(type: String, onResult: (String) -> Unit) {
         val dialog = Dialog(context)
         val bind = SelTargetDialogBinding.inflate(LayoutInflater.from(context))
@@ -223,19 +311,41 @@ class Mess(context: Context) {
         dialog.show()
     }
 
+    /**
+     * Loads an image from a URL into the specified ImageView using Glide.
+     *
+     * @param url-> The URL of the image to load.
+     * @param view-> The ImageView in which to display the loaded image.
+     */
     fun loadImage(url: String, view: ImageView) {
         Glide.with(context).load(url).into(view)
     }
 
+    /**
+     * Opens the given URL in the device's default browser.
+     *
+     * @param url-> The URL to open.
+     */
     fun openLink(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
     }
 
+    /**
+     * Loads a circular-cropped image from a URL into the specified ImageView using Glide.
+     *
+     * @param url-> The URL of the image to load.
+     * @param view-> The ImageView in which to display the loaded image.
+     */
     fun loadCircularImage(url: String, view: ImageView) {
         Glide.with(context).load(url).circleCrop().error(R.drawable.profile_circle).into(view)
     }
 
+    /**
+     * Shows an image in a simple fullscreen dialog. Clicking the image dismisses the dialog.
+     *
+     * @param photo-> The URL of the image to display.
+     */
     fun showImage(photo: String) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.img2)
@@ -247,6 +357,12 @@ class Mess(context: Context) {
         dialog.show()
     }
 
+    /**
+     * Creates and returns a custom LinearLayoutManager that does not allow vertical scrolling,
+     * preventing IndexOutOfBoundsException in certain cases.
+     *
+     * @return A non-scrollable [RecyclerView.LayoutManager].
+     */
     fun getmanager(): RecyclerView.LayoutManager {
         val layoutManager = object : LinearLayoutManager(context) {
             override fun onLayoutChildren(
@@ -267,6 +383,12 @@ class Mess(context: Context) {
         return layoutManager
     }
 
+    /**
+     * Retrieves a list of strings from the Firestore "Lists" collection for the specified [listName].
+     *
+     * @param listName-> The name of the list in the Firestore document.
+     * @param onResult-> A callback invoked with the retrieved list.
+     */
     fun getLists(listName: String, onResult: (List<String>) -> Unit) {
         firestoreReference.collection("Lists").document("lists").get().addOnSuccessListener {
             val list = it.get(listName) as? List<String> ?: emptyList()
@@ -274,6 +396,12 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Checks if the provided email is in the allowed list, or meets certain conditions.
+     *
+     * @param email-> The email to validate.
+     * @param onResult-> A callback that returns `true` if valid, otherwise `false`.
+     */
     private fun cont(email: String, onResult: (Boolean) -> Unit) {
         getLists("allows") {
             if (it.contains(email)) {
@@ -283,6 +411,12 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Checks if the provided email is a valid email address
+     *
+     * @param email-> The email to validate.
+     * @param onResult-> A callback that returns `true` if valid, otherwise `false`.
+     */
     fun isValidEmail(email: String, onResult: (Boolean) -> Unit) {
         try {
             val emailR = email.substring(0, email.indexOf("@"))
@@ -331,6 +465,11 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Downloads the file at the specified [url] using the system [DownloadManager].
+     *
+     * @param url-> The direct URL to the file.
+     */
     fun downloadFile(url: String) {
         val title = "MessMenu.pdf"
         val description = "Downloading file"
@@ -349,6 +488,11 @@ class Mess(context: Context) {
         Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Stores the user's data in SharedPreferences.
+     *
+     * @param user-> The [User] object containing user details.
+     */
     fun setUser(user: User) {
         val s =
             user.uid + "#" + user.name + "#" + user.token + "#" + user.member + "#" +
@@ -358,6 +502,11 @@ class Mess(context: Context) {
         save("user", s)
     }
 
+    /**
+     * Retrieves the user's data from SharedPreferences and constructs a [User] object.
+     *
+     * @return The [User] object if data exists, otherwise a new empty [User].
+     */
     fun getUser(): User {
         try {
             val s = get("user", "7:30")
@@ -369,17 +518,33 @@ class Mess(context: Context) {
         }
     }
 
+    /**
+     * Retrieves update information from SharedPreferences.
+     *
+     * @param onResult-> A callback that returns two strings: version and URL.
+     */
     fun getUpdates(onResult: (String, String) -> Unit) {
         val s = get("update", "7:30")
         val a = s.split("#")
         onResult(a[0], a[1])
     }
 
+    /**
+     * Stores the given version and URL as update info in SharedPreferences.
+     *
+     * @param version-> The version string to store.
+     * @param url-> The URL to store.
+     */
     fun setUpdate(version: String, url: String) {
         val s = "$version#$url"
         save("update", s)
     }
 
+    /**
+     * Fetches the main [Menu] object from the local Room database asynchronously.
+     *
+     * @param onResult A callback that returns the [Menu] once loaded.
+     */
     @OptIn(DelicateCoroutinesApi::class)
     fun getMainMenu(onResult: (Menu) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -389,6 +554,5 @@ class Mess(context: Context) {
             }
         }
     }
-
-
 }
+
