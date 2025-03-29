@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         fun cancelAllAlarms(context: Context,index:Int) {
             try {
-                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java)
 
                 val pendingIntent = PendingIntent.getBroadcast(
@@ -108,9 +109,10 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mess = Mess(this)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         applySavedTheme()
         initialise()
         setUpNav()
@@ -122,17 +124,15 @@ class MainActivity : AppCompatActivity() {
         listeners()
     }
     private fun applySavedTheme() {
-        val isNightMode = sharedPreferences.getBoolean("isNightMode", false)
-        if (isNightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+        val isNightMode = mess.get("isNightMode","false").toBoolean()
+        val newMode = if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES
+        else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(newMode)
     }
 
     private fun toggleTheme() {
-        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        val isNightMode = currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val isNightMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES
 
         val newMode = if (isNightMode) {
             AppCompatDelegate.MODE_NIGHT_NO
@@ -142,10 +142,7 @@ class MainActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(newMode)
 
-        with(sharedPreferences.edit()) {
-            putBoolean("isNightMode", !isNightMode)
-            apply()
-        }
+        mess.save("isNightMode", (!isNightMode).toString())
     }
     private fun listeners() {
 //        darkModeSwitch.setOnCheckedChangeListener{

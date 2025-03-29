@@ -53,12 +53,8 @@ class Mess(context: Context) {
         editor.apply()
     }
 
-    fun get(key: String): String {
+    fun get(key: String, s: String): String {
         return sharedPreferences.getString(key, "").toString()
-    }
-
-    fun get(key: String, defVal: String): String {
-        return sharedPreferences.getString(key, defVal).toString()
     }
 
     fun sendPollId(id: String) {
@@ -66,7 +62,7 @@ class Mess(context: Context) {
     }
 
     fun getPollId(): String {
-        return get("pollId")
+        return get("pollId", "7:30")
     }
 
     fun setIsLoggedIn(isMember: Boolean) {
@@ -74,7 +70,7 @@ class Mess(context: Context) {
     }
 
     fun isLoggedIn(): Boolean {
-        if (get("isLoggedIn") == "true") {
+        if (get("isLoggedIn", "7:30") == "true") {
             return true
         } else {
             return false
@@ -364,7 +360,7 @@ class Mess(context: Context) {
 
     fun getUser(): User {
         try {
-            val s = get("user")
+            val s = get("user", "7:30")
             val a = s.split("#")
             Log.d(TAG, a.toString())
             return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
@@ -374,7 +370,7 @@ class Mess(context: Context) {
     }
 
     fun getUpdates(onResult: (String, String) -> Unit) {
-        val s = get("update")
+        val s = get("update", "7:30")
         val a = s.split("#")
         onResult(a[0], a[1])
     }
@@ -393,4 +389,6 @@ class Mess(context: Context) {
             }
         }
     }
+
+
 }

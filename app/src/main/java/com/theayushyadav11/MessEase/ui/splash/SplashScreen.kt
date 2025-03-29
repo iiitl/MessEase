@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.Models.Menu
@@ -29,10 +30,14 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mess: Mess
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        mess = Mess(this)
+        applySavedTheme()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
         initialise()
+
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         imageView.startAnimation(fadeAnimation)
@@ -54,6 +59,16 @@ class SplashScreen : AppCompatActivity() {
         }
 
     }
+    private fun applySavedTheme() {
+        val savedTheme = mess.get("isNightMode", "false").toBoolean()
+        val newMode = if (savedTheme) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(newMode)
+    }
+
 
     fun initialise() {
         mess = Mess(this)
@@ -111,7 +126,7 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun isFirstTime(): Boolean {
-        if (mess.get("firstTime") == "") {
+        if (mess.get("firstTime", "7:30") == "") {
             mess.save("firstTime", "false")
             return true
         } else return false
