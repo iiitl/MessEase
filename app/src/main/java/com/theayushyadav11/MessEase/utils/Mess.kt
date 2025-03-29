@@ -528,7 +528,7 @@ class Mess(context: Context) {
      * @param onResult-> A callback that returns two strings: version and URL.
      */
     fun getUpdates(onResult: (String, String) -> Unit) {
-        val s = get("update", "7:30")
+        val s = get("update")
         val a = s.split("#")
         onResult(a[0], a[1])
     }
