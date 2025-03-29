@@ -17,6 +17,7 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,8 @@ import java.util.Date
 class Mess(context: Context) {
     var context: Context
     private var loadingDialog: Dialog? = Dialog(context)
-    private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private var sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
     val designation = MutableLiveData<String>()
 
     init {
@@ -170,6 +172,7 @@ class Mess(context: Context) {
     fun snack(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
+
     /**
      * Logs a message to the console with a predefined tag.
      *
@@ -178,6 +181,7 @@ class Mess(context: Context) {
     fun log(message: Any) {
         Log.d(TAG, message.toString())
     }
+
     /**
      * Shows a custom input dialog with a text field. The user can press "OK" or "Cancel".
      *
@@ -554,5 +558,25 @@ class Mess(context: Context) {
             }
         }
     }
+
+    fun getIsDarkMode(): Boolean {
+        return sharedPreferences.getBoolean("isDarkMode", false)
+    }
+
+    fun changeTheme() {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isDarkMode", !getIsDarkMode())
+        editor.apply()
+        setTheme()
+    }
+
+    fun setTheme() {
+        if (getIsDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
 }
+
 

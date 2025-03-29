@@ -22,10 +22,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.MyApplication.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@color/menu</item>
-    </style>
-
     <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

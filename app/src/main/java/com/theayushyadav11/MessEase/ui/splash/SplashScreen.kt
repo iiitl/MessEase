@@ -30,13 +30,12 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mess: Mess
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        mess = Mess(this)
+        initialise()
         applySavedTheme()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
-        initialise()
+
 
         val imageView = findViewById<ImageView>(R.id.imageViewLogo)
         val fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -60,7 +59,7 @@ class SplashScreen : AppCompatActivity() {
 
     }
     private fun applySavedTheme() {
-        val savedTheme = mess.get("isNightMode", "false").toBoolean()
+        val savedTheme = mess.get("isNightMode").toBoolean()
         val newMode = if (savedTheme) {
             AppCompatDelegate.MODE_NIGHT_YES
         } else {
@@ -72,6 +71,7 @@ class SplashScreen : AppCompatActivity() {
 
     fun initialise() {
         mess = Mess(this)
+        mess.setTheme()
     }
 
     private fun getUpdate(onResult: () -> Unit) {
@@ -126,7 +126,7 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun isFirstTime(): Boolean {
-        if (mess.get("firstTime", "7:30") == "") {
+        if (mess.get("firstTime") == "") {
             mess.save("firstTime", "false")
             return true
         } else return false
