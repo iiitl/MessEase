@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.theayushyadav11.MessEase" />
+                  <option name="mobileSdkAppId" value="1:567099274361:android:99d9642e4f8e47a51fd0a8" />
+                  <option name="projectId" value="messease-4fd64" />
+                  <option name="projectNumber" value="567099274361" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

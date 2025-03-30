@@ -112,7 +112,12 @@ class McMainPage : Fragment() {
                 if (isAdded) {
                     mess.loadImage(user.photoUrl, binding.ivUser)
                 }
-
+                val designationIcon = when (user.designation) {
+                    "Coordinator" -> R.drawable.coordinator
+                    "Developer" -> R.drawable.developer
+                    else -> R.drawable.seniormember
+                }
+                binding.ivDesignation.setImageResource(designationIcon)
 
     }
 
