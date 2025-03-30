@@ -111,6 +111,8 @@ dependencies {
     implementation (libs.anychart.android)
     implementation (libs.checkout)
 
+    // Lottie Animation
+    implementation("com.airbnb.android:lottie:6.6.4")
 
 
 

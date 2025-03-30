@@ -37,7 +37,15 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         co.setKeyID(RAZORPAY_API_KEY)
 
         binding.btnPay.setOnClickListener {
-            startPayment()
+            if (binding.etAmount.text.toString().isEmpty()) {
+                Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show()
+            } else if (binding.etPurpose.text.toString().isEmpty()) {
+                Toast.makeText(this, "Please enter purpose", Toast.LENGTH_SHORT).show()
+            } else if (binding.etAmount.text.toString().toDouble() * 100 <= 0) {
+                Toast.makeText(this, "Please enter valid amount", Toast.LENGTH_SHORT).show()
+            } else {
+                startPayment()
+            }
         }
 
 
@@ -50,7 +58,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         try {
             val options = JSONObject()
             options.put("name", "MessEase")
-            options.put("description", "payment for the order")
+            options.put("description", binding.etPurpose.text.toString())
             options.put(
                 "image",
                 "https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
