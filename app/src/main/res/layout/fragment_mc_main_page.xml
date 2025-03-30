@@ -106,7 +106,7 @@
                             android:id="@+id/ivDesignation"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/seniormember"/>
+                            android:src="@drawable/volunteer"/>
 
                         <TextView
                             android:id="@+id/tvDesignation"

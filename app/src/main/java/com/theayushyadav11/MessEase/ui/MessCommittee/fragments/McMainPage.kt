@@ -115,7 +115,9 @@ class McMainPage : Fragment() {
                 val designationIcon = when (user.designation) {
                     "Coordinator" -> R.drawable.coordinator
                     "Developer" -> R.drawable.developer
-                    else -> R.drawable.seniormember
+                    "Senior Member" -> R.drawable.seniormember
+                    "Member" -> R.drawable.member
+                    else -> R.drawable.volunteer
                 }
                 binding.ivDesignation.setImageResource(designationIcon)
 
