@@ -38,7 +38,9 @@ Adjust announcement timings as needed.
 
 ### **8. Payment Integration**
 Seamlessly make payments to the mess through the app.  
-<img src="Paymment1.jpg" alt="Payment" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/d22acd90-7ae2-4de8-9355-44ff01999697" alt="Payment" width="300" height="600">
+
+
 
 ### **9. Downloadable Menu**
 Download the current menu, which updates automatically.  
@@ -49,11 +51,11 @@ The admin can add or remove committee members, with the member list displayed in
 
 ### **11. Review System**
 Users can leave reviews about the mess services, helping improve the quality of meals.  
-<img src="Review2.jpg" alt="Review" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/8abeb46a-3ef0-4f50-81fd-438f7f134045" alt="Review" width="300" height="600">
 
 ### **12. Dark Mode**
 The app supports a dark mode for better user experience.  
-<img src="Darkmode1.jpg" alt="Darkmode" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/66765c71-4c29-4ae9-a224-245562dd49c5" alt="Darkmode" width="300" height="600">
 
 ---
 
