@@ -20,6 +20,7 @@ import org.json.JSONObject
 
 class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private lateinit var binding: ActivityPaymentBinding
+    private lateinit var mess:Mess
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
@@ -38,11 +39,11 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
 
         binding.btnPay.setOnClickListener {
             if (binding.etAmount.text.toString().isEmpty()) {
-                Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show()
+                mess.toast("Please enter amount!")
             } else if (binding.etPurpose.text.toString().isEmpty()) {
-                Toast.makeText(this, "Please enter purpose", Toast.LENGTH_SHORT).show()
+                mess.toast("Please enter purpose!")
             } else if (binding.etAmount.text.toString().toDouble() * 100 <= 0) {
-                Toast.makeText(this, "Please enter valid amount", Toast.LENGTH_SHORT).show()
+                mess.toast("Please enter valid amount!")
             } else {
                 startPayment()
             }
@@ -87,6 +88,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private fun initialise() {
         setUpToolBar()
         amountWatcher()
+        mess=Mess(this)
         binding.btnPay.isFocusable = true
     }
 
