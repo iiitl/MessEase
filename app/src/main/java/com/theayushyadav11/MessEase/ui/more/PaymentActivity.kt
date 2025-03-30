@@ -20,6 +20,7 @@ import org.json.JSONObject
 
 class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private lateinit var binding: ActivityPaymentBinding
+    private lateinit var mess:Mess
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
@@ -37,7 +38,15 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         co.setKeyID(RAZORPAY_API_KEY)
 
         binding.btnPay.setOnClickListener {
-            startPayment()
+            if (binding.etAmount.text.toString().isEmpty()) {
+                mess.toast("Please enter amount!")
+            } else if (binding.etPurpose.text.toString().isEmpty()) {
+                mess.toast("Please enter purpose!")
+            } else if (binding.etAmount.text.toString().toDouble() * 100 <= 0) {
+                mess.toast("Please enter valid amount!")
+            } else {
+                startPayment()
+            }
         }
 
 
@@ -50,7 +59,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         try {
             val options = JSONObject()
             options.put("name", "MessEase")
-            options.put("description", "payment for the order")
+            options.put("description", binding.etPurpose.text.toString())
             options.put(
                 "image",
                 "https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
@@ -79,6 +88,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private fun initialise() {
         setUpToolBar()
         amountWatcher()
+        mess=Mess(this)
         binding.btnPay.isFocusable = true
     }
 
