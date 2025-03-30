@@ -90,19 +90,38 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
-                    <TextView
-                        android:id="@+id/tvDesignation"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:id="@+id/llDesignation"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        android:text="Loading..."
-
-                        android:textSize="21sp"
-
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvname" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvname">
+
+                        <ImageView
+                            android:id="@+id/ivDesignation"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/volunteer"/>
+
+                        <TextView
+                            android:id="@+id/tvDesignation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:text="Loading..."
+
+                            android:textSize="21sp"
+
+                            />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -113,7 +132,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDesignation">
+                        app:layout_constraintTop_toBottomOf="@+id/llDesignation">
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/editMenu"
