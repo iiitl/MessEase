@@ -19,6 +19,7 @@ class SignUpFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var confirmPassword: String
     private lateinit var mess: Mess
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,16 +55,22 @@ class SignUpFragment : Fragment() {
         binding.verify.setOnClickListener {
             email = binding.etEmail.text.toString().trim()
             password = binding.etPassword.text.toString().trim()
-            mess.isValidEmail(email) {
-                if (it) {
-                    if (email.isNotEmpty() && password.isNotEmpty()) {
-                        registerUser(email, password)
+            confirmPassword = binding.etConfirmPassword.text.toString().trim()
+            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+                mess.isValidEmail(email) {
+                    if (it) {
+                        if (password == confirmPassword) {
+                            registerUser(email, password)
+                        } else {
+                            mess.toast("Passwords do not match!")
+                        }
                     } else {
-                        mess.toast("Feilds cannot be Empty!")
+                        mess.toast("Use only College Email!")
                     }
-                } else {
-                    mess.toast("Use only College Email!")
-                }}
+                }
+            } else {
+                mess.toast("Fields cannot be Empty!")
+            }
 
 
             }

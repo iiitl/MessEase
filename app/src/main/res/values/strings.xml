@@ -12,5 +12,18 @@
     <string name="menu_know_our_team">Know our team\n</string>
     <string name="demolunch">Aytush yadav is very good.</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="empty_field">This field cannot be empty!</string>
+    <string name="select_year">Please Select a year</string>
+    <string name="select_gender">Please Select gender</string>
+    <string name="select_batch">Please Select a batch</string>
+    <string name="title_mess_menu">MessMenu.pdf</string>
+    <string name="description_downloading_file">Downloading file</string>
+    <string name="download_started">Download started</string>
+    <string name="mess_poll_id">pollId</string>
+    <string name="user_is_Logged_In">isLoggedIn</string>
+    <string name="ayush_yadav">ayushyadav</string>
+    <string name="suffix_iiitl.ac.in"><![CDATA[iiitl.ac.in]]></string>
+    <string name="user">user</string>
+    <string name="update">update</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

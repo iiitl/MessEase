@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.R.string.empty_field
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
@@ -89,7 +91,7 @@ class Mess(context: Context) {
      * @param id-> The poll ID to store.
      */
     fun sendPollId(id: String) {
-        save("pollId", id)
+        save(context.getString(R.string.mess_poll_id), id)
     }
 
     /**
@@ -98,7 +100,7 @@ class Mess(context: Context) {
      * @return The stored poll ID, or an empty string if none is stored.
      */
     fun getPollId(): String {
-        return get("pollId")
+        return get(context.getString(R.string.mess_poll_id))
     }
 
     /**
@@ -116,7 +118,7 @@ class Mess(context: Context) {
      * @return `true` if the user is logged in, otherwise `false`.
      */
     fun isLoggedIn(): Boolean {
-        if (get("isLoggedIn") == "true") {
+        if (get(context.getString(R.string.user_is_Logged_In)) == "true") {
             return true
         } else {
             return false
@@ -207,7 +209,7 @@ class Mess(context: Context) {
         bind.done.setOnClickListener {
             val d = bind.etUpdate.text.toString()
             if (d.isEmpty()) {
-                toast("This feild cannot be empty!")
+                toast(context.getString(R.string.empty_field))
             } else {
                 onOkClicked(d)
                 dialog.dismiss()
@@ -302,11 +304,11 @@ class Mess(context: Context) {
                 if (i > 7 && rbList[i].isChecked) batchSelected = true
             }
             if (!yearSelected) {
-                toast("Please Select a year")
+                toast(context.getString(R.string.select_year))
             } else if (!genderSelected) {
-                toast("Please Select gender")
+                toast(context.getString(R.string.select_gender))
             } else if (!batchSelected) {
-                toast("Please Select a batch")
+                toast(context.getString(R.string.select_batch))
             } else {
                 onResult(target)
                 dialog.dismiss()
@@ -453,8 +455,8 @@ class Mess(context: Context) {
             }
             cont(email) {
                 if (it || (
-                            (email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
-                                "ayushyadav"
+                            (email.endsWith(context.getString(R.string.suffix_iiitl_ac_in)) && isValid) || email.contains(
+                                context.getString(R.string.ayush_yadav)
                             )
                             )
                 ) {
@@ -475,8 +477,8 @@ class Mess(context: Context) {
      * @param url-> The direct URL to the file.
      */
     fun downloadFile(url: String) {
-        val title = "MessMenu.pdf"
-        val description = "Downloading file"
+        val title = context.getString(R.string.title_mess_menu)
+        val description = context.getString(R.string.description_downloading_file)
         val request = DownloadManager.Request(Uri.parse(url))
         request.setTitle(title)
         request.setDescription(description)
@@ -489,7 +491,7 @@ class Mess(context: Context) {
         )
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadId = downloadManager.enqueue(request)
-        Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.download_started), Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -503,7 +505,7 @@ class Mess(context: Context) {
                     user.photoUrl +
                     "#" + user.email + "#" + user.designation + "#" + user.batch + "#" +
                     user.passingYear + "#" + user.gender + "#"
-        save("user", s)
+        save(context.getString(R.string.user), s)
     }
 
     /**
@@ -513,7 +515,7 @@ class Mess(context: Context) {
      */
     fun getUser(): User {
         try {
-            val s = get("user", "7:30")
+            val s = get(context.getString(R.string.user))
             val a = s.split("#")
             Log.d(TAG, a.toString())
             return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
@@ -528,7 +530,7 @@ class Mess(context: Context) {
      * @param onResult-> A callback that returns two strings: version and URL.
      */
     fun getUpdates(onResult: (String, String) -> Unit) {
-        val s = get("update")
+        val s = get(context.getString(R.string.update))
         val a = s.split("#")
         onResult(a[0], a[1])
     }
@@ -541,7 +543,7 @@ class Mess(context: Context) {
      */
     fun setUpdate(version: String, url: String) {
         val s = "$version#$url"
-        save("update", s)
+        save(context.getString(R.string.update), s)
     }
 
     /**
