@@ -22,6 +22,8 @@ import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.McMainPageViewModel
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
 import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MEMBER
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SENIOR_MEMBER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
@@ -113,10 +115,10 @@ class McMainPage : Fragment() {
                     mess.loadImage(user.photoUrl, binding.ivUser)
                 }
                 val designationIcon = when (user.designation) {
-                    "Coordinator" -> R.drawable.coordinator
-                    "Developer" -> R.drawable.developer
-                    "Senior Member" -> R.drawable.seniormember
-                    "Member" -> R.drawable.member
+                    COORDINATOR -> R.drawable.coordinator
+                    DEVELOPER -> R.drawable.developer
+                    SENIOR_MEMBER -> R.drawable.seniormember
+                    MEMBER -> R.drawable.member
                     else -> R.drawable.volunteer
                 }
                 binding.ivDesignation.setImageResource(designationIcon)
