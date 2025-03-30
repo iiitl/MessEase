@@ -98,20 +98,21 @@
                         android:orientation="horizontal"
                         android:gravity="center"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvname">
 
                         <ImageView
                             android:id="@+id/ivDesignation"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/volunteer"/>
 
                         <TextView
                             android:id="@+id/tvDesignation"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
 
                             android:text="Loading..."
