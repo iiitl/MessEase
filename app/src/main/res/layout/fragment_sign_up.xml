@@ -16,7 +16,6 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-
             android:layout_height="0dp"
             android:scaleType="fitXY"
             android:src="@drawable/loginbg"
@@ -68,6 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
+            android:layout_marginBottom="0dp"
             android:hint="Password"
             app:boxStrokeColor="@color/food"
             app:boxStrokeWidth="2dp"
@@ -80,6 +80,29 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:hint="Confirm Password"
+            app:boxStrokeColor="@color/food"
+            app:boxStrokeWidth="2dp"
+            app:helperTextTextColor="#FF0015"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/baseline_lock_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +134,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/tilConfirmPassword" />
 
         <!--    <com.google.android.gms.common.SignInButton-->
         <!--        android:id="@+id/gsi"-->
