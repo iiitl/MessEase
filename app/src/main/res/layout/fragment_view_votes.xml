@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view"
                 android:paddingStart="10dp"
-                />
+                 />
 
             <View
                 android:id="@+id/v2"

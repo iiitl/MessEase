@@ -20,12 +20,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
-
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -37,7 +35,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -84,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
         fun cancelAllAlarms(context: Context,index:Int) {
             try {
-                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java)
 
                 val pendingIntent = PendingIntent.getBroadcast(
@@ -97,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 if (pendingIntent != null) {
                     alarmManager.cancel(pendingIntent)
                     pendingIntent.cancel()
-                Log.d(TAG, "All alarms cancelled")
+                    Log.d(TAG, "All alarms cancelled")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -110,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initialise()
         setUpNav()
         setUpHeader()
@@ -120,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         setAlarm()
         listeners()
     }
+
 
     private fun listeners() {
 //        darkModeSwitch.setOnCheckedChangeListener{
@@ -171,6 +168,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+
     private fun setDrawerClickListener(
         navView: NavigationView,
         drawerLayout: DrawerLayout,
@@ -191,9 +189,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_darkmode -> {
-                    toggleTheme()
+                    mess.changeTheme()
                     return@setNavigationItemSelectedListener true
                 }
+
                 else -> {
                     navController.navigate(menuItem.itemId)
                     drawerLayout.closeDrawers()
@@ -512,12 +511,5 @@ class MainActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
-    private fun toggleTheme() {
-        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-    }
+
 }
