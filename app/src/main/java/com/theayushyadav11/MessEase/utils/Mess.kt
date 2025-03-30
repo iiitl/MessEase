@@ -88,7 +88,7 @@ class Mess(context: Context) {
      * @param id-> The poll ID to store.
      */
     fun sendPollId(id: String) {
-        save("pollId", id)
+        save(context.getString(R.string.mess_poll_id), id)
     }
 
     /**
@@ -97,7 +97,7 @@ class Mess(context: Context) {
      * @return The stored poll ID, or an empty string if none is stored.
      */
     fun getPollId(): String {
-        return get("pollId")
+        return get(context.getString(R.string.mess_poll_id))
     }
 
     /**
@@ -115,7 +115,7 @@ class Mess(context: Context) {
      * @return `true` if the user is logged in, otherwise `false`.
      */
     fun isLoggedIn(): Boolean {
-        if (get("isLoggedIn") == "true") {
+        if (get(context.getString(R.string.user_is_Logged_In)) == "true") {
             return true
         } else {
             return false
@@ -450,8 +450,8 @@ class Mess(context: Context) {
             }
             cont(email) {
                 if (it || (
-                            (email.endsWith("@iiitl.ac.in") && isValid) || email.contains(
-                                "ayushyadav"
+                            (email.endsWith(context.getString(R.string.suffix_iiitl_ac_in)) && isValid) || email.contains(
+                                context.getString(R.string.ayush_yadav)
                             )
                             )
                 ) {
@@ -500,7 +500,7 @@ class Mess(context: Context) {
                     user.photoUrl +
                     "#" + user.email + "#" + user.designation + "#" + user.batch + "#" +
                     user.passingYear + "#" + user.gender + "#"
-        save("user", s)
+        save(context.getString(R.string.user), s)
     }
 
     /**
@@ -510,7 +510,7 @@ class Mess(context: Context) {
      */
     fun getUser(): User {
         try {
-            val s = get("user")
+            val s = get(context.getString(R.string.user))
             val a = s.split("#")
             Log.d(TAG, a.toString())
             return User(a[0], a[1], a[2], a[3].toBoolean(), a[4], a[5], a[6], a[7], a[8], a[9])
@@ -525,7 +525,7 @@ class Mess(context: Context) {
      * @param onResult-> A callback that returns two strings: version and URL.
      */
     fun getUpdates(onResult: (String, String) -> Unit) {
-        val s = get("update")
+        val s = get(context.getString(R.string.update))
         val a = s.split("#")
         onResult(a[0], a[1])
     }
@@ -538,7 +538,7 @@ class Mess(context: Context) {
      */
     fun setUpdate(version: String, url: String) {
         val s = "$version#$url"
-        save("update", s)
+        save(context.getString(R.string.update), s)
     }
 
     /**
