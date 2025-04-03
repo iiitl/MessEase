@@ -45,7 +45,7 @@ class PaymentViewModel : ViewModel() {
             options.put("retry", retryObj);
 
             val prefill = JSONObject()
-            prefill.put("contact", "9696620395")
+
             options.put("email", user.email)
 
             options.put("prefill", prefill)
