@@ -135,6 +135,7 @@ class EditCompleteActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+        toolbar.setTitleTextColor(Color.WHITE)
         toolbar.navigationIcon?.setTint(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()

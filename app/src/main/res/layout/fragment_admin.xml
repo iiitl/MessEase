@@ -4,12 +4,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu">
+    android:background="@color/bg">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="none"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,82 +18,157 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp">
+
+            <!-- Header with icon -->
+            <ImageView
+                android:id="@+id/ivHeaderIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Mess committee icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/food" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-
-
-                android:text="Add to mess committee"
-                android:textColor="@color/food"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="25dp"
+                android:text="Add to Mess Committee"
+                android:textColor="@color/food"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivHeaderIcon"
+                app:layout_constraintTop_toTopOf="@+id/ivHeaderIcon"
+                app:layout_constraintBottom_toBottomOf="@+id/ivHeaderIcon" />
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="100dp"
-                app:boxStrokeColor="@color/food"
-                app:boxStrokeWidth="2dp"
-                app:endIconMode="clear_text"
-                app:helperTextTextColor="#FF0015"
+                android:layout_marginTop="24dp"
+                android:background="@color/food"
+                android:alpha="0.2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:startIconDrawable="@drawable/baseline_attach_email_24">
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilspin"
-                android:layout_width="match_parent"
+            <!-- Card container -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                app:cardBackgroundColor="@color/bg"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                app:helperText="Designation"
-                app:helperTextTextColor="@color/food"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilEmail">
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:strokeColor="@color/food"
+                app:strokeWidth="1dp">
 
-                <Spinner
-                    android:id="@+id/spinner"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="20dp">
 
-                    android:spinnerMode="dropdown" />
+                    <TextView
+                        android:id="@+id/tvFormTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Committee Member Details"
+                        android:textColor="@color/food"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEmail"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:hint="Email Address"
+                        app:boxStrokeColor="@color/food"
+                        app:boxStrokeWidth="2dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/food"
+                        app:helperTextTextColor="#FF0015"
+                        app:hintTextColor="@color/food"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvFormTitle"
+                        app:startIconDrawable="@drawable/baseline_attach_email_24"
+                        app:startIconTint="@color/food">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilspin"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:hint="Designation"
+                        app:boxStrokeColor="@color/food"
+                        app:boxStrokeWidth="2dp"
+                        app:endIconTint="@color/food"
+                        app:helperTextTextColor="@color/food"
+                        app:hintTextColor="@color/food"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilEmail"
+                        app:startIconDrawable="@drawable/baseline_person_24"
+                        app:startIconTint="@color/food">
+
+                        <AutoCompleteTextView
+                            android:textColor="@color/black"
+                            android:id="@+id/spinnerAutoComplete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdd"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginVertical="55dp"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/food"
-                android:text="Add"
+                android:text="Add to Committee"
                 android:textColor="@color/white"
+                android:textSize="16sp"
                 app:cornerRadius="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:elevation="4dp"
+
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilspin" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
