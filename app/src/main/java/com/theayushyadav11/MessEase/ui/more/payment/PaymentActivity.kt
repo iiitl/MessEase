@@ -1,41 +1,46 @@
-package com.theayushyadav11.MessEase.ui.more
+package com.theayushyadav11.MessEase.ui.more.payment
 
-import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.ImageButton
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
+import com.theayushyadav11.MessEase.Models.PaymentStatus
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.ActivityPaymentBinding
-import com.theayushyadav11.MessEase.utils.Constants.Companion.RAZORPAY_API_KEY
 import com.theayushyadav11.MessEase.utils.Mess
-import org.json.JSONObject
 
 
 class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var mess:Mess
+    private lateinit var mess: Mess
+    private val paymentViewModel: PaymentViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initialise()
         listeners()
 
     }
 
-    private fun listeners() {
+    private fun initialise() {
+        setUpToolBar()
+        amountWatcher()
+        mess = Mess(this)
+        binding.btnPay.isFocusable = true
+    }
 
+    private fun listeners() {
         Checkout.preload(applicationContext)
         val co = Checkout()
-        co.setKeyID(RAZORPAY_API_KEY)
+        co.setKeyID(getString(R.string.razorpay_key))
 
         binding.btnPay.setOnClickListener {
             if (binding.etAmount.text.toString().isEmpty()) {
@@ -44,63 +49,30 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
                 mess.toast("Please enter purpose!")
             } else if (binding.etAmount.text.toString().toDouble() * 100 <= 0) {
                 mess.toast("Please enter valid amount!")
-            } else {
-                startPayment()
+            } else if(binding.etPurpose.text.toString().length>25)
+            {
+                mess.snack(binding.etPurpose,"Purpose should not exceed 15 characters!")
+            }
+            else {
+                paymentViewModel.amount.value = binding.etAmount.text.toString().toDouble()
+                paymentViewModel.purpose.value = binding.etPurpose.text.toString()
+                paymentViewModel.startPayment(this@PaymentActivity, mess.getUser())
             }
         }
 
 
     }
 
-    private fun startPayment() {
-        val activity: Activity = this
-        val co = Checkout()
-
-        try {
-            val options = JSONObject()
-            options.put("name", "MessEase")
-            options.put("description", binding.etPurpose.text.toString())
-            options.put(
-                "image",
-                "https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
-            )
-            options.put("theme.color", ContextCompat.getColor(this, R.color.food));
-            options.put("currency", "INR");
-            options.put("amount", binding.etAmount.text.toString().toDouble() * 100)
-
-            val retryObj = JSONObject();
-            retryObj.put("enabled", true);
-            retryObj.put("max_count", 4);
-            options.put("retry", retryObj);
-
-            val prefill = JSONObject()
-            prefill.put("contact", "9696620395")
-
-            options.put("prefill", prefill)
-            co.open(activity, options)
-        } catch (e: Exception) {
-            Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_LONG).show()
-            e.printStackTrace()
-        }
-    }
-
-
-    private fun initialise() {
-        setUpToolBar()
-        amountWatcher()
-        mess=Mess(this)
-        binding.btnPay.isFocusable = true
-    }
 
     private fun amountWatcher() {
-       binding.etAmount.doOnTextChanged {
-              text, start, before, count ->
-              if (text.toString().isNotEmpty()) {
+        binding.etAmount.doOnTextChanged { text, start, before, count ->
+
+            if (text.toString().isNotEmpty()) {
                 binding.btnPay.isEnabled = true
-              } else {
+            } else {
                 binding.btnPay.isEnabled = false
-              }
-       }
+            }
+        }
     }
 
     fun setUpToolBar() {
@@ -116,17 +88,38 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        val historyIcon: ImageButton = toolbar.findViewById(R.id.history_icon)
+        historyIcon.setOnClickListener {
+            val intent=Intent(this, PaymentHistory::class.java)
+            intent.putExtra("payment",false)
+            startActivity(intent)
+        }
     }
 
     override fun onPaymentSuccess(p0: String?, p1: PaymentData?) {
+        paymentViewModel.onPaymentComplete(
+            paymentViewModel.amount.value,
+            paymentViewModel.purpose.value,
+            mess.getUser(),
+            PaymentStatus.SUCCESS
+        )
         binding.etAmount.text?.clear()
-        Toast.makeText(this@PaymentActivity, "Payment Success!", Toast.LENGTH_SHORT).show()
+        binding.etPurpose.text?.clear()
+        mess.toast("Payment Successful!")
     }
 
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
+        paymentViewModel.onPaymentComplete(
+            paymentViewModel.amount.value,
+            paymentViewModel.purpose.value,
+            mess.getUser(),
+            PaymentStatus.FAILED
+        )
         binding.etAmount.text?.clear()
-        Toast.makeText(this@PaymentActivity,"Payment Failed!", Toast.LENGTH_SHORT).show()
-        Mess(this@PaymentActivity).log(p2.toString())
+        binding.etPurpose.text?.clear()
+        mess.toast("Payment Failed!")
     }
 
 }
+
+

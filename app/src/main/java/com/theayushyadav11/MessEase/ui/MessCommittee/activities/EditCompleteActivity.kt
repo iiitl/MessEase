@@ -130,14 +130,11 @@ class EditCompleteActivity : AppCompatActivity() {
     fun setUpToolBar() {
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-
-        // Ensure that the support action bar is not null before setting the title
         supportActionBar?.apply {
             title = "Edit Complete"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
-
         toolbar.navigationIcon?.setTint(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()

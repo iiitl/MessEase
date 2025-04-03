@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayoutMediator
 import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.Models.Menu
@@ -19,13 +17,11 @@ import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.FragmentMcMainPageBinding
 import com.theayushyadav11.MessEase.ui.Adapters.ViewPagerAdapter
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
-import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.McMainPageViewModel
+import com.theayushyadav11.MessEase.ui.more.payment.PaymentHistory
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COORDINATOR
 import com.theayushyadav11.MessEase.utils.Constants.Companion.DEVELOPER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.MEMBER
 import com.theayushyadav11.MessEase.utils.Constants.Companion.SENIOR_MEMBER
-import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
-import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -130,8 +126,16 @@ class McMainPage : Fragment() {
         popupMenu.menuInflater.inflate(R.menu.mc_more, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.action_review -> {
+                R.id.write_review -> {
                     navigateSafely(R.id.action_mcMainPage_to_reviewFragment)
+                    true
+                }
+                R.id.action_payments->
+                {
+                    val intent=Intent(context, PaymentHistory::class.java)
+                    intent.putExtra("payment",true)
+                    context?.startActivity(intent)
+
                     true
                 }
                 else -> false
