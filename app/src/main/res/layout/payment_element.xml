@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginBottom="25dp"
+    android:background="@color/bg"
     android:elevation="12dp"
     android:padding="10dp"
     app:cardBackgroundColor="@color/menu"
@@ -30,42 +31,66 @@
             android:layout_margin="15dp"
             android:text="Purpose"
             android:textColor="@color/food"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-
             app:layout_constraintEnd_toStartOf="@+id/amount"
-            app:layout_constraintStart_toEndOf="@id/view3" />
+            app:layout_constraintStart_toEndOf="@id/view3"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/amount"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:gravity="center"
             android:text="Rs. 10000"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="@color/food"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPurpose"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:gravity="center"
             android:text="Rs. 10000"
             android:textColor="@color/black"
-
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvPurpose"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/view3"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tvPurpose" />
 
+        <LinearLayout
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <ImageView
+                android:id="@+id/status_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/cross_circle_svgrepo_com" />
+
+            <TextView
+                android:id="@+id/status_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:text="Failed"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -49,7 +49,11 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
                 mess.toast("Please enter purpose!")
             } else if (binding.etAmount.text.toString().toDouble() * 100 <= 0) {
                 mess.toast("Please enter valid amount!")
-            } else {
+            } else if(binding.etPurpose.text.toString().length>25)
+            {
+                mess.snack(binding.etPurpose,"Purpose should not exceed 15 characters!")
+            }
+            else {
                 paymentViewModel.amount.value = binding.etAmount.text.toString().toDouble()
                 paymentViewModel.purpose.value = binding.etPurpose.text.toString()
                 paymentViewModel.startPayment(this@PaymentActivity, mess.getUser())

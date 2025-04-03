@@ -162,7 +162,7 @@ class Mess(context: Context) {
      * @param message-> The message or object to display as a Toast.
      */
     fun toast(message: Any) {
-        Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message.toString(), Toast.LENGTH_LONG).show()
     }
 
     /**

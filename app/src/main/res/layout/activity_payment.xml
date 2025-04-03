@@ -59,16 +59,17 @@
         android:layout_margin="25dp"
         android:hint="Enter Purpose"
         app:counterEnabled="true"
-        app:counterMaxLength="15"
+        app:counterMaxLength="25"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout2"
         tools:layout_editor_absoluteX="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPurpose"
+            android:inputType="textCapSentences"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+           />
     </com.google.android.material.textfield.TextInputLayout>
 
 

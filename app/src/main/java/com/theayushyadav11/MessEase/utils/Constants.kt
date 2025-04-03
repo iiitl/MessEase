@@ -123,21 +123,10 @@ class Constants {
 
     fun formatTimeMillis(timeMillis: Long): String {
         val date = Date(timeMillis)
-        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-        val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
-
-        val timeString = timeFormat.format(date)
-        val dateString = dateFormat.format(date)
-
-        val dayOfMonth = date.date
-        val suffix = when (dayOfMonth % 10) {
-            1 -> if (dayOfMonth != 11) "st" else "th"
-            2 -> if (dayOfMonth != 12) "nd" else "th"
-            3 -> if (dayOfMonth != 13) "rd" else "th"
-            else -> "th"
-        }
-
-        return "$timeString, ${dayOfMonth}$suffix ${dateString.substring(1)}"
+        val dateFormat = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()) // Apr 3, 4:48 PM
+        return dateFormat.format(date)
     }
-    }
+
+
+}
 }

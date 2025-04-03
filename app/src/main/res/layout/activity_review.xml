@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/bg"
     tools:context=".ui.more.ReviewActivity">
 
     <!-- Toolbar unchanged -->
@@ -46,7 +46,7 @@
                 android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardBackgroundColor="@color/bg"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <!-- No changes to inner layout -->
@@ -67,6 +67,7 @@
                         android:hint="Day">
                         <AutoCompleteTextView
                             android:id="@+id/day"
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
@@ -83,6 +84,7 @@
 
                         <AutoCompleteTextView
                             android:id="@+id/type"
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
@@ -111,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rate your experience"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?android:attr/textColorPrimary"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/ratingBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -133,20 +135,19 @@
                 app:layout_constraintTop_toBottomOf="@id/rating_label"
                 android:layout_marginTop="8dp"/>
 
-            <!-- Review section -->
             <TextView
                 android:id="@+id/review_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Share your thoughts"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?android:attr/textColorPrimary"
+                android:textColor="@color/black"
                 android:layout_marginStart="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ratingBar"
                 android:layout_marginTop="24dp"/>
 
-            <!-- Review card - fixed for dark mode -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cc"
                 android:layout_width="match_parent"
@@ -175,6 +176,7 @@
                         android:background="@null"
                         android:gravity="top"
                         android:minHeight="150dp"
+                        android:inputType="textCapSentences"
                         android:hint="What did you like or dislike?"
                         android:textColorHint="?android:attr/textColorSecondary"
                         android:textColor="?android:attr/textColorPrimary"
@@ -190,6 +192,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
                 android:text="Post Review"
+                android:focusable="true"
                 android:textAllCaps="false"
                 android:backgroundTint="@color/food"
                 app:layout_constraintTop_toBottomOf="@id/cc" />
