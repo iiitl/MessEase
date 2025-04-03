@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,11 +26,13 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".ui.more.payment.PaymentHistory"
+            android:exported="false" />
         <activity
             android:name=".utils.TestingActivity"
-            android:exported="false">
-
+            android:exported="false" >
         </activity>
         <activity
             android:name=".ui.more.ErrorActivity"
@@ -44,16 +46,15 @@
         <activity
             android:name=".ui.splash.fragments.LoginAndSignUpActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.more.ReviewActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.more.PaymentActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:name=".ui.more.payment.PaymentActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.more.SettingsActivity"
             android:exported="false" />
@@ -70,7 +71,7 @@
             android:name=".ui.splash.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Material3.Light.NoActionBar">
+            android:theme="@style/Theme.Material3.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,10 +79,9 @@
             </intent-filter>
         </activity>
 
-
         <service
             android:name=".notifications.MyFirebaseMessagingService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -99,7 +99,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.theayushyadav11.MessEase.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
@@ -107,7 +107,7 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_pEv2OERPEj1yaT" />
+            android:value="@string/razorpay_key" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -43,7 +43,10 @@ class Constants {
         val ASCENDING_ORDER = com.google.firebase.firestore.Query.Direction.ASCENDING
         val DESCENDING_ORDER = com.google.firebase.firestore.Query.Direction.DESCENDING
 
-    const val RAZORPAY_API_KEY = "rzp_live_pEv2OERPEj1yaT"
+    const val RAZORPAY_API_KEY = "test_U7Sr1TuI0xqh3w"
+    const val LOGO_LINK="https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
+    const val PAYMENTS="Payments"
+    const val TIMESTAMP ="timestamp"
         // ****************************************************Some String Constants********************************************************
         const val COMPARER = "comp"
         const val MENU_ALERTS_CHANNEL_NAME = "menuAlerts"
@@ -117,5 +120,24 @@ class Constants {
             val imageData = baos.toByteArray()
             return imageData
         }
+
+    fun formatTimeMillis(timeMillis: Long): String {
+        val date = Date(timeMillis)
+        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+
+        val timeString = timeFormat.format(date)
+        val dateString = dateFormat.format(date)
+
+        val dayOfMonth = date.date
+        val suffix = when (dayOfMonth % 10) {
+            1 -> if (dayOfMonth != 11) "st" else "th"
+            2 -> if (dayOfMonth != 12) "nd" else "th"
+            3 -> if (dayOfMonth != 13) "rd" else "th"
+            else -> "th"
+        }
+
+        return "$timeString, ${dayOfMonth}$suffix ${dateString.substring(1)}"
+    }
     }
 }

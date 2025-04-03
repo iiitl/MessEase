@@ -42,7 +42,7 @@ import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.databinding.ActivityMainBinding
 import com.theayushyadav11.MessEase.notifications.AlarmReceiver
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.MessCommitteeMain
-import com.theayushyadav11.MessEase.ui.more.PaymentActivity
+import com.theayushyadav11.MessEase.ui.more.payment.PaymentActivity
 import com.theayushyadav11.MessEase.ui.more.ReviewActivity
 import com.theayushyadav11.MessEase.ui.more.SettingsActivity
 import com.theayushyadav11.MessEase.ui.splash.fragments.LoginAndSignUpActivity

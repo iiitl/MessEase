@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/bg"
     android:layout_height="match_parent"
-    tools:context=".ui.more.PaymentActivity">
-
+    tools:context=".ui.more.payment.PaymentActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,7 +16,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleEnabled="true" />
+        app:titleEnabled="true">
+        <ImageButton
+            android:id="@+id/history_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/history_svgrepo_com"
+            android:contentDescription="History"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_gravity="end|center_vertical"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="15dp"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -46,6 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:hint="Enter Purpose"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout2"
         tools:layout_editor_absoluteX="25dp">
 
