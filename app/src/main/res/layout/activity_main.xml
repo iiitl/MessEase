@@ -19,11 +19,15 @@
     <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
+        app:itemTextColor="@color/nav_element"
+        app:itemRippleColor="@color/food"
+        app:itemIconTint="@color/nav_element"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@color/mode"
+        app:subheaderColor="@color/black"
+        android:background="@color/nav_black"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer">
 

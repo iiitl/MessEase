@@ -8,6 +8,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/baseline_home_filled_24"
             android:title="Home"
 
@@ -31,14 +32,15 @@
             android:title="Download Current Menu" />
     </group>
 
-    <item android:title="Preferences">
+    <item
+
+        android:title="Preferences">
         <menu>
             <item
                 android:id="@+id/nav_darkmode"
                 android:checkable="true"
                 android:icon="@drawable/baseline_toggle_off_24"
-                android:actionLayout="@layout/switch_item"
-                android:title="Dark Mode" />
+                android:title="Change Mode" />
 
         </menu>
     </item>

@@ -13,4 +13,7 @@
     <color name="medium">#82B5FE</color>
     <color name="grey">#cfd8df</color>
     <color name="bg">#2E2D2D</color>
+    <color name="nav_black">#131313</color>
+    <color name="nav_element">#a0a0a2</color>
+
 </resources>
