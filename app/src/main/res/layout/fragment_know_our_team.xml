@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="20dp"
-    android:background="@color/menu"
+    android:background="@color/bg"
     tools:context=".ui.NavigationDrawers.Fragments.KnowOurTeamFragment">
 
     <ScrollView
@@ -35,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:text="Coordinators"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -77,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:padding="10dp"
                     android:text="Developers"
                     android:textSize="20sp"
@@ -120,6 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:padding="10dp"
                     android:text="Senior-members"
                     android:textSize="20sp"
@@ -164,6 +167,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:text="Members"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -206,6 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:padding="10dp"
                     android:text="Volunteers"
                     android:textSize="20sp"
