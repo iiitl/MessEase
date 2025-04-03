@@ -90,7 +90,9 @@ class PaymentActivity : AppCompatActivity(), PaymentResultWithDataListener {
         }
         val historyIcon: ImageButton = toolbar.findViewById(R.id.history_icon)
         historyIcon.setOnClickListener {
-            startActivity(Intent(this, PaymentHistory::class.java))
+            val intent=Intent(this, PaymentHistory::class.java)
+            intent.putExtra("payment",false)
+            startActivity(intent)
         }
     }
 

@@ -37,7 +37,26 @@
             app:layout_constraintStart_toEndOf="@id/view3"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/food"
+            android:textStyle="italic"
+            android:fontFamily="@font/andika"
+            android:text="theayushyadav11.work@gmail.com"
+            app:layout_constraintStart_toEndOf="@id/view3"
+            app:layout_constraintTop_toBottomOf="@id/tvPurpose" />
+        <TextView
+            android:id="@+id/des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
 
+            android:text="Donation"
+            app:layout_constraintStart_toEndOf="@id/view3"
+            app:layout_constraintTop_toBottomOf="@id/email"/>
         <TextView
             android:id="@+id/amount"
             android:layout_width="wrap_content"
@@ -62,7 +81,7 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/view3"
-            app:layout_constraintTop_toBottomOf="@id/tvPurpose" />
+            app:layout_constraintTop_toBottomOf="@id/des" />
 
         <LinearLayout
             android:id="@+id/status"

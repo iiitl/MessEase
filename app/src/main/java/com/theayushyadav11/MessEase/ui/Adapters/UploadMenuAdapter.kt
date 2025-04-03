@@ -159,7 +159,6 @@ class UploadMenuAdapter(
     }
 
     fun sendMail(url: String) {
-
         fireBase.getSenderDeatails { email, password, toEmail ->
             val mailSender = MailSender(email,password)
 

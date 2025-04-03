@@ -15,16 +15,24 @@ import kotlinx.coroutines.withContext
 class PaymentHistoryViewModel : ViewModel() {
 
 
-    fun getMyPayments(user: User, onResult: (List<Payment>) -> Unit) =
+    fun getMyPayments(user: User, isMember: Boolean, onResult: (List<Payment>) -> Unit) =
         CoroutineScope(Dispatchers.IO).launch {
-            var payments = firestoreReference.collection(PAYMENTS).whereEqualTo(UID, user.uid)
-                .get()
-                .await()
-                .toObjects(Payment::class.java)
+            val payments = if (isMember) {
+                firestoreReference.collection(PAYMENTS)
+                    .get()
+                    .await()
+                    .toObjects(Payment::class.java)
+            } else {
+                firestoreReference.collection(PAYMENTS)
+                    .whereEqualTo(UID, user.uid)
+                    .get()
+                    .await()
+                    .toObjects(Payment::class.java)
+            }
 
             withContext(Dispatchers.Main) {
-                payments = payments.sortedByDescending { it.timeStamp }
-                onResult(payments)
+                onResult(payments.sortedByDescending { it.timeStamp })
             }
         }
+
 }

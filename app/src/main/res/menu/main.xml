@@ -12,7 +12,7 @@
         android:title="Payments"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_review"
+        android:id="@+id/write_review"
         android:orderInCategory="100"
         android:title="Write Review"
         app:showAsAction="never" />

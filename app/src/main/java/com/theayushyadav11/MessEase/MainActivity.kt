@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, PaymentActivity::class.java))
                 true
             }
-            R.id.action_review -> {
+            R.id.write_review -> {
                 startActivity(Intent(this, ReviewActivity::class.java))
                 true
             }

@@ -54,12 +54,13 @@ class PaymentHistory : AppCompatActivity() {
 
     fun getMyPayments() {
         mess.addPb("Loading Payments")
-        viewModel.getMyPayments(mess.getUser()) {
+        val isMember=intent.getBooleanExtra("payment",false)
+        viewModel.getMyPayments(mess.getUser(),isMember) {
             if (it.isNotEmpty()) {
                binding.message.visibility=View.GONE
                 binding.recyclerView.isVisible = true
                 binding.recyclerView.apply {
-                    adapter = PaymentAdapter(it)
+                    adapter = PaymentAdapter(it,isMember)
                     layoutManager = LinearLayoutManager(this@PaymentHistory)
                 }
             }
