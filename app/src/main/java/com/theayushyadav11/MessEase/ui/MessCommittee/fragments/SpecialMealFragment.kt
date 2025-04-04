@@ -15,6 +15,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentSpecialMealBinding
 import com.theayushyadav11.MessEase.notifications.PushNotifications
+import com.theayushyadav11.MessEase.utils.Constants.Companion.ALL_USERS
 import com.theayushyadav11.MessEase.utils.Mess
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -27,6 +28,10 @@ class SpecialMealFragment : Fragment() {
     private lateinit var mess: Mess
     private var selectedDate: String = ""
     val mealTypes = arrayOf("Breakfast", "Lunch", "Snacks", "Dinner")
+    var mealType = ""
+    var mealDetails = ""
+    var date = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,14 +99,13 @@ class SpecialMealFragment : Fragment() {
             viewModel.day.value = selectedDateObj.date
             viewModel.month.value = selectedDateObj.month
             viewModel.year.value = selectedDateObj.year
-            mess.toast("day=${selectedDateObj.date}\nmonth=${selectedDateObj.month}\nyear=${selectedDateObj.year}")
         }
     }
 
     private fun validateAndUpload() {
-        val date = binding.dateEditText.text.toString()
-        val mealType = binding.mealTypeDropdown.text.toString()
-        val mealDetails = binding.mealDetailsEditText.text.toString()
+        date = binding.dateEditText.text.toString()
+        mealType = binding.mealTypeDropdown.text.toString()
+        mealDetails = binding.mealDetailsEditText.text.toString()
 
         if (date.isEmpty()) {
             binding.dateLayout.error = "Please select a date"
@@ -145,11 +149,12 @@ class SpecialMealFragment : Fragment() {
         }
 
     }
+
     private fun sendNotification() {
-        val pn = PushNotifications(requireContext(), "akcbas")
+        val pn = PushNotifications(requireContext(), ALL_USERS)
         pn.sendNotificationToAllUsers(
-            "New Message Added",
-            "Special dinner salo"
+            "New Special $mealType added.",
+            "New Special $mealType added. \non $date \n Menu: $mealDetails",
         )
     }
 }

@@ -1,10 +1,11 @@
 package com.theayushyadav11.MessEase.notifications
 
 import android.content.Context
-import android.util.Log
 import com.google.auth.oauth2.GoogleCredentials
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
+import com.theayushyadav11.MessEase.utils.Constants.Companion.FCM_URL
+import com.theayushyadav11.MessEase.utils.Constants.Companion.MEDIA_TYPE
 import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
@@ -12,7 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -21,19 +21,17 @@ import java.io.IOException
 
 class PushNotifications(private val context: Context, private val target: String) {
 
-    private val TAG = "FCM"
     private val client = OkHttpClient()
     private var accessToken: String = ""
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val fcmUrl = "https://fcm.googleapis.com/v1/projects/messease-b3b3f/messages:send"
-    private val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-    private val mess=Mess(context)
+
+    private val mess = Mess(context)
 
     init {
         coroutineScope.launch {
             updateAccessToken()
         }
-        Log.d(TAG, "Initialized notification for target: $target")
+      mess.log("Initialized notification for target: $target")
     }
 
     fun sendNotificationToAllUsers(title: String, message: String) {
@@ -45,11 +43,11 @@ class PushNotifications(private val context: Context, private val target: String
                             sendNotification(tokens, names, title, message)
                         }
                     } else {
-                        mess.log( "No tokens found for target: $target")
+                        mess.log("No tokens found for target: $target")
                     }
                 }
             } catch (e: Exception) {
-                mess.log( "Error getting user tokens: ${e.message}")
+                mess.log("Error getting user tokens: ${e.message}")
             }
         }
     }
@@ -69,7 +67,7 @@ class PushNotifications(private val context: Context, private val target: String
                     }
                 }
 
-                mess.log( "Found ${tokens.size} tokens for target: $target")
+                mess.log("Found ${tokens.size} tokens for target: $target")
                 onResult(tokens, names)
             }
             .addOnFailureListener { e ->
@@ -92,10 +90,10 @@ class PushNotifications(private val context: Context, private val target: String
                         .createScoped("https://www.googleapis.com/auth/firebase.messaging")
                     credentials.refresh()
                     accessToken = credentials.accessToken.tokenValue
-                    Log.d(TAG, "Access token updated successfully")
+                    mess.log( "Access token updated successfully")
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Error updating access token: ${e.message}")
+                mess.log( "Error updating access token: ${e.message}")
             }
         }
     }
@@ -106,23 +104,21 @@ class PushNotifications(private val context: Context, private val target: String
         title: String,
         message: String
     ) {
-        // Ensure token is valid before sending
         if (accessToken.isEmpty()) {
             updateAccessToken()
         }
 
         mess.log("Sending notification to ${tokens.size} users")
 
-        // Create a mapping of tokens to names for easier lookup
         val tokenToName = tokens.zip(names).toMap()
 
         tokens.forEach { token ->
             val notificationJson = createNotificationJson(token, title, message)
-            val requestBody = notificationJson.toString().toRequestBody(mediaType)
+            val requestBody = notificationJson.toString().toRequestBody(MEDIA_TYPE)
 
             val request = Request.Builder()
                 .header("Authorization", "Bearer $accessToken")
-                .url(fcmUrl)
+                .url(FCM_URL)
                 .post(requestBody)
                 .build()
 
@@ -130,9 +126,9 @@ class PushNotifications(private val context: Context, private val target: String
                 withContext(Dispatchers.IO) {
                     client.newCall(request).execute().use { response ->
                         if (response.isSuccessful) {
-                            mess.log( "Notification sent successfully to ${tokenToName[token]}")
+                            mess.log("Notification sent successfully to ${tokenToName[token]}")
                         } else {
-                            Log.e(TAG, "Notification sending failed: ${response.body?.string()}")
+                            mess.log("Notification sending failed: ${response.body?.string()}")
                         }
                     }
                 }

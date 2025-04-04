@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -18,17 +19,7 @@ import java.util.Date
 import java.util.Locale
 
 class Constants {
-//   val supabase by lazy {
-//
-//       createSupabaseClient(
-//           supabaseUrl = SUPABASE_URL,
-//           supabaseKey = SUPABASE_KEY
-//       ) {
-//           install(Postgrest)
-//           install(Realtime)
-//
-//       }
-//   }
+
     companion object {
         val auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid.toString()
@@ -43,10 +34,12 @@ class Constants {
         val ASCENDING_ORDER = com.google.firebase.firestore.Query.Direction.ASCENDING
         val DESCENDING_ORDER = com.google.firebase.firestore.Query.Direction.DESCENDING
 
-    const val RAZORPAY_API_KEY = "test_U7Sr1TuI0xqh3w"
-    const val LOGO_LINK="https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
-    const val PAYMENTS="Payments"
-    const val TIMESTAMP ="timestamp"
+        const val RAZORPAY_API_KEY = "test_U7Sr1TuI0xqh3w"
+        const val LOGO_LINK =
+            "https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df"
+        const val PAYMENTS = "Payments"
+        const val TIMESTAMP = "timestamp"
+
         // ****************************************************Some String Constants********************************************************
         const val COMPARER = "comp"
         const val MENU_ALERTS_CHANNEL_NAME = "menuAlerts"
@@ -95,6 +88,10 @@ class Constants {
         const val SELECTED_OPTION = "selected"
         const val SPECIAL_MEAL = "SpecialMeal"
 
+        const val ALL_USERS="Batch - 2024Batch - 2025Batch - 2026Batch - 2027Batch - 2028Batch - 2029FemaleMale    Btech    Mtech   MBA     Mtech   "
+        const val FCM_URL = "https://fcm.googleapis.com/v1/projects/messease-b3b3f/messages:send"
+        val MEDIA_TYPE = "application/json; charset=utf-8".toMediaTypeOrNull()
+
         // ****************************************************Functions********************************************************
 
         fun getCurrentTimeInAmPm(): String {
@@ -122,12 +119,13 @@ class Constants {
             return imageData
         }
 
-    fun formatTimeMillis(timeMillis: Long): String {
-        val date = Date(timeMillis)
-        val dateFormat = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()) // Apr 3, 4:48 PM
-        return dateFormat.format(date)
+        fun formatTimeMillis(timeMillis: Long): String {
+            val date = Date(timeMillis)
+            val dateFormat =
+                SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()) // Apr 3, 4:48 PM
+            return dateFormat.format(date)
+        }
+
+
     }
-
-
-}
 }
