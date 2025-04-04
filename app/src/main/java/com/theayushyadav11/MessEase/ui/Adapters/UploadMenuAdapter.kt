@@ -16,6 +16,7 @@ import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.notifications.PushNotifications
 import com.theayushyadav11.MessEase.ui.MessCommittee.activities.EditMenuActivity
+import com.theayushyadav11.MessEase.utils.Constants.Companion.ALL_USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.MailSender
@@ -143,7 +144,7 @@ class UploadMenuAdapter(
                         mess.pbDismiss()
                         mess.toast("Menu uploaded successfully")
                         sendMail(aprMenu.url)
-                     val pn= PushNotifications(context, "Batch - 2024Batch - 2025Batch - 2026Batch - 2027Batch - 2028Batch - 2029FemaleMale    Btech    Mtech   MBA     Mtech   ")
+                     val pn= PushNotifications(context, ALL_USERS)
                      pn.sendNotificationToAllUsers("New Mess Menu has been updated", "Go and take a look at the new menu.")
 
                     }, onFailure = {

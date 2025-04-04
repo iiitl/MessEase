@@ -4,8 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-  >
+    android:background="@color/bg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,19 +23,19 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
-                app:cardBackgroundColor="@color/bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="12dp"
                 android:paddingTop="50dp"
+                app:cardBackgroundColor="@color/bg"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:paddingBottom="5dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:id="@+id/ivBack"
@@ -95,10 +94,10 @@
                         android:id="@+id/llDesignation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvname">
@@ -107,7 +106,7 @@
                             android:id="@+id/ivDesignation"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/volunteer"/>
+                            android:src="@drawable/volunteer" />
 
                         <TextView
                             android:id="@+id/tvDesignation"
@@ -122,187 +121,230 @@
                             />
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="102dp"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal"
-
+                    <HorizontalScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/llDesignation">
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/editMenu"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="6dp"
-                            android:layout_marginStart="2dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight="1"
-                            app:cardBackgroundColor="@color/bg"
-                            android:background="@drawable/ripple"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:strokeColor="@color/grey"
-                            app:strokeWidth="2dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="102dp"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal"
+
+                            >
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/editMenu"
+                                android:layout_width="95dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                android:layout_marginVertical="6dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/ripple"
+                                app:cardBackgroundColor="@color/bg"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                app:strokeColor="@color/grey"
+                                app:strokeWidth="2dp">
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:padding="1dp"
-                                    android:src="@drawable/editmenu" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:textColor="@color/black"
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:text="Edit Menu" />
-                            </LinearLayout>
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:padding="1dp"
+                                        android:src="@drawable/editmenu" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Edit Menu"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
 
-                        </com.google.android.material.card.MaterialCardView>
+                            </com.google.android.material.card.MaterialCardView>
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btnPoll"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="6dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            app:cardBackgroundColor="@color/bg"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/ripple"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:strokeColor="@color/grey"
-                            app:strokeWidth="2dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/special_menu"
+                                android:layout_width="95dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                android:layout_marginVertical="6dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/ripple"
+                                app:cardBackgroundColor="@color/bg"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                app:strokeColor="@color/grey"
+                                app:strokeWidth="2dp">
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:src="@drawable/baseline_poll_24" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:textColor="@color/black"
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:text="Create Poll" />
-                            </LinearLayout>
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/baseline_food_bank_24" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Special Meal"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
 
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/createMsg"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="6dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/ripple"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:cardBackgroundColor="@color/bg"
-                            app:strokeColor="@color/grey"
-                            app:strokeWidth="2dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            </com.google.android.material.card.MaterialCardView>
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btnPoll"
+                                android:layout_width="95dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                android:layout_marginVertical="6dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/ripple"
+                                app:cardBackgroundColor="@color/bg"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                app:strokeColor="@color/grey"
+                                app:strokeWidth="2dp">
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:src="@drawable/msg" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:textColor="@color/black"
-                                    android:text="Create Msg" />
-                            </LinearLayout>
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/baseline_poll_24" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Create Poll"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
 
-                        </com.google.android.material.card.MaterialCardView>
+                            </com.google.android.material.card.MaterialCardView>
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/uploadMenu"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="6dp"
-                            android:layout_marginRight="2dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight="1"
-                            app:cardBackgroundColor="@color/bg"
-                            android:background="@drawable/ripple"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:strokeColor="@color/grey"
-                            app:strokeWidth="2dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/createMsg"
+                                android:layout_width="95dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                android:layout_marginVertical="6dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/ripple"
+                                app:cardBackgroundColor="@color/bg"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                app:strokeColor="@color/grey"
+                                app:strokeWidth="2dp">
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:padding="2dp"
-                                    android:src="@drawable/upload" />
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:textColor="@color/black"
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:text="Upload Menu" />
-                            </LinearLayout>
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/msg" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Create Msg"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
 
-                        </com.google.android.material.card.MaterialCardView>
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/uploadMenu"
+                                android:layout_width="95dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="6dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/ripple"
+                                app:cardBackgroundColor="@color/bg"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                app:strokeColor="@color/grey"
+                                app:strokeWidth="2dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:padding="2dp"
+                                        android:src="@drawable/upload" />
+
+                                    <TextView
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Upload Menu"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
 
-                    </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
 
 
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -319,9 +361,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/bg"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:background="@color/bg"
                     android:paddingStart="10dp">
 
                     <TextView

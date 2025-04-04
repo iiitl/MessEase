@@ -1,7 +1,6 @@
 package com.theayushyadav11.MessEase.ui.Adapters
 
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ class DateAdapter(
     private var selectedPosition = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1
 
     interface Listeners {
-        fun ondateSelected(date: DateItem, position: Int, main: DateViewHolder)
+        fun onDateSelected(date: DateItem, position: Int, main: DateViewHolder)
 
 
     }
@@ -99,7 +98,7 @@ class DateAdapter(
             // Notify adapter to refresh the UI
             notifyItemChanged(previousPosition)
             notifyItemChanged(selectedPosition)
-            listener.ondateSelected(dates[position], position, holder)
+            listener.onDateSelected(dates[position], position, holder)
         }
     }
 

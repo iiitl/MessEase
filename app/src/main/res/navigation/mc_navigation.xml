@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_mcMainPage_to_reviewFragment"
             app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_mcMainPage_to_specialMealFragment"
+            app:destination="@id/specialMealFragment" />
 
     </fragment>
      <fragment
@@ -53,6 +56,11 @@
         android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.ReviewFragment"
         android:label="fragment_review"
         tools:layout="@layout/fragment_review" />
+    <fragment
+        android:id="@+id/specialMealFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.SpecialMealFragment"
+        android:label="fragment_special_meal"
+        tools:layout="@layout/fragment_special_meal" />
 
 
 </navigation>

@@ -16,4 +16,6 @@
     <color name="red">#CC3E44</color>
     <color name="nav_black">#FFFFFF</color>
     <color name="nav_element">#000000</color>
+    <color name="gold">#ba8e43</color>
+    <color name="light_gold">#f5eba3</color>
 </resources>

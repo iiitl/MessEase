@@ -1,6 +1,7 @@
 package com.theayushyadav11.MessEase.ui.NavigationDrawers.Fragments
 
 
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.firestore.SetOptions
 import com.theayushyadav11.MessEase.Models.Comment
 import com.theayushyadav11.MessEase.Models.Menu
@@ -36,7 +38,6 @@ import com.theayushyadav11.MessEase.ui.Adapters.DateItem
 import com.theayushyadav11.MessEase.ui.Adapters.MsgAdapter
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels.HomeViewModel
 import com.theayushyadav11.MessEase.ui.NavigationDrawers.viewModelFactories.HomeViewModelFactory
-import com.theayushyadav11.MessEase.ui.splash.SplashScreen
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
 import com.theayushyadav11.MessEase.utils.Constants.Companion.databaseReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
@@ -44,9 +45,7 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentDate
 import com.theayushyadav11.MessEase.utils.Constants.Companion.getCurrentTimeInAmPm
 import com.theayushyadav11.MessEase.utils.Mess
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -117,9 +116,10 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     }
 
     //Handle the date selection
-    override fun ondateSelected(date: DateItem, position: Int, main: DateAdapter.DateViewHolder) {
+    override fun onDateSelected(date: DateItem, position: Int, main: DateAdapter.DateViewHolder) {
         homeViewModel.day.value = position + 1
         homeViewModel.dayOfWeek.value = date.weekday
+
         binding.rv.smoothScrollToPosition(position + 3)
 
     }
@@ -209,16 +209,15 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
 
     private fun addMsgs(day: Int) {
-           val user = mess.getUser()
-            homeViewModel.getDayMsgs(user, getDate(day)) { msgs ->
-                binding.msgAdder.removeAllViews()
-                if (msgs.isNotEmpty()) {
-                    msgs.forEach {
-                        addMsg(it)
-                    }
+        val user = mess.getUser()
+        homeViewModel.getDayMsgs(user, getDate(day)) { msgs ->
+            binding.msgAdder.removeAllViews()
+            if (msgs.isNotEmpty()) {
+                msgs.forEach {
+                    addMsg(it)
                 }
             }
-
+        }
 
 
     }
@@ -256,17 +255,44 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     private fun addFood() {
         homeViewModel.dayOfWeek.observe(requireActivity(), Observer { day ->
 
-            homeViewModel.getDayParticulars(requireContext(),day) { particulars ->
+            homeViewModel.getDayParticulars(requireContext(), day) { particulars ->
                 if (isAdded) {
                     binding.menuAdder.removeAllViews()
                     if (particulars.isNotEmpty()) {
-                        particulars.forEach {
+                        particulars.forEachIndexed { index, particular ->
                             val menuLayout = LayoutInflater.from(requireActivity()).inflate(
                                 R.layout.particulars_element_layout, binding.menuAdder, false
                             )
-                            menuLayout.findViewById<TextView>(R.id.foodType).text = it.type
-                            menuLayout.findViewById<TextView>(R.id.foodMenu).text = it.food
-                            menuLayout.findViewById<TextView>(R.id.foodTimeing).text = it.time
+
+                            val foodType = menuLayout.findViewById<TextView>(R.id.foodType)
+                            val foodMenu = menuLayout.findViewById<TextView>(R.id.foodMenu)
+                            val foodTimimg = menuLayout.findViewById<TextView>(R.id.foodTimeing)
+                            val view = menuLayout.findViewById<View>(R.id.view3)
+                            val card = menuLayout.findViewById<MaterialCardView>(R.id.card)
+                            val clock = menuLayout.findViewById<ImageView>(R.id.imageView4)
+
+                            homeViewModel.getSpecialMeal(homeViewModel.day.value!!,
+                                { meal, mealIndex ->
+
+                                    if (meal.isEmpty() || mealIndex != index) {
+                                        foodType.text = particular.type
+                                        foodMenu.text = particular.food
+                                        foodTimimg.text = particular.time
+                                    } else {
+                                        foodType.text = "Special ${particular.type}"
+                                        foodMenu.text = meal
+                                        foodTimimg.text = particular.time
+                                        view.setBackgroundColor(requireContext().resources.getColor(R.color.gold))
+                                        card.setCardBackgroundColor(
+                                            requireContext().resources.getColor(R.color.light_gold)
+                                        )
+                                        foodType.setTextColor(requireContext().resources.getColor(R.color.gold))
+                                        foodMenu.setTextColor(Color.BLACK)
+                                        foodTimimg.setTextColor(requireContext().resources.getColor(R.color.gold))
+                                        clock.setImageResource(R.drawable.goldentime)
+                                    }
+
+                                })
                             binding.menuAdder.addView(menuLayout)
                         }
                     }
@@ -279,15 +305,15 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
     private fun addPolls(day: Int) {
         val user = mess.getUser()
-            homeViewModel.getDayPolls(user, getDate(day)) { polls ->
+        homeViewModel.getDayPolls(user, getDate(day)) { polls ->
+            binding.pollAdder.removeAllViews()
+            if (polls.isNotEmpty()) {
                 binding.pollAdder.removeAllViews()
-                if (polls.isNotEmpty()) {
-                    binding.pollAdder.removeAllViews()
-                    polls.forEach {
-                        addPoll(it)
-                    }
+                polls.forEach {
+                    addPoll(it)
                 }
             }
+        }
     }
 
     private fun addPoll(poll: Poll) {
@@ -370,12 +396,11 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
 
     private fun optionSelect(pid: String, option: String) {
 
-     val user=mess.getUser()
-            val optionSelected = OptionSelected(
-                user = user, selected = option, time = getCurrentTimeInAmPm(), date = getCurrentDate()
-            )
-            homeViewModel.selectOption(pid, optionSelected)
-
+        val user = mess.getUser()
+        val optionSelected = OptionSelected(
+            user = user, selected = option, time = getCurrentTimeInAmPm(), date = getCurrentDate()
+        )
+        homeViewModel.selectOption(pid, optionSelected)
 
 
     }
@@ -406,11 +431,11 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         dismiss?.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
-        val user=mess.getUser()
-            if (isAdded)
-                mess.loadCircularImage(
-                    user.photoUrl, bottomSheetDialog.findViewById<ImageView>(R.id.profileIcon)!!
-                )
+        val user = mess.getUser()
+        if (isAdded)
+            mess.loadCircularImage(
+                user.photoUrl, bottomSheetDialog.findViewById<ImageView>(R.id.profileIcon)!!
+            )
 
         val rv = bottomSheetDialog.findViewById<RecyclerView>(R.id.rv)
         val message = bottomSheetDialog.findViewById<TextView>(R.id.message)!!
@@ -435,27 +460,27 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         if (commentText.isNotEmpty()) {
             val key = databaseReference.push().key.toString()
 
-            val user=mess.getUser()
+            val user = mess.getUser()
 
-                val comment = Comment(
-                    id = key,
-                    comment = commentText,
-                    time = getCurrentTimeInAmPm(),
-                    date = getCurrentDate(),
-                    creator = user,
-                )
+            val comment = Comment(
+                id = key,
+                comment = commentText,
+                time = getCurrentTimeInAmPm(),
+                date = getCurrentDate(),
+                creator = user,
+            )
 
-                firestoreReference.collection("Msgs").document(msg.uid).collection("Comments")
-                    .document(key).set(comment).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            mess.toast("Comment added")
-                            editText.text = null
+            firestoreReference.collection("Msgs").document(msg.uid).collection("Comments")
+                .document(key).set(comment).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        mess.toast("Comment added")
+                        editText.text = null
 
 
-                        } else {
-                            mess.toast(it.exception?.message.toString())
-                        }
+                    } else {
+                        mess.toast(it.exception?.message.toString())
                     }
+                }
 
 
         }
@@ -480,6 +505,7 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
             }
         }
     }
+
     private fun setMainMenu(onResult: () -> Unit) {
         firestoreReference.collection("MainMenu").document("menu")
             .addSnapshotListener { value, error ->
