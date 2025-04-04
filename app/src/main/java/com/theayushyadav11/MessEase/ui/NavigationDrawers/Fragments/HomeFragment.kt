@@ -117,8 +117,9 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
     }
 
     //Handle the date selection
-    override fun ondateSelected(date: DateItem, position: Int, main: DateAdapter.DateViewHolder) {
+    override fun onDateSelected(date: DateItem, position: Int, main: DateAdapter.DateViewHolder) {
         homeViewModel.day.value = position + 1
+        mess.toast("day=${homeViewModel.day.value}\nmonth=${Date().month}\nyear=${Date().year}")
         homeViewModel.dayOfWeek.value = date.weekday
         binding.rv.smoothScrollToPosition(position + 3)
 

@@ -13,6 +13,7 @@ import com.theayushyadav11.MessEase.MainActivity
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.R.id.action_mcMainPage_to_createMsgFragment
+import com.theayushyadav11.MessEase.R.id.action_mcMainPage_to_specialMealFragment
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.FragmentMcMainPageBinding
 import com.theayushyadav11.MessEase.ui.Adapters.ViewPagerAdapter
@@ -58,6 +59,9 @@ class McMainPage : Fragment() {
         }
         binding.createMsg.setOnClickListener {
             navigateSafely(action_mcMainPage_to_createMsgFragment)
+        }
+        binding.specialMenu.setOnClickListener {
+            navigateSafely(action_mcMainPage_to_specialMealFragment)
         }
         binding.editMenu.setOnClickListener {
             val db=MenuDatabase.getDatabase(requireContext()).menuDao()

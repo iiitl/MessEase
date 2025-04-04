@@ -93,6 +93,7 @@ class Constants {
         // Polls Fields
         const val DATE = "date"
         const val SELECTED_OPTION = "selected"
+        const val SPECIAL_MEAL = "SpecialMeal"
 
         // ****************************************************Functions********************************************************
 
