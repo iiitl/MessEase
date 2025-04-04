@@ -20,6 +20,7 @@ class SpecialMealViewModel : ViewModel() {
     fun uploadSpecialMeal(onResult: () -> Unit) = viewModelScope.launch(Dispatchers.IO)
     {
         val specialMeal = SpecialMeal(
+            System.currentTimeMillis(),
             day.value!!,
             month.value!!,
             year.value!!,

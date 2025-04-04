@@ -3,16 +3,18 @@ package com.theayushyadav11.MessEase.ui.NavigationDrawers.ViewModels
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.Query
+import androidx.lifecycle.viewModelScope
 import com.theayushyadav11.MessEase.Models.Comment
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.Msg
 import com.theayushyadav11.MessEase.Models.OptionSelected
 import com.theayushyadav11.MessEase.Models.Particulars
 import com.theayushyadav11.MessEase.Models.Poll
+import com.theayushyadav11.MessEase.Models.SpecialMeal
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDao
 import com.theayushyadav11.MessEase.utils.Constants.Companion.COMMENTS
@@ -23,14 +25,21 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.MESSAGES
 import com.theayushyadav11.MessEase.utils.Constants.Companion.POLLS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.POLL_RESULT
 import com.theayushyadav11.MessEase.utils.Constants.Companion.SELECTED_OPTION
+import com.theayushyadav11.MessEase.utils.Constants.Companion.SPECIAL_MEAL
+import com.theayushyadav11.MessEase.utils.Constants.Companion.TAG
+import com.theayushyadav11.MessEase.utils.Constants.Companion.TIMESTAMP
 import com.theayushyadav11.MessEase.utils.Constants.Companion.UID
 import com.theayushyadav11.MessEase.utils.Constants.Companion.USERS
 import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
-import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
 import com.theayushyadav11.MessEase.utils.Mess
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
 import java.util.Locale
 
 class HomeViewModel(val menuDao: MenuDao) : ViewModel() {
@@ -110,18 +119,18 @@ class HomeViewModel(val menuDao: MenuDao) : ViewModel() {
     fun getVoteByUid(pid: String, onResult: (String) -> Unit) {
         firestoreReference.collection(POLL_RESULT).document(pid).collection(USERS)
             .whereEqualTo("user.$UID", uid).addSnapshotListener { value, error ->
-            if (error != null) {
-                onResult("")
-                return@addSnapshotListener
+                if (error != null) {
+                    onResult("")
+                    return@addSnapshotListener
+                }
+                try {
+                    val option =
+                        value?.documents?.get(0)?.toObject(OptionSelected::class.java)?.selected
+                    onResult(option!!)
+                } catch (e: Exception) {
+                    onResult("")
+                }
             }
-            try {
-                val option =
-                    value?.documents?.get(0)?.toObject(OptionSelected::class.java)?.selected
-                onResult(option!!)
-            } catch (e: Exception) {
-                onResult("")
-            }
-        }
     }
 
     fun getTotalVotes(pid: String, onResult: (Int) -> Unit) {
@@ -183,4 +192,39 @@ class HomeViewModel(val menuDao: MenuDao) : ViewModel() {
         }
 
     }
+
+    fun getSpecialMeal(day: Int, onResult: (String, Int) -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val documents=firestoreReference.collection(SPECIAL_MEAL)
+                .orderBy(TIMESTAMP ,DESCENDING_ORDER)
+                .get()
+                .await()
+                .documents
+                documents.forEach { document ->
+                    Log.d(TAG, document.toString())
+                    val meal = document.toObject(SpecialMeal::class.java)
+                    if (meal?.day == day && meal.month == Date().month && meal.year == Date().year) {
+                        withContext(Dispatchers.Main)
+                        {
+                            Log.d(TAG, "${meal.day}==$day\n${meal.month} \n ${meal.year}\n ${meal.mealIndex}")
+                            onResult(meal.food, meal.mealIndex)
+                        }
+                        return@launch
+                    } else {
+                        withContext(Dispatchers.Main)
+                        {
+                            Log.d(TAG, "${meal?.day}==$day\n${meal?.month} \n ${meal?.year}")
+                            onResult("", -1)
+                        }
+                    }
+
+                }
+            withContext(Dispatchers.Main)
+            {
+                if(documents.isEmpty())
+                    onResult("", -1)
+            }
+
+
+        }
 }

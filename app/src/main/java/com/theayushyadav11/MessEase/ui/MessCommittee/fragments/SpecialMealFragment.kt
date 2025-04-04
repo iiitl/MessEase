@@ -129,13 +129,17 @@ class SpecialMealFragment : Fragment() {
         viewModel.mealIndex.value = mealTypes.indexOf(mealType)
         binding.uploadMenuButton.isEnabled = false
         binding.uploadMenuButton.text = "Uploading..."
-        mess.addPb("Adding Special $mealType")
-        uploadSpecialMeal()
+        mess.showAlertDialog("Alert!","Are you sure you want to Upload Special $mealType?","Upload","Cancel"){
+            uploadSpecialMeal()
+
+        }
+
 
 
     }
 
     private fun uploadSpecialMeal() {
+        mess.addPb("Adding Special Meal")
         binding.uploadMenuButton.isEnabled = true
         binding.uploadMenuButton.text = "Upload Special Meal"
         viewModel.uploadSpecialMeal {
@@ -144,7 +148,7 @@ class SpecialMealFragment : Fragment() {
             binding.mealDetailsEditText.text?.clear()
             binding.mealTypeDropdown.text?.clear()
             binding.dateEditText.text?.clear()
-            sendNotification()
+            //sendNotification()
 
         }
 
