@@ -10,14 +10,25 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="Add Special Meal"
-        app:titleTextColor="@color/white"
+        android:layout_height="59dp"
         android:background="@color/food"
-        android:elevation="4dp"
+        android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleEnabled="true">
+        <ImageButton
+            android:id="@+id/history_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/history_svgrepo_com__2_"
+            android:contentDescription="History"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_gravity="end|center_vertical"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="15dp"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

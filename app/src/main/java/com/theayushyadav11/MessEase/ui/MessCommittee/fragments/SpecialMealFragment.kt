@@ -1,5 +1,6 @@
 package com.theayushyadav11.MessEase.ui.MessCommittee.fragments
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.databinding.FragmentSpecialMealBinding
 import com.theayushyadav11.MessEase.notifications.PushNotifications
+import com.theayushyadav11.MessEase.ui.more.payment.PaymentHistory
 import com.theayushyadav11.MessEase.utils.Constants.Companion.ALL_USERS
 import com.theayushyadav11.MessEase.utils.Mess
 import java.text.SimpleDateFormat
@@ -73,6 +77,10 @@ class SpecialMealFragment : Fragment() {
         toolbar.navigationIcon?.setTint(Color.WHITE)
         toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+        val historyIcon: ImageButton = toolbar.findViewById(R.id.history_icon)
+        historyIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_specialMealFragment_to_specialMealHistoryFragment)
         }
     }
 
@@ -158,7 +166,7 @@ class SpecialMealFragment : Fragment() {
         val pn = PushNotifications(requireContext(), ALL_USERS)
         pn.sendNotificationToAllUsers(
             "New Special $mealType added.",
-            "New Special $mealType added. \non $date \n Menu: $mealDetails",
+            "On $date \n Menu: $mealDetails",
         )
     }
 }
