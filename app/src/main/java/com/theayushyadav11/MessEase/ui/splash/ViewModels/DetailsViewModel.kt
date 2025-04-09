@@ -22,8 +22,6 @@ class DetailsViewModel : ViewModel() {
             name = displayName,
             email = auth.currentUser?.email.toString(),
             batch = batch,
-            member = true,
-            designation = COORDINATOR,
             gender = gender,
             passingYear = passingyear,
             photoUrl = auth.currentUser?.photoUrl.toString(),

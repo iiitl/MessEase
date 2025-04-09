@@ -100,6 +100,10 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
         binding.imageView.setOnClickListener {
             scrollToPosition(-1)
         }
+        binding.rr.setOnRefreshListener{
+            updateUI()
+            binding.rr.isRefreshing = false
+        }
     }
 
     //Setting the Adapters

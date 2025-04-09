@@ -156,13 +156,16 @@ class SpecialMealFragment : Fragment() {
             binding.mealDetailsEditText.text?.clear()
             binding.mealTypeDropdown.text?.clear()
             binding.dateEditText.text?.clear()
-            sendNotification()
+            if(binding.notiSwitch.isChecked) {
+                sendNotification()
+            }
 
         }
 
     }
 
     private fun sendNotification() {
+
         val pn = PushNotifications(requireContext(), ALL_USERS)
         pn.sendNotificationToAllUsers(
             "New Special $mealType added.",

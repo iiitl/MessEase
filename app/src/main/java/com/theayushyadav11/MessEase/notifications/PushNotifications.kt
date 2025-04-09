@@ -31,7 +31,7 @@ class PushNotifications(private val context: Context, private val target: String
         coroutineScope.launch {
             updateAccessToken()
         }
-      mess.log("Initialized notification for target: $target")
+        mess.log("Initialized notification for target: $target")
     }
 
     fun sendNotificationToAllUsers(title: String, message: String) {
@@ -90,10 +90,10 @@ class PushNotifications(private val context: Context, private val target: String
                         .createScoped("https://www.googleapis.com/auth/firebase.messaging")
                     credentials.refresh()
                     accessToken = credentials.accessToken.tokenValue
-                    mess.log( "Access token updated successfully")
+                    mess.log("Access token updated successfully")
                 }
             } catch (e: Exception) {
-                mess.log( "Error updating access token: ${e.message}")
+                mess.log("Error updating access token: ${e.message}")
             }
         }
     }
