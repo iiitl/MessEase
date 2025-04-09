@@ -19,15 +19,16 @@ class SpecialMealViewModel : ViewModel() {
 
     fun uploadSpecialMeal(onResult: () -> Unit) = viewModelScope.launch(Dispatchers.IO)
     {
+        val id=System.currentTimeMillis()
         val specialMeal = SpecialMeal(
-            System.currentTimeMillis(),
+            id,
             day.value!!,
             month.value!!,
             year.value!!,
             mealIndex.value!!,
             mealName.value!!
         )
-        firestoreReference.collection(SPECIAL_MEAL).add(specialMeal).addOnCompleteListener {
+        firestoreReference.collection(SPECIAL_MEAL).document(id.toString()).set(specialMeal).addOnCompleteListener {
             onResult()
         }
     }

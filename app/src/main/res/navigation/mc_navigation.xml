@@ -60,7 +60,16 @@
         android:id="@+id/specialMealFragment"
         android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.SpecialMealFragment"
         android:label="fragment_special_meal"
-        tools:layout="@layout/fragment_special_meal" />
+        tools:layout="@layout/fragment_special_meal" >
+        <action
+            android:id="@+id/action_specialMealFragment_to_specialMealHistoryFragment"
+            app:destination="@id/specialMealHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specialMealHistoryFragment"
+        android:name="com.theayushyadav11.MessEase.ui.MessCommittee.fragments.SpecialMealHistoryFragment"
+        android:label="fragment_special_meal_history"
+        tools:layout="@layout/fragment_special_meal_history" />
 
 
 </navigation>

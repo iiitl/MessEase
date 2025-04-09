@@ -270,29 +270,27 @@ class HomeFragment : Fragment(), DateAdapter.Listeners {
                             val view = menuLayout.findViewById<View>(R.id.view3)
                             val card = menuLayout.findViewById<MaterialCardView>(R.id.card)
                             val clock = menuLayout.findViewById<ImageView>(R.id.imageView4)
+                            foodType.text = particular.type
+                            foodMenu.text = particular.food
+                            foodTimimg.text = particular.time
+                            homeViewModel.getSpecialMeal(
+                                homeViewModel.day.value!!
+                            ) { meal, mealIndex ->
+                                if (meal.isNotEmpty() && mealIndex == index) {
+                                    foodType.text = "Special ${particular.type}"
+                                    foodMenu.text = meal
+                                    foodTimimg.text = particular.time
+                                    view.setBackgroundColor(requireContext().resources.getColor(R.color.gold))
+                                    card.setCardBackgroundColor(
+                                        requireContext().resources.getColor(R.color.light_gold)
+                                    )
+                                    foodType.setTextColor(requireContext().resources.getColor(R.color.gold))
+                                    foodMenu.setTextColor(Color.BLACK)
+                                    foodTimimg.setTextColor(requireContext().resources.getColor(R.color.gold))
+                                    clock.setImageResource(R.drawable.goldentime)
+                                }
 
-                            homeViewModel.getSpecialMeal(homeViewModel.day.value!!,
-                                { meal, mealIndex ->
-
-                                    if (meal.isEmpty() || mealIndex != index) {
-                                        foodType.text = particular.type
-                                        foodMenu.text = particular.food
-                                        foodTimimg.text = particular.time
-                                    } else {
-                                        foodType.text = "Special ${particular.type}"
-                                        foodMenu.text = meal
-                                        foodTimimg.text = particular.time
-                                        view.setBackgroundColor(requireContext().resources.getColor(R.color.gold))
-                                        card.setCardBackgroundColor(
-                                            requireContext().resources.getColor(R.color.light_gold)
-                                        )
-                                        foodType.setTextColor(requireContext().resources.getColor(R.color.gold))
-                                        foodMenu.setTextColor(Color.BLACK)
-                                        foodTimimg.setTextColor(requireContext().resources.getColor(R.color.gold))
-                                        clock.setImageResource(R.drawable.goldentime)
-                                    }
-
-                                })
+                            }
                             binding.menuAdder.addView(menuLayout)
                         }
                     }

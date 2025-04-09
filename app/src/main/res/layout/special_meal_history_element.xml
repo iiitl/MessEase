@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/card"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginBottom="25dp"
+    android:elevation="0dp"
+    app:cardBackgroundColor="@color/menu"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:background="@color/food"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/foodType"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:gravity="center_vertical"
+            android:paddingStart="13dp"
+            android:textColor="@color/food"
+            android:textSize="27dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/foodMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:paddingHorizontal="13dp"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toBottomOf="@+id/foodType" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginVertical="15dp"
+            android:gravity="center_vertical"
+            android:paddingStart="13dp"
+            android:textColor="@color/food"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/foodMenu"
+            app:layout_constraintTop_toBottomOf="@+id/foodMenu" />
+
+        <ImageButton
+            android:id="@+id/delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="delete"
+            android:src="@drawable/baseline_delete_24menu"
+            app:layout_constraintEnd_toEndOf="@+id/foodType"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+
