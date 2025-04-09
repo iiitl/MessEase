@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theayushyadav11.MessEase.databinding.FragmentSpecialMealHistoryBinding
 import com.theayushyadav11.MessEase.ui.Adapters.SpecialMealAdapter
+import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.SpecialMealHistoryViewModel
 import com.theayushyadav11.MessEase.utils.Mess
 
 class SpecialMealHistoryFragment : Fragment() {

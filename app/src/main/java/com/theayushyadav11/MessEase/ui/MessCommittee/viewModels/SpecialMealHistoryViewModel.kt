@@ -1,4 +1,4 @@
-package com.theayushyadav11.MessEase.ui.MessCommittee.fragments
+package com.theayushyadav11.MessEase.ui.MessCommittee.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.theayushyadav11.MessEase.Models.SpecialMeal

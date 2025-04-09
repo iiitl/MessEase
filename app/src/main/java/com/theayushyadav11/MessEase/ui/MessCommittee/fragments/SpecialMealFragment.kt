@@ -156,7 +156,7 @@ class SpecialMealFragment : Fragment() {
             binding.mealDetailsEditText.text?.clear()
             binding.mealTypeDropdown.text?.clear()
             binding.dateEditText.text?.clear()
-            //sendNotification()
+            sendNotification()
 
         }
 
