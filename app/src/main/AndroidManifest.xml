@@ -118,11 +118,15 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/menu_widget_info" />
         </receiver>
+
+        <service
+            android:name=".ui.widget.MenuWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
 
     </application>
 

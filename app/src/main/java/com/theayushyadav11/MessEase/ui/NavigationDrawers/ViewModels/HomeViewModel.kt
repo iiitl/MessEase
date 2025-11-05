@@ -206,14 +206,12 @@ class HomeViewModel(val menuDao: MenuDao) : ViewModel() {
                     if (meal?.day == day && meal.month == Date().month && meal.year == Date().year) {
                         withContext(Dispatchers.Main)
                         {
-                            Log.d(TAG, "${meal.day}==$day\n${meal.month} \n ${meal.year}\n ${meal.mealIndex}")
                             onResult(meal.food, meal.mealIndex)
                         }
                         return@launch
                     } else {
                         withContext(Dispatchers.Main)
                         {
-                            Log.d(TAG, "${meal?.day}==$day\n${meal?.month} \n ${meal?.year}")
                             onResult("", -1)
                         }
                     }
