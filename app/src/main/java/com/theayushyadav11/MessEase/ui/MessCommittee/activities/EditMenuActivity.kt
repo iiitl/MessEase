@@ -24,8 +24,6 @@ import com.theayushyadav11.MessEase.databinding.ActivityMenuBinding
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModelFactories.EditMenuViewModelFactory
 import com.theayushyadav11.MessEase.ui.MessCommittee.viewModels.EditMenuViewModel
-import com.theayushyadav11.MessEase.utils.Constants.Companion.auth
-import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Mess
 import java.io.File
 import java.io.FileOutputStream
@@ -43,6 +41,7 @@ class EditMenuActivity : AppCompatActivity() {
         val database = MenuDatabase.getDatabase(this)
         EditMenuViewModelFactory(database.menuDao())
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
@@ -53,6 +52,7 @@ class EditMenuActivity : AppCompatActivity() {
         assign()
         listeners()
     }
+
     private fun initialise() {
         mess = Mess(this)
         mess.addPb("Loading menu...")
@@ -125,6 +125,7 @@ class EditMenuActivity : AppCompatActivity() {
             startActivity(Intent(this@EditMenuActivity, EditCompleteActivity::class.java))
         }
     }
+
     private fun pdfConversion() {
         val horizontalScrollView = binding.root
         val displayMetrics = DisplayMetrics()
@@ -261,7 +262,7 @@ class EditMenuActivity : AppCompatActivity() {
         dayMenus.add(DayMenu())
         val types = listOf("Breakfast", "Lunch", "Snacks", "Dinner")
         val timings = listOf(
-            "8:00 AM to 10:00 AM",
+            "8:30 AM to 10:00 AM",
             "12:30 PM to 2:30 PM",
             "5:00 PM to 6:00 PM",
             "7:30 PM to 9:30 PM"
@@ -269,33 +270,41 @@ class EditMenuActivity : AppCompatActivity() {
         for (i in 0..6) {
             val particulars = mutableListOf<Particulars>()
             for (j in 0..3) {
-                particulars.add(Particulars(types[j], texts[j][i].text.toString(), timings[j]))
+                particulars.add(
+                    Particulars(
+                        types[j],
+                        texts[j][i].text.toString().trim(),
+                        timings[j]
+                    )
+                )
             }
             dayMenus.add(DayMenu(particulars))
         }
-        val  user=mess.getUser()
-            editedMenu = Menu(
-                id = 1,
-                creator = user,
-                menu = dayMenus,
+        val user = mess.getUser()
+        editedMenu = Menu(
+            id = 1,
+            creator = user,
+            menu = dayMenus,
 
 
-                )
-            onResult(editedMenu)
+            )
+        onResult(editedMenu)
 
 
     }
 
     override fun onBackPressed() {
-
-        if(isEdited)
-        {
-            mess.showAlertDialog("Alert!","You have unsaved changes,Your data will be gone\nYou want to go back?","Yes","Cancel"){
+        if (isEdited) {
+            mess.showAlertDialog(
+                "Alert!",
+                "You have unsaved changes,Your data will be gone\nYou want to go back?",
+                "Yes",
+                "Cancel"
+            ) {
 
                 finish()
             }
-        }
-        else
+        } else
             super.onBackPressed()
     }
 }

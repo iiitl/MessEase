@@ -36,7 +36,7 @@ class MenuWidget : AppWidgetProvider() {
             for (p in dayMenu.particulars) {
                 val itemView = RemoteViews(context.packageName, R.layout.widget_particular_element)
                 itemView.setTextViewText(R.id.foodType, p.type)
-                itemView.setTextViewText(R.id.foodMenu, p.food)
+                itemView.setTextViewText(R.id.foodMenu, p.food.trim().replace("\n"," "))
                 itemView.setTextViewText(R.id.foodTiming, p.time)
                 views.addView(R.id.container, itemView)
             }
