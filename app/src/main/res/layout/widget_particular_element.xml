@@ -5,7 +5,7 @@
     android:background="@color/menu"
     android:layout_marginHorizontal="5dp"
     android:layout_marginBottom="10dp"
-    android:padding="8dp"
+    android:padding="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

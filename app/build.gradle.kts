@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.theayushyadav11.MessEase"
-    compileSdk = 34
+    compileSdk = 36
     packaging {
         resources {
             // Use 'exclude' for each entry instead of 'excludes +='
@@ -22,7 +22,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.1"
+        versionName = "1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
