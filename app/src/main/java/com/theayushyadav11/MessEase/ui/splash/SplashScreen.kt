@@ -89,7 +89,7 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun navigate() {
-        val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+        val versionName = packageManager.getPackageInfo(packageName, 0).versionName?:""
         mess.getUpdates { version, _ ->
             mess.log(version)
             mess.log(versionName)
