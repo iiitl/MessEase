@@ -10,13 +10,7 @@ plugins {
 android {
     namespace = "com.theayushyadav11.MessEase"
     compileSdk = 36
-    packaging {
-        resources {
-            // Use 'exclude' for each entry instead of 'excludes +='
-            exclude("META-INF/NOTICE.md")
-            exclude("META-INF/LICENSE.md")
-        }
-    }
+
     defaultConfig {
         applicationId = "com.theayushyadav11.MessEase"
         minSdk = 24
@@ -24,14 +18,22 @@ android {
         versionCode = 1
         versionName = "1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resConfigs("en")
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+        }
+        debug {
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 
@@ -48,72 +50,86 @@ android {
         viewBinding = true
     }
 
-    packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/NOTICE")
-        exclude("META-INF/LICENSE")
-        exclude("META-INF/LICENSE.txt")
-        exclude("META-INF/ASL2.0")
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/ASL2.0",
+                "META-INF/LICENSE.md",
+                "META-INF/NOTICE.md"
+            )
+        }
     }
-
 }
 
 dependencies {
+    // AndroidX core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx.v160)
+    implementation(libs.androidx.legacy.support.v4)
+
+    // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx.v270)
+    implementation(libs.androidx.navigation.ui.ktx.v270)
+
+    // Firebase (only required ones)
     implementation(libs.firebase.auth)
-    implementation(libs.androidx.activity)
     implementation(libs.firebase.database)
-    implementation(libs.androidx.legacy.support.v4)
-    implementation(libs.androidx.fragment.ktx)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.messaging.ktx)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.media3.exoplayer)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    //Kotlin Coroutines
+    // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    //Room Database
+    // Room Database
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.gson)
 
-    implementation(libs.play.services.auth)
+    // Glide
     implementation(libs.glide)
     kapt("com.github.bumptech.glide:compiler:4.13.2")
 
+    // JSON + Network
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+
+    // Lottie Animations
+    implementation(libs.lottie)
+
+    // Razorpay Checkout
+    implementation(libs.checkout)
+
+    // Others
+    implementation(libs.play.services.auth)
     implementation(libs.pinview)
 
+    implementation(libs.commons.io)
+    implementation(libs.android.mail)
+    implementation(libs.android.activation)
     implementation(libs.google.auth.library.oauth2.http)
-    implementation(libs.okhttp)
-    implementation(libs.lottie)
-    implementation(libs.androidx.fragment.ktx.v160)
-    implementation(libs.androidx.navigation.fragment.ktx.v270)
-    implementation(libs.androidx.navigation.ui.ktx.v270)
-    implementation (libs.android.mail)
-    implementation (libs.android.activation)
-    implementation (libs.commons.io)
-    implementation (libs.anychart.android)
-    implementation (libs.checkout)
 
+    // ExoPlayer
+    implementation(libs.androidx.media3.exoplayer)
 
-
-
-
-
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

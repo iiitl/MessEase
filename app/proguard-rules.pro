@@ -34,3 +34,7 @@
 -keepclasseswithmembers class * {
   public void onPayment*(...);
 }
+# Keep models and Firebase-required classes
+-keep class com.theayushyadav11.MessEase.Models.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
