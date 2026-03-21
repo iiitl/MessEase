@@ -2,6 +2,8 @@
 ## **Contributing**
 For contribution guidelines, see [Contributors.md](https://github.com/iiitl/MessEase/blob/master/Contributors.md).
 
+For information on how app releases are built and deployed via GitHub Actions, please see [RELEASE.md](RELEASE.md).
+
 ![logo](https://github.com/user-attachments/assets/02c34e6a-2e85-4745-82b8-715d2fdda3df)
 
 MessEase is an Android application designed to streamline and simplify mess-related operations at the Indian Institute of Information Technology, Lucknow. The app reduces administrative burdens, making daily tasks more efficient for the mess committee.

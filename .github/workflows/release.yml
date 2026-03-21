@@ -1,0 +1,154 @@
+name: Create Android Release (APK & AAB)
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type (patch, minor, major)'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+      track:
+        description: 'Play Store Track'
+        required: true
+        default: 'alpha'
+        type: choice
+        options:
+        - internal
+        - alpha
+        - beta
+        - production
+
+jobs:
+  release:
+    name: Build & Release Android
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push version bump commits and create GitHub Releases
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for release notes/changelogs
+
+      - name: Configure Git
+        run: |
+          set -e
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump Version (build.gradle.kts)
+        id: version_bump
+        run: |
+          set -e
+          GRADLE_FILE="app/build.gradle.kts"
+          
+          # Extract current version name and code
+          CURRENT_VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' $GRADLE_FILE)
+          CURRENT_VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' $GRADLE_FILE)
+          
+          # Parse Version Name (assumes x.y or x.y.z format)
+          IFS='.' read -ra ADDR <<< "$CURRENT_VERSION_NAME"
+          MAJOR=${ADDR[0]:-0}
+          MINOR=${ADDR[1]:-0}
+          PATCH=${ADDR[2]:-0}
+          
+          BUMP_TYPE="${{ github.event.inputs.bump_type }}"
+          if [ "$BUMP_TYPE" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP_TYPE" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+          
+          NEW_VERSION_NAME="$MAJOR.$MINOR.$PATCH"
+          NEW_VERSION_CODE=$((CURRENT_VERSION_CODE + 1))
+          
+          echo "NEW_VERSION=$NEW_VERSION_NAME" >> $GITHUB_ENV
+          
+          # Replace versions in build.gradle.kts
+          sed -i "s/versionName\s*=\s*\".*\"/versionName = \"$NEW_VERSION_NAME\"/g" $GRADLE_FILE
+          sed -i "s/versionCode\s*=\s*[0-9]\+/versionCode = $NEW_VERSION_CODE/g" $GRADLE_FILE
+          
+          # Commit the changes
+          git add $GRADLE_FILE
+          git commit -m "chore(release): bump version to v$NEW_VERSION_NAME"
+          git tag "v$NEW_VERSION_NAME"
+          # Push the commit to the current branch, then push the tags
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin --tags
+
+      - name: Setup Java Jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Unsigned Android APK and AAB
+        run: |
+          set -e
+          chmod +x ./gradlew
+          
+          # Build unsigned APK and App Bundle
+          ./gradlew assembleRelease bundleRelease
+
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_apk
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Sign AAB
+        uses: r0adkll/sign-android-release@v1
+        id: sign_aab
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Extract Release Notes
+        id: changelog
+        run: |
+          set -e
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 --match="v*" HEAD^ 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          COMMITS=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)")
+          echo -e "Changes in this release:\n\n$COMMITS" > release_notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.NEW_VERSION }}
+          name: Release v${{ env.NEW_VERSION }}
+          body_path: release_notes.md
+          files: |
+            ${{ steps.sign_apk.outputs.signedReleaseFile }}
+            ${{ steps.sign_aab.outputs.signedReleaseFile }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to Google Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_CREDENTIALS }}
+          packageName: com.theayushyadav11.MessEase
+          releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+          track: ${{ github.event.inputs.track }}
+          status: completed
