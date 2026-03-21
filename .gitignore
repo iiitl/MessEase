@@ -19,3 +19,8 @@ local.properties
 .idea
 *.iml
 /app/release
+
+# Root level sensitive files
+/messease
+/messease.json
+/google-services.json
