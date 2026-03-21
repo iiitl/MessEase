@@ -96,11 +96,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Create google-services.json
+      - name: Create google-services.json and messease.json
         env:
           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+          MESSEASE_JSON_BASE64: ${{ secrets.MESSEASE_JSON_BASE64 }}
         run: |
           echo "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > app/google-services.json
+          mkdir -p app/src/main/res/raw
+          echo "$MESSEASE_JSON_BASE64" | base64 --decode > app/src/main/res/raw/messease.json
 
       - name: Build Unsigned Android APK and AAB
         run: |
