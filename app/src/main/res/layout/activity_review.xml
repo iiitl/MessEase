@@ -9,19 +9,24 @@
     android:background="@color/bg"
     tools:context=".ui.more.ReviewActivity">
 
-    <!-- Toolbar unchanged -->
+    <View
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/food"
+        app:layout_constraintBottom_toTopOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="59dp"
         android:background="@color/food"
-        android:elevation="4dp"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:paddingBottom="5dp"
         android:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/baseline_arrow_back_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar"
         app:titleEnabled="true"
         app:titleTextColor="@color/white" />
 
