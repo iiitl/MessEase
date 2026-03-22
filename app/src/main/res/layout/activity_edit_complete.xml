@@ -9,17 +9,24 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/food"
+        app:layout_constraintBottom_toTopOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:background="@color/food"
         android:paddingBottom="5dp"
-        android:title="Upload Menu"
         android:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar"
         app:titleEnabled="true"
         app:titleTextColor="@color/white" />
 

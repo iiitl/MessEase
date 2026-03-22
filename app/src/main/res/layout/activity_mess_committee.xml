@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="40dp"
-    android:background="@color/bg"
+    android:background="@color/food"
     tools:context=".ui.splash.SplashScreen">
     <fragment
+        android:layout_marginTop="50dp"
         android:id="@+id/mc_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
