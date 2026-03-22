@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.theayushyadav11.MessEase.Models.Menu
 import com.theayushyadav11.MessEase.Models.User
 import com.theayushyadav11.MessEase.R
-import com.theayushyadav11.MessEase.R.string.empty_field
 import com.theayushyadav11.MessEase.RoomDatabase.MenuDataBase.MenuDatabase
 import com.theayushyadav11.MessEase.databinding.EditDialogBinding
 import com.theayushyadav11.MessEase.databinding.SelTargetDialogBinding
@@ -491,7 +489,8 @@ class Mess(context: Context) {
         )
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadId = downloadManager.enqueue(request)
-        Toast.makeText(context, context.getString(R.string.download_started), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.download_started), Toast.LENGTH_SHORT)
+            .show()
     }
 
     /**
@@ -564,19 +563,28 @@ class Mess(context: Context) {
     fun getIsDarkMode(): Boolean {
         return sharedPreferences.getBoolean("isDarkMode", false)
     }
-    fun changeTheme()
-    {
+
+    fun changeTheme() {
         val editor = sharedPreferences.edit()
         editor.putBoolean("isDarkMode", !getIsDarkMode())
         editor.apply()
         setTheme()
     }
+
     fun setTheme() {
         if (getIsDarkMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+
+    fun putUpdateSkipped(value: Boolean) {
+        save("isSkipped", value.toString())
+    }
+
+    fun getUpdateSkipped():Boolean {
+       return get("isSkipped","false").toBoolean()
     }
 
 }
