@@ -38,3 +38,7 @@
 -keep class com.theayushyadav11.MessEase.Models.** { *; }
 -keepattributes Signature
 -keepattributes *Annotation*
+
+# Gson requirements
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken { *; }
