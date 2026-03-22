@@ -10,7 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.theayushyadav11.MessEase.R
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
-import com.theayushyadav11.MessEase.utils.Constants.Companion.isVersionGreater
 
 class UpdateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +24,9 @@ class UpdateActivity : AppCompatActivity() {
 
         findViewById<MaterialButton>(R.id.btnUpdate).setOnClickListener {
             fireBase.getUpdates { version, url ->
-                val finalUrl = if (isVersionGreater(version, "1.2")) {
-                    "https://play.google.com/store/apps/details?id=com.theayushyadav11.MessEase"
-                } else {
-                    url
-                }
-                
-                if (finalUrl != "") {
+                if (url != "") {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(finalUrl)
+                    intent.data = Uri.parse(url)
                     startActivity(intent)
                 }
 

@@ -113,10 +113,6 @@ jobs:
           # Build unsigned APK and App Bundle
           ./gradlew assembleRelease bundleRelease
 
-      - name: Install old build-tools for signing
-        run: |
-          echo "y" | sdkmanager "build-tools;29.0.3"
-
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_apk
@@ -126,6 +122,7 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+          buildToolsVersion: 34.0.0
 
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1
@@ -136,6 +133,7 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+          buildToolsVersion: 34.0.0
 
       - name: Extract Release Notes
         id: changelog
