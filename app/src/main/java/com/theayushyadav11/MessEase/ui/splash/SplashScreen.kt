@@ -98,7 +98,7 @@ class SplashScreen : AppCompatActivity() {
 
                 startActivity(Intent(this, ErrorActivity::class.java))
                 finish()
-            } else if (isVersionGreater(version, versionName)) {
+            } else if (isVersionGreater(version, versionName)&&!mess.getUpdateSkipped()) {
                 mess.log(version)
                 mess.log(versionName)
                 startActivity(Intent(this, UpdateActivity::class.java))
