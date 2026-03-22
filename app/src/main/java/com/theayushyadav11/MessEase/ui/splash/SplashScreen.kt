@@ -97,12 +97,6 @@ class SplashScreen : AppCompatActivity() {
 
                 startActivity(Intent(this, ErrorActivity::class.java))
                 finish()
-            } else if (version != versionName) {
-                mess.log(version)
-                mess.log(versionName)
-                startActivity(Intent(this, UpdateActivity::class.java))
-                finish()
-
             } else if (mess.isLoggedIn()) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
