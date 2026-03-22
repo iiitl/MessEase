@@ -19,6 +19,7 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.MAIN_MENU
 import com.theayushyadav11.MessEase.utils.Constants.Companion.MENU
 import com.theayushyadav11.MessEase.utils.Constants.Companion.fireBase
 import com.theayushyadav11.MessEase.utils.Constants.Companion.firestoreReference
+import com.theayushyadav11.MessEase.utils.Constants.Companion.isVersionGreater
 import com.theayushyadav11.MessEase.utils.Mess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -97,7 +98,7 @@ class SplashScreen : AppCompatActivity() {
 
                 startActivity(Intent(this, ErrorActivity::class.java))
                 finish()
-            } else if (version != versionName) {
+            } else if (isVersionGreater(version, versionName)) {
                 mess.log(version)
                 mess.log(versionName)
                 startActivity(Intent(this, UpdateActivity::class.java))
