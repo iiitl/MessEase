@@ -15,8 +15,8 @@ android {
         applicationId = "com.theayushyadav11.MessEase"
         minSdk = 24
         targetSdk = 36
-        versionCode = 8
-        versionName = "1.3.6"
+        versionCode = 9
+        versionName = "1.3.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resConfigs("en")
         vectorDrawables.useSupportLibrary = true
