@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/designation_text_color"
                     android:text="Coordinators"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:id="@+id/coordAdder"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/designation_text_color"
                     android:padding="10dp"
                     android:text="Developers"
                     android:textSize="20sp"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:id="@+id/devAdder"
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/designation_text_color"
                     android:padding="10dp"
                     android:text="Senior-members"
                     android:textSize="20sp"
@@ -135,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:id="@+id/smAdder"
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/designation_text_color"
                     android:text="Members"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -179,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:id="@+id/memAdder"
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/designation_text_color"
                     android:padding="10dp"
                     android:text="Volunteers"
                     android:textSize="20sp"
@@ -223,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/grey" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:id="@+id/volAdder"
