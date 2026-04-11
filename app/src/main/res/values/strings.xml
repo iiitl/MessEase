@@ -36,11 +36,14 @@
 
     <!-- hardcoded strings from kotlin files -->
     <string name="download_completed">Download completed!</string>
-    <string name="all_alarms_cancelled">All alarms cancelled</string>
     <string name="alert">Alert!</string>
     <string name="not_mess_member">You are not a member of Mess Committee!</string>
     <string name="ok">Ok</string>
     <string name="logged_out_successfully">Logged out successfully</string>
+    <string name="bt" translatable="false">bt</string>
+    <string name="lt" translatable="false">lt</string>
+    <string name="st" translatable="false">st</string>
+    <string name="dt" translatable="false">dt</string>
     <string name="b_time">7:30</string>
     <string name="l_time">12:0</string>
     <string name="s_time">16:30</string>
@@ -55,11 +58,11 @@
     <string name="title_mess_menu">MessMenu.pdf</string>
     <string name="description_downloading_file">Downloading file</string>
     <string name="download_started">Download started</string>
-    <string name="mess_poll_id">pollId</string>
-    <string name="user_is_Logged_In">isLoggedIn</string>
+    <string name="mess_poll_id" translatable="false">pollId</string>
+    <string name="user_is_Logged_In" translatable="false">isLoggedIn</string>
     <string name="ayush_yadav">ayushyadav</string>
     <string name="suffix_iiitl.ac.in"><![CDATA[iiitl.ac.in]]></string>
-    <string name="user">user</string>
+    <string name="user" translatable="false">user</string>
     <string name="update">update</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="razorpay_key">rzp_live_pEv2OERPEj1yaT</string>

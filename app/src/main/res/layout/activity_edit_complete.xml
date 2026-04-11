@@ -63,7 +63,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginBottom="45dp"
         android:drawableEnd="@drawable/baseline_send_24"
-        android:text="Send Menu for Approval"
+        android:text="@string/menu_approval"
         android:textColor="@color/white"
         app:cornerRadius="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

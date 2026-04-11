@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 if (pendingIntent != null) {
                     alarmManager.cancel(pendingIntent)
                     pendingIntent.cancel()
-                    Log.d(TAG, context.getString(R.string.all_alarms_cancelled))
+                    Log.d(TAG, "All alarms cancelled")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -358,10 +358,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, AlarmReceiver::class.java)
 
             val times = listOf(
-                mess.get("Breakfast timings",getString(R.string.b_time)),
-                mess.get("Lunch timings",getString(R.string.l_time)),
-                mess.get("Snack timings",getString(R.string.s_time)),
-                mess.get("Dinner timings",getString(R.string.d_time))
+                mess.get(getString(R.string.bt),getString(R.string.b_time)),
+                mess.get(getString(R.string.lt),getString(R.string.l_time)),
+                mess.get(getString(R.string.st),getString(R.string.s_time)),
+                mess.get(getString(R.string.dt),getString(R.string.d_time))
             )
 
             mess.log(String.format(
