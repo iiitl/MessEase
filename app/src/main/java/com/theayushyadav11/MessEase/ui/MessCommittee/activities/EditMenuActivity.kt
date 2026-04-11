@@ -9,6 +9,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.DisplayMetrics
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -42,6 +45,35 @@ class EditMenuActivity : AppCompatActivity() {
         EditMenuViewModelFactory(database.menuDao())
     }
 
+    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private lateinit var gestureDetector: GestureDetector
+    private var scaleFactor = 1.0f
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        scaleGestureDetector.onTouchEvent(ev)
+        gestureDetector.onTouchEvent(ev)
+
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun updatePivot(rawFocusX: Float, rawFocusY: Float) {
+        val location = IntArray(2)
+        binding.layout.getLocationInWindow(location)
+
+        // Get exact coordinates on the layout by subtracting its actual on-screen position
+        val newPivotX = (rawFocusX - location[0]) / scaleFactor
+        val newPivotY = (rawFocusY - location[1]) / scaleFactor
+
+        val oldPivotX = binding.layout.pivotX
+        val oldPivotY = binding.layout.pivotY
+
+        binding.layout.translationX += (newPivotX - oldPivotX) * (scaleFactor - 1)
+        binding.layout.translationY += (newPivotY - oldPivotY) * (scaleFactor - 1)
+
+        binding.layout.pivotX = newPivotX
+        binding.layout.pivotY = newPivotY
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
@@ -52,6 +84,53 @@ class EditMenuActivity : AppCompatActivity() {
         requestStoragePermissions()
         loadInitialMenu()
         setupEditMenuListeners()
+        setupZoomFeatures()
+    }
+
+    private fun setupZoomFeatures() {
+        scaleGestureDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+            override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+                updatePivot(detector.focusX, detector.focusY)
+                return true
+            }
+
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                scaleFactor *= detector.scaleFactor
+
+                scaleFactor = Math.max(0.3f, Math.min(scaleFactor, 3.0f))
+
+                binding.layout.scaleX = scaleFactor
+                binding.layout.scaleY = scaleFactor
+
+                return true
+            }
+        })
+
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+
+                scaleFactor = when {
+                    scaleFactor == 1.0f -> 2.0f
+                    scaleFactor > 1.0f -> 0.3f
+                    else -> 1.0f
+                }
+
+                updatePivot(e.x, e.y)
+
+                val anim = binding.layout.animate()
+                    .scaleX(scaleFactor)
+                    .scaleY(scaleFactor)
+                    .setDuration(250)
+
+                if (scaleFactor == 1.0f) {
+                    anim.translationX(0f).translationY(0f)
+                }
+
+                anim.start()
+                return true
+            }
+        })
     }
 
     private fun initializeMenuView() {
@@ -138,6 +217,15 @@ class EditMenuActivity : AppCompatActivity() {
         val view = binding.root
         val displayMetrics = DisplayMetrics()
 
+        val currentScale = scaleFactor
+        val currentTransX = binding.layout.translationX
+        val currentTransY = binding.layout.translationY
+
+        binding.layout.scaleX = 1.0f
+        binding.layout.scaleY = 1.0f
+        binding.layout.translationX = 0f
+        binding.layout.translationY = 0f
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             this.display?.getRealMetrics(displayMetrics)
         } else {
@@ -154,7 +242,7 @@ class EditMenuActivity : AppCompatActivity() {
         val document = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(view.measuredWidth, view.measuredHeight, 1).create()
         val page = document.startPage(pageInfo)
-        
+
         view.draw(page.canvas)
         document.finishPage(page)
 
@@ -171,6 +259,11 @@ class EditMenuActivity : AppCompatActivity() {
         } finally {
             document.close()
         }
+
+        binding.layout.scaleX = currentScale
+        binding.layout.scaleY = currentScale
+        binding.layout.translationX = currentTransX
+        binding.layout.translationY = currentTransY
     }
 
     private fun setupEditMenuListeners() {
