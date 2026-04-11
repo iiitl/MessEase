@@ -73,10 +73,6 @@ class PollsFragment : Fragment() {
 
                 }
             }
-
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
         }
 
         return layoutManager
