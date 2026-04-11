@@ -25,11 +25,25 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initialise() {
-        val times = listOf(mess.get("bt","7:30"),mess.get("lt","12:0"),mess.get("st","16:30"),mess.get("dt","19:0"))
-        binding.timeb.text=getFormattedTime(times[0])
-        binding.timel.text=getFormattedTime(times[1])
-        binding.times.text=getFormattedTime(times[2])
-        binding.timed.text=getFormattedTime(times[3])
+        // =============================
+        val times = listOf(
+            mess.get("bt", "7:30"),
+            mess.get("lt", "12:0"),
+            mess.get("st", "16:30"),
+            mess.get("dt", "19:0")
+        )
+        binding.notifSwitchB.isChecked = mess.getBool("bn", true)
+        binding.notifSwitchL.isChecked = mess.getBool("ln", true)
+        binding.notifSwitchS.isChecked = mess.getBool("sn", true)
+        binding.notifSwitchD.isChecked = mess.getBool("dn", true)
+        // =============================
+
+        // =============================
+        /* 
+         Timing displays (timeb, timel, etc.) have been removed for a minimalist look.
+         The app still tracks the time for scheduling, but doesn't display it here.
+        */
+        // =============================
     }
 
     fun listeners()
@@ -61,11 +75,18 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
         binding.done.setOnClickListener{
+            // =============================
+            mess.save("bt", b[0])
+            mess.save("lt", b[1])
+            mess.save("st", b[2])
+            mess.save("dt", b[3])
 
-            mess.save("bt",b[0])
-            mess.save("lt",b[1])
-            mess.save("st",b[2])
-            mess.save("dt",b[3])
+            mess.saveBool("bn", binding.notifSwitchB.isChecked)
+            mess.saveBool("ln", binding.notifSwitchL.isChecked)
+            mess.saveBool("sn", binding.notifSwitchS.isChecked)
+            mess.saveBool("dn", binding.notifSwitchD.isChecked)
+            // =============================
+
             mess.log(b)
             mess.toast("Timings Updated")
             //cancelAllAlarms(this@SettingsActivity)
@@ -103,6 +124,9 @@ class SettingsActivity : AppCompatActivity() {
                 val timeFormat = android.text.format.DateFormat.getTimeFormat(this)
                 val formattedTime = timeFormat.format(selectedTime.time)
 
+                // =============================
+                // binding.timeb.text = formattedTime (Removed for minimalist look)
+                // =============================
                 onResult(formattedTime,"$hourOfDay:$minute")
             } else {
                 Toast.makeText(this, "Please choose between ${getFormattedTime("$minHour:$minMinute")} and  ${getFormattedTime("$maxHour:$maxMinute")}", Toast.LENGTH_SHORT).show()

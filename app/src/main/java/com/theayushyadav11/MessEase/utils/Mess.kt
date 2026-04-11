@@ -83,6 +83,18 @@ class Mess(context: Context) {
         return sharedPreferences.getString(key, defVal).toString()
     }
 
+    // =============================
+    fun saveBool(key: String, value: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(key, value)
+        editor.apply()
+    }
+
+    fun getBool(key: String, defVal: Boolean): Boolean {
+        return sharedPreferences.getBoolean(key, defVal)
+    }
+    // =============================
+
     /**
      * Saves the poll ID to SharedPreferences.
      *

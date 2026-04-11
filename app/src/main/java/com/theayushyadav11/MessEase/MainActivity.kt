@@ -310,9 +310,11 @@ class MainActivity : AppCompatActivity() {
             val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
             mAuth.signOut()
-            mGoogleSignInClient.signOut().addOnCompleteListener(this) {
-                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+// =============================
+            mGoogleSignInClient.signOut().addOnCompleteListener { task ->
+                Toast.makeText(this@MainActivity, "Logged out successfully", Toast.LENGTH_SHORT).show()
             }
+// =============================
         } catch (e: Exception) {
             mess.log("Sign out error: ${e.message}")
         }
@@ -357,19 +359,22 @@ class MainActivity : AppCompatActivity() {
         try {
             val intent = Intent(this@MainActivity, AlarmReceiver::class.java)
 
-            val times = listOf(
-                mess.get("bt", "7:30"),
-                mess.get("lt", "12:0"),
-                mess.get("st", "16:30"),
-                mess.get("dt", "19:0")
-            )
+            // =============================
+            val timeKeys = listOf("bt", "lt", "st", "dt")
+            val notifKeys = listOf("bn", "ln", "sn", "dn")
+            val defaultTimes = listOf("7:30", "12:0", "16:30", "19:0")
 
-            mess.log("Setting alarms: Breakfast ${times[0]}, Lunch ${times[1]}, " +
-                    "Snack ${times[2]}, Dinner ${times[3]}")
-
-            for (i in times.indices) {
-                scheduleAlarm(i, times[i], intent)
+            for (i in 0 until 4) {
+                val isEnabled = mess.getBool(notifKeys[i], true)
+                if (isEnabled) {
+                    val timeString = mess.get(timeKeys[i], defaultTimes[i])
+                    scheduleAlarm(i, timeString, intent)
+                } else {
+                    MainActivity.cancelAllAlarms(this, i)
+                    mess.log("Alarm for index $i is disabled")
+                }
             }
+            // =============================
         } catch (e: Exception) {
             mess.log("Error setting alarms: ${e.message}")
         }

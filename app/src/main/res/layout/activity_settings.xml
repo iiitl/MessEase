@@ -89,6 +89,17 @@
                         app:layout_constraintStart_toEndOf="@id/v"
                         app:layout_constraintTop_toBottomOf="@id/breakfastTitle" />
 
+                    <!-- ============================= -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/notifSwitchB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/pickb"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!-- ============================= -->
+
                     <ImageView
                         android:id="@+id/pickb"
                         android:layout_width="50dp"
@@ -151,6 +162,17 @@
                         app:layout_constraintStart_toEndOf="@id/v2"
                         app:layout_constraintTop_toBottomOf="@id/lunchTitle"
                         app:layout_constraintVertical_bias="0.6" />
+
+                    <!-- ============================= -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/notifSwitchL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/pickl"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!-- ============================= -->
 
                     <ImageView
                         android:id="@+id/pickl"
@@ -215,6 +237,17 @@
                         app:layout_constraintStart_toEndOf="@id/v3"
                         app:layout_constraintTop_toBottomOf="@id/snacksTitle"
                         app:layout_constraintVertical_bias="0.0" />
+
+                    <!-- ============================= -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/notifSwitchS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/picks"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!-- ============================= -->
 
                     <ImageView
                         android:id="@+id/picks"
@@ -281,6 +314,17 @@
                         app:layout_constraintStart_toEndOf="@id/v5"
                         app:layout_constraintTop_toBottomOf="@id/dinnerTitle"
                         app:layout_constraintVertical_bias="0.6" />
+
+                    <!-- ============================= -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/notifSwitchD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/pickd"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!-- ============================= -->
 
                     <ImageView
                         android:id="@+id/pickd"
