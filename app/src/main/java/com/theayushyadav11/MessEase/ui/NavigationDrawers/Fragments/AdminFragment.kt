@@ -13,28 +13,23 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.DESIGNATION
 import com.theayushyadav11.MessEase.utils.Mess
 
 class AdminFragment : Fragment() {
-    private lateinit var binding: FragmentAdminBinding
-    private lateinit var mess: Mess
 
+    private var _binding: FragmentAdminBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var mess: Mess
     private val viewModel: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAdminBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initialise()
         listeners()
-    }
-
-    private fun listeners() {
-        binding.btnAdd.setOnClickListener {
-            add()
-        }
     }
 
     private fun initialise() {
@@ -42,31 +37,71 @@ class AdminFragment : Fragment() {
         setAdapter()
     }
 
+    private fun listeners() {
+        binding.btnAdd.setOnClickListener {
+            validateAndAdd()
+        }
+    }
 
-    fun add() {
-        if (binding.etEmail.text.toString().isNotEmpty()) {
-            mess.addPb("Adding to Mess Committee")
-            viewModel.addToMessCommittee(
-                binding.etEmail.text.toString(),
-                binding.spinnerAutoComplete.text.toString()
-            )
-            {
-                mess.pbDismiss()
-                mess.toast(it)
+    private fun validateAndAdd() {
+        val email = binding.etEmail.text.toString().trim()
+        val designation = binding.spinnerAutoComplete.text.toString().trim()
+
+        when {
+            email.isEmpty() -> {
+                binding.tilEmail.error = "Email required"
             }
-        } else {
-            mess.toast("Please enter email")
+
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.tilEmail.error = "Invalid email"
+            }
+
+            designation.isEmpty() -> {
+                binding.tilspin.error = "Select designation"
+            }
+
+            else -> {
+                binding.tilEmail.error = null
+                binding.tilspin.error = null
+                add(email, designation)
+            }
+        }
+    }
+
+    private fun add(email: String, designation: String) {
+        // Disable button to avoid spam clicking
+        binding.btnAdd.isEnabled = false
+        binding.btnAdd.text = "Adding..."
+
+        mess.addPb("Adding to Mess Committee")
+
+        viewModel.addToMessCommittee(email, designation) {
+            mess.pbDismiss()
+
+            binding.btnAdd.isEnabled = true
+            binding.btnAdd.text = "Add to Committee"
+
+            mess.toast(it)
+
+            // Clear fields after success
+            binding.etEmail.text?.clear()
+            binding.spinnerAutoComplete.text?.clear()
         }
     }
 
     private fun setAdapter() {
         mess.getLists("${DESIGNATION}s") {
-            val spinner = binding.spinnerAutoComplete
-            val spinnerItems = it
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.setAdapter(adapter)
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                it
+            )
+            binding.spinnerAutoComplete.setAdapter(adapter)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
