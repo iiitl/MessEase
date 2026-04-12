@@ -11,6 +11,45 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_know_our_team">Know our team\n</string>
     <string name="demolunch">Marry had a little lamb.</string>
+
+
+    <string name="meal_breakfast">Breakfast</string>
+    <string name="meal_lunch">Lunch</string>
+    <string name="meal_dinner">Dinner</string>
+    <string name="download_edited_menu">Download edited Menu</string>
+    <string name="menu_approval">Send Menu for Approval</string>
+    <string name="history">History</string>
+    <string name="enter_amount">Enter Amount in Rupees</string>
+    <string name="enter_purpose">Enter Purpose</string>
+    <string name="pay">Pay</string>
+    <string name="next">Next</string>
+    <string name="day">Day</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="meal_type">Meal Type</string>
+    <string name="done">Done</string>
+
+    <!-- hardcoded strings from kotlin files -->
+    <string name="download_completed">Download completed!</string>
+    <string name="alert">Alert!</string>
+    <string name="not_mess_member">You are not a member of Mess Committee!</string>
+    <string name="ok">Ok</string>
+    <string name="logged_out_successfully">Logged out successfully</string>
+    <string name="bt" translatable="false">bt</string>
+    <string name="lt" translatable="false">lt</string>
+    <string name="st" translatable="false">st</string>
+    <string name="dt" translatable="false">dt</string>
+    <string name="b_time">7:30</string>
+    <string name="l_time">12:0</string>
+    <string name="s_time">16:30</string>
+    <string name="d_time">19:0</string>
+    <string name="setting_alarms_log">Setting alarms: Breakfast %s, Lunch %s, Snack %s, Dinner %s</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="empty_field">This field cannot be empty!</string>
     <string name="select_year">Please Select a year</string>
@@ -19,11 +58,11 @@
     <string name="title_mess_menu">MessMenu.pdf</string>
     <string name="description_downloading_file">Downloading file</string>
     <string name="download_started">Download started</string>
-    <string name="mess_poll_id">pollId</string>
-    <string name="user_is_Logged_In">isLoggedIn</string>
+    <string name="mess_poll_id" translatable="false">pollId</string>
+    <string name="user_is_Logged_In" translatable="false">isLoggedIn</string>
     <string name="ayush_yadav">ayushyadav</string>
     <string name="suffix_iiitl.ac.in"><![CDATA[iiitl.ac.in]]></string>
-    <string name="user">user</string>
+    <string name="user" translatable="false">user</string>
     <string name="update">update</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="razorpay_key">rzp_live_pEv2OERPEj1yaT</string>

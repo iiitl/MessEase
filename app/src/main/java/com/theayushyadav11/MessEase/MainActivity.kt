@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            Toast.makeText(context, "Download completed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.download_completed), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -238,9 +238,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             if (!isFinishing && !isDestroyed) {
                 mess.showAlertDialog(
-                    "Alert!",
-                    "You are not a member of Mess Committee!",
-                    "Ok",
+                    getString(R.string.alert),
+                    getString(R.string.not_mess_member),
+                    getString(R.string.ok),
                     ""
                 ) {}
             }
@@ -311,7 +311,7 @@ class MainActivity : AppCompatActivity() {
 
             mAuth.signOut()
             mGoogleSignInClient.signOut().addOnCompleteListener(this) {
-                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             mess.log("Sign out error: ${e.message}")
@@ -358,14 +358,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, AlarmReceiver::class.java)
 
             val times = listOf(
-                mess.get("bt", "7:30"),
-                mess.get("lt", "12:0"),
-                mess.get("st", "16:30"),
-                mess.get("dt", "19:0")
+                mess.get(getString(R.string.bt),getString(R.string.b_time)),
+                mess.get(getString(R.string.lt),getString(R.string.l_time)),
+                mess.get(getString(R.string.st),getString(R.string.s_time)),
+                mess.get(getString(R.string.dt),getString(R.string.d_time))
             )
 
-            mess.log("Setting alarms: Breakfast ${times[0]}, Lunch ${times[1]}, " +
-                    "Snack ${times[2]}, Dinner ${times[3]}")
+            mess.log(String.format(
+                getString(R.string.setting_alarms_log), times[0], times[1], times[2], times[3]))
 
             val enabledStates = listOf(
                 mess.isMealEnabled("bt_enabled"),

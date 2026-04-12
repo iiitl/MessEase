@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="Day"
+            android:text="@string/day"
             android:textColor="@color/food"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
