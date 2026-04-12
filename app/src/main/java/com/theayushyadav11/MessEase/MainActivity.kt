@@ -367,8 +367,22 @@ class MainActivity : AppCompatActivity() {
             mess.log("Setting alarms: Breakfast ${times[0]}, Lunch ${times[1]}, " +
                     "Snack ${times[2]}, Dinner ${times[3]}")
 
+            val enabledStates = listOf(
+                mess.isMealEnabled("bt_enabled"),
+                mess.isMealEnabled("lt_enabled"),
+                mess.isMealEnabled("st_enabled"),
+                mess.isMealEnabled("dt_enabled")
+            )
+
             for (i in times.indices) {
-                scheduleAlarm(i, times[i], intent)
+                cancelAllAlarms(this, i)
+            }
+
+
+            for (i in times.indices) {
+                if (enabledStates[i]) {
+                    scheduleAlarm(i, times[i], intent)
+                }
             }
         } catch (e: Exception) {
             mess.log("Error setting alarms: ${e.message}")

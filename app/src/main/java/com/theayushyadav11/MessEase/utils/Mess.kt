@@ -587,6 +587,14 @@ class Mess(context: Context) {
        return get("isSkipped","false").toBoolean()
     }
 
+    fun setMealEnabled(key: String, value: Boolean) {
+        sharedPreferences.edit().putBoolean(key, value).apply()
+    }
+
+    fun isMealEnabled(key: String): Boolean {
+        return sharedPreferences.getBoolean(key, true)
+    }
+
 }
 
 

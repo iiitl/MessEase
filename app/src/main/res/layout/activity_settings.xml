@@ -75,6 +75,14 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/v"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <Switch
+                        android:id="@+id/switchBreakfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/pickb"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="8dp"/>
 
                     <TextView
                         android:id="@+id/timeb"
@@ -137,6 +145,14 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/v2"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <Switch
+                        android:id="@+id/switchLunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/pickl"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="8dp"/>
 
                     <TextView
                         android:id="@+id/timel"
@@ -201,6 +217,14 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/v3"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <Switch
+                        android:id="@+id/switchSnacks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/picks"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="8dp"/>
 
                     <TextView
                         android:id="@+id/times"
@@ -267,6 +291,14 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/v5"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <Switch
+                        android:id="@+id/switchDinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/pickd"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="8dp"/>
 
                     <TextView
                         android:id="@+id/timed"
