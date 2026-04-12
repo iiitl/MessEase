@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="?attr/colorPrimary"
     tools:context=".ui.MessCommittee.fragments.ReviewFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        android:elevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="59dp"
-        app:titleTextColor="@color/white"
+        app:titleTextColor="?attr/colorOnPrimary"
         android:background="@color/food"
         android:title="Upload Menu"
         android:paddingBottom="5dp"
@@ -29,6 +30,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No Reviews."
+        android:textColor="?attr/colorOnBackground"
 
         android:textSize="30sp"
         android:textStyle="bold"
@@ -40,6 +42,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
+        android:background="?attr/colorSurface"
         android:layout_height="0dp"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

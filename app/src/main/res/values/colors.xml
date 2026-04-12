@@ -12,10 +12,19 @@
     <color name="food">#1972f0</color>
     <color name="medium">#82B5FE</color>
     <color name="grey">#cfd8df</color>
-    <color name="bg">#FFFFFF</color>
     <color name="red">#CC3E44</color>
     <color name="nav_black">#FFFFFF</color>
     <color name="nav_element">#000000</color>
     <color name="gold">#ba8e43</color>
     <color name="light_gold">#f5eba3</color>
+    <color name="primary">#2563EB</color>
+    <color name="primary_variant">#1E40AF</color>
+    <color name="accent">#F59E0B</color>
+    <color name="accent_soft">#FEF3C7</color>
+    <color name="bg">#F9FAFB</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="error">#DC2626</color>
 </resources>
