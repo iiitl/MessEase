@@ -13,28 +13,23 @@ import com.theayushyadav11.MessEase.utils.Constants.Companion.DESIGNATION
 import com.theayushyadav11.MessEase.utils.Mess
 
 class AdminFragment : Fragment() {
-    private lateinit var binding: FragmentAdminBinding
-    private lateinit var mess: Mess
 
+    private var _binding: FragmentAdminBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var mess: Mess
     private val viewModel: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAdminBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initialise()
         listeners()
-    }
-
-    private fun listeners() {
-        binding.btnAdd.setOnClickListener {
-            add()
-        }
     }
 
     private fun initialise() {
@@ -42,31 +37,77 @@ class AdminFragment : Fragment() {
         setAdapter()
     }
 
+    private fun listeners() {
+        binding.btnAdd.setOnClickListener {
+            validateAndAdd()
+        }
+    }
 
-    fun add() {
-        if (binding.etEmail.text.toString().isNotEmpty()) {
-            mess.addPb("Adding to Mess Committee")
-            viewModel.addToMessCommittee(
-                binding.etEmail.text.toString(),
-                binding.spinnerAutoComplete.text.toString()
-            )
-            {
-                mess.pbDismiss()
-                mess.toast(it)
+    private fun validateAndAdd() {
+        val email = binding.etEmail.text.toString().trim()
+        val designation = binding.spinnerAutoComplete.text.toString().trim()
+        binding.tilEmail.error = null
+        binding.tilspin.error = null
+
+        var isValid = true
+        if (email.isEmpty()) {
+            binding.tilEmail.error = "Email required"
+            isValid = false
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.tilEmail.error = "Invalid email"
+            isValid = false
+        }
+
+        if (designation.isEmpty()) {
+            binding.tilspin.error = "Select designation"
+            isValid = false
+        }
+
+        if (isValid) {
+            add(email, designation)
+        }
+    }
+
+    private fun add(email: String, designation: String) {
+        _binding?.let { binding ->
+            binding.btnAdd.isEnabled = false
+            binding.btnAdd.text = "Adding..."
+        }
+
+        mess.addPb("Adding to Mess Committee")
+
+        viewModel.addToMessCommittee(email, designation) { result ->
+            mess.pbDismiss()
+            val binding = _binding
+            if (binding != null) {
+                binding.btnAdd.isEnabled = true
+                binding.btnAdd.text = "Add to Committee"
+
             }
-        } else {
-            mess.toast("Please enter email")
+            mess.toast(result)
+            if (result.contains("success", ignoreCase = true)) {
+                binding?.etEmail?.text?.clear()
+                binding?.spinnerAutoComplete?.text?.clear()
+            }
         }
     }
 
     private fun setAdapter() {
-        mess.getLists("${DESIGNATION}s") {
-            val spinner = binding.spinnerAutoComplete
-            val spinnerItems = it
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.setAdapter(adapter)
+        mess.getLists("${DESIGNATION}s") {list ->
+            if (!isAdded || context == null) return@getLists
+            val b = _binding ?: return@getLists
+            val ctx = context ?: return@getLists
+            val adapter = ArrayAdapter(
+                ctx,
+                android.R.layout.simple_dropdown_item_1line,
+                list
+            )
+            b.spinnerAutoComplete.setAdapter(adapter)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

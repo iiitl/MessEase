@@ -26,6 +26,9 @@ class AdminViewModel : ViewModel() {
                     .addOnSuccessListener {
                         onResult("User added to committee")
                     }
+                    .addOnFailureListener {e ->
+                        onResult(e.message ?: "Error adding user to committee")
+                    }
             }
         }
     }

@@ -38,9 +38,12 @@ class SettingsActivity : AppCompatActivity() {
         tempStates["dt_enabled"] = mess.isMealEnabled("dt_enabled")
 
     }
-
+    private val mealKeys = listOf("bt", "lt", "st", "dt")
     private fun initialise() {
-        val times = listOf(mess.get("bt","7:30"),mess.get("lt","12:0"),mess.get("st","16:30"),mess.get("dt","19:0"))
+        val defaultTimes = listOf("7:30", "12:0", "16:30", "19:0")
+        val times = mealKeys.mapIndexed { index, key ->
+            mess.get(key, defaultTimes[index])
+        }
         binding.timeb.text=getFormattedTime(times[0])
         binding.timel.text=getFormattedTime(times[1])
         binding.times.text=getFormattedTime(times[2])
@@ -81,11 +84,9 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
         binding.done.setOnClickListener{
-
-            mess.save("bt",b[0])
-            mess.save("lt",b[1])
-            mess.save("st",b[2])
-            mess.save("dt",b[3])
+            mealKeys.forEachIndexed { index, key ->
+                mess.save(key, b[index])
+            }
             mess.log(b)
             //cancelAllAlarms(this@SettingsActivity)
             mess.setMealEnabled("bt_enabled", tempStates["bt_enabled"]!!)
