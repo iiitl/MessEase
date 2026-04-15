@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@color/nav_black"
     tools:context=".ui.more.ReviewActivity">
 
     <View
@@ -30,7 +30,6 @@
         app:titleEnabled="true"
         app:titleTextColor="@color/white" />
 
-    <!-- Remaining layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +41,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp">
 
-            <!-- First MaterialCardView -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/spinner_card"
                 android:layout_width="match_parent"
@@ -51,10 +49,9 @@
                 android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/bg"
+                app:cardBackgroundColor="@color/nav_black"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- No changes to inner layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:id="@+id/ll"
@@ -72,7 +69,7 @@
                         android:hint="Day">
                         <AutoCompleteTextView
                             android:id="@+id/day"
-                            android:textColor="@color/black"
+                            android:textColor="@color/nav_element"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
@@ -89,7 +86,7 @@
 
                         <AutoCompleteTextView
                             android:id="@+id/type"
-                            android:textColor="@color/black"
+                            android:textColor="@color/nav_element"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
@@ -98,7 +95,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Food TextView -->
             <TextView
                 android:id="@+id/food"
                 android:layout_width="match_parent"
@@ -111,14 +107,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinner_card"
                 android:layout_marginTop="16dp"/>
 
-            <!-- Rating section -->
             <TextView
                 android:id="@+id/rating_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rate your experience"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="@color/black"
+                android:textColor="@color/nav_element"
                 app:layout_constraintBottom_toTopOf="@id/ratingBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:text="Share your thoughts"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="@color/black"
+                android:textColor="@color/nav_element"
                 android:layout_marginStart="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ratingBar"
@@ -161,7 +156,7 @@
                 android:layout_marginTop="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardBackgroundColor="@color/nav_black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/review_label"
@@ -184,12 +179,11 @@
                         android:inputType="textCapSentences"
                         android:hint="What did you like or dislike?"
                         android:textColorHint="?android:attr/textColorSecondary"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:textColor="@color/nav_element"
                         android:padding="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPost"
                 android:layout_width="match_parent"
